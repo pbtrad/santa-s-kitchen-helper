@@ -1,7 +1,46 @@
-from flask import Flask
+from flask import (
+    Flask, url_for, render_template,
+    redirect, request, session, flash)
+import os
+from flask_pymongo import PyMongo
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
+
+# mongo envs
+'''
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.secret_key = os.environ.get("SECRET_KEY")
+'''
+
+mongo = PyMongo(app)
 
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
+
+
+# Registration
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if existing_user:
+            flash("Username already exists")
+            return redirect(url_for("register"))
+
+        register = {
+            "username": request.form.get("username").lower(),
+            "email": request.form.get("email").lower(),
+            "password": generate_password_hash(request.form.get("password")),
+        }
+        mongo.db.users.insert_one(register)
+
+        session["user"] = request.form.get("username").lower()
+        flash('Your account has been created! You are now able to log in')
+
+    return render_template("register.html")
