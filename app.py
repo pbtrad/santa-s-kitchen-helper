@@ -42,5 +42,36 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash('Your account has been created! You are now able to log in')
+        return redirect(url_for("profile", username=session["user"]))
+        #register modal to be rendered here
+    #return render_template("register.html")
 
-    return render_template("register.html")
+# Login
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # check if username exists in db
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if existing_user:
+            # ensure hashed password matches user input
+            if check_password_hash(
+                    existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
+                flash("Welcome, {}".format(
+                    request.form.get("username")))
+                return redirect(url_for("profile", username=session["user"]))
+            else:
+                # invalid password match
+                flash("Incorrect Username and/or Password")
+                return redirect(url_for("login"))
+
+        else:
+            # username doesn't exist
+            flash("Incorrect Username and/or Password")
+            return redirect(url_for("login"))
+        #To be rendered on modal
+    #return render_template("login.html")
+
