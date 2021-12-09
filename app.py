@@ -75,3 +75,11 @@ def login():
         #To be rendered on modal
     #return render_template("login.html")
 
+
+# Logout
+@app.route("/logout")
+def logout():
+    flash("You are now logged out")
+    session.pop("user")
+    return redirect(url_for("login"))
+
