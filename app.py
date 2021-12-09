@@ -45,9 +45,9 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash('Your account has been created! You are now able to log in')
-        return redirect(url_for("profile", username=session["user"]))
+        return redirect(url_for("register", username=session["user"]))
         #register modal to be rendered here
-    #return render_template("register.html")
+    return render_template("register.html")
 
 # Login
 
@@ -76,7 +76,7 @@ def login():
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
         #To be rendered on modal
-    #return render_template("login.html")
+    return render_template("login.html")
 
 
 # Logout
@@ -86,3 +86,7 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+if __name__ == "__main__":
+    app.run(host=os.environ.get("IP"),
+            port=int(os.environ.get("PORT")),
+            debug=True)
