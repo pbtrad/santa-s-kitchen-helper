@@ -26,7 +26,7 @@ db = client.kitchenHelper
 
 mongo = PyMongo(app)
 
-records = db.register
+records = db.users
 
 @app.route("/")
 def hello_world():
