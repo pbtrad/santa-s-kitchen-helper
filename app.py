@@ -51,7 +51,7 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash('Your account has been created! You are now able to log in')
-        return redirect(url_for("register", username=session["user"]))
+        return redirect(url_for("login", username=session["user"]))
         #register modal to be rendered here
     return render_template("register.html")
 
@@ -71,7 +71,7 @@ def login():
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(
                     request.form.get("username")))
-                return redirect(url_for("login", username=session["user"]))
+                return redirect(url_for("profile", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -92,6 +92,24 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+
+# Provisional Profile
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # grab session users username from database
+    print(username)
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    print(username)
+    user = mongo.db.users.find_one({"username": request.form.get("username")})
+
+    # mongo.db.users.find(user_info)
+   
+    if session["user"]:
+        return render_template(
+            "profile.html", username=username, profile=profile,
+            user=user)
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
