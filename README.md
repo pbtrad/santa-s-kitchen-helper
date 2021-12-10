@@ -1,4 +1,4 @@
-# Santa's Little Helper
+# Santa's Kitchen Helper
 
 ![Add Image Here]()
 
@@ -35,6 +35,10 @@ Introduction/Overview
 
 ### Design
 
+#### Typograhpy
+
+Heading font: [https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
+
 [Back to Contents](#contents)
 
 ---
@@ -50,6 +54,10 @@ Introduction/Overview
 ---
 
 ## Technologies Used
+
+### Tools
+
+- Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
 
 [Back to Contents](#contents)
 
