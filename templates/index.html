@@ -5,7 +5,8 @@
     <div class="row justify-content-center">
         <div id="calendar-container" class="col-10 calendar-container">
             <!-- Creates curved SVG text -->
-            <svg id="calendarText" viewBox="0 0 100 100" height=100 width=100>
+            <svg id="calendarText" viewBox="0 0 100 100" width="100%" height="100%">
+                <!-- <svg id="calendarText" viewBox="0 0 100 100" height=100 width=100> -->
                 <!-- <svg style="height:auto width:auto;"> -->
                 <path id="CurveHeader" stroke="green" fill="transparent" d=" m 0 100 a 10 10, 0, 0, 1, 180 0"/>
                 <text>
@@ -28,7 +29,7 @@
 {% endblock %}
 
 {% block scripts %}
-
+    <!-- Currently without use, if SVG plays well with calendar -->
     <script type="text/javascript">
         // Sets the size of the calendar text
         function resizePathText(){
@@ -40,16 +41,17 @@
             let quarterWidth = Math.floor(width / 4);
             // finds container width
             let colWidth = document.getElementById("calendar-container").offsetWidth;
-            let quarterColWidth = -1 * Math.floor(colWidth / 8);
+            let colHeight = document.getElementById("calendar-container").offsetHeight;
+            let quarterColWidth = -1 * Math.floor(colWidth / 13);
             // Sets contianer x according to user screen x
-            document.getElementById("calendarText").setAttribute("width", halfWidth + "px");
-            document.getElementById("calendarText").setAttribute("height", halfWidth + "px");
+            // document.getElementById("calendarText").setAttribute("width", colWidth + "px");
+            // document.getElementById("calendarText").setAttribute("height", halfWidth + "px");
             document.getElementById("calendarText").setAttribute("viewBox", quarterColWidth + " 0 " + String(quarterWidth) + " " + String(quarterWidth));
 
         }
         // Original size set
         resizePathText();
         // Uses event to recall size set
-        window.onresize = resizePathText;
+        // window.onresize = resizePathText;
     </script>
 {% endblock %}
