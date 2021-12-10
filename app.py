@@ -1,10 +1,12 @@
 import datetime
+import certifi
 from flask import (
     Flask, url_for, render_template,
     redirect, request, session, flash)
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -16,13 +18,17 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
+# Corrects authentication certificate error
+client = MongoClient(os.environ['MONGO_URI'], tlsCAFile=certifi.where())
+db = client.kitchenHelper
 
 mongo = PyMongo(app)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    # displays DB call format and users
+    users = list(db.users.find())
+    return render_template("index.html", users=users)
 
 
 # Registration
@@ -45,12 +51,12 @@ def register():
 
         session["user"] = request.form.get("username").lower()
         flash('Your account has been created! You are now able to log in')
-        return redirect(url_for("profile", username=session["user"]))
+        return redirect(url_for("login", username=session["user"]))
         #register modal to be rendered here
-    #return render_template("register.html")
+    return render_template("register.html")
+
 
 # Login
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -76,7 +82,7 @@ def login():
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
         #To be rendered on modal
-    #return render_template("login.html")
+    return render_template("login.html")
 
 
 # Logout
@@ -86,6 +92,24 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+
+# Provisional Profile
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # grab session users username from database
+    print(username)
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    print(username)
+    user = mongo.db.users.find_one({"username": request.form.get("username")})
+
+    # mongo.db.users.find(user_info)
+   
+    if session["user"]:
+        return render_template(
+            "profile.html", username=username, profile=profile,
+            user=user)
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
