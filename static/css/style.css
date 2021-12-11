@@ -63,7 +63,7 @@ body {
 /* Event create/edit page */
 
 .event-container {
-    background-color: #fff;
+    background-color: #F9FCFB;
     color: #000;
     border: 2px solid #000;
 }
@@ -73,12 +73,16 @@ body {
     padding: 0;
 }
 
+.event-form p {
+    font-weight: 500;
+}
+
 .event-form input {
     width: 100%;
 }
 
 .event-form .row {
-    margin: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
 }
 
 .add-button {
