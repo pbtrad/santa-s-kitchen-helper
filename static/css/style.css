@@ -125,9 +125,6 @@ body {
 
 /* Santa letter modal style */
 .santa-letter {
-    background: url(../images/santa-letter.png);
-    background-size: cover;
-    background-repeat: no-repeat;
     margin: auto;
     padding: 0;
     position: relative;
