@@ -1,10 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-.color-codes{
+.color-codes {
     color: #FD5E53;
     color: #F9FCFB;
     color: #B0EACD;
     color: #21BF73;
+}
+
+:root {
+	--dark-red: #ad251b;
+	--green: #21bf73;
+	--light-green: #b0eacd;
+	--white: #f9fcfb;
+	--black: #012023;
+
+	--heading-font: "Emilys Candy", sans-serif;
 }
 
 /* -------------------- General */
@@ -13,6 +23,38 @@ body {
     background: url("../images/holiday-background.webp");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+/* ----- Navbar */
+.navbar-bg {
+	background-color: var(--white);
+}
+
+.navbar-brand img {
+	width: 40px;
+}
+
+.navbar-nav {
+	display: flex;
+	gap: 15px;
+}
+
+.nav-item {
+	border: 3px solid var(--dark-red);
+	box-shadow: 3px 3px var(--black);
+	padding: 4px 8px;
+}
+
+.nav-item:hover {
+	box-shadow: none;
+	transform: translate(3px, 3px);
+}
+
+.nav-link {
+	color: var(--black);
+	font-weight: bold;
+	padding: 0;
+	text-transform: uppercase;
 }
 
 /* -------------------- Index */
