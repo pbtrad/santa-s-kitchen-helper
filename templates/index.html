@@ -59,7 +59,10 @@
     <script type="text/javascript">
         // Open modal when index page loads
         $(document).ready(function() {
-            $('#exampleModal').modal('show');
+            let logged_in = ({{ logged_in }});
+            if (logged_in != 1){
+                $('#exampleModal').modal('show');
+            }
         })
 
         // Changes the size of the calendar peep view
