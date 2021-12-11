@@ -1,9 +1,10 @@
 from calendar import monthrange
 from datetime import datetime
+from authlib.integrations.flask_client import OAuth
 import certifi
 from flask import (
     Flask, url_for, render_template,
-    redirect, request, session, flash)
+    redirect, request, session, flash, abort)
 import os
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -11,11 +12,24 @@ from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 import bcrypt
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+import google.auth.transport.requests
+from pip._vendor import cachecontrol
+import requests
+from os import PathLike
+
 if os.path.exists("env.py"):
     import env
 
+from dotenv import load_dotenv
+load_dotenv()
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
+
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
 # mongo envs
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -25,9 +39,15 @@ app.secret_key = os.environ.get("SECRET_KEY")
 client = MongoClient(os.environ['MONGO_URI'], tlsCAFile=certifi.where())
 db = client.kitchenHelper
 
+# Google Credentials
+app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
+app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
+
+
 mongo = PyMongo(app)
 
 records = db.users
+
 
 @app.route("/")
 def hello_world():
@@ -175,3 +195,49 @@ if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
             debug=True)
+
+
+'''
+# GOOGLE LOGIN
+
+client_secrets_file = os.path.join(os.PathLike.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri="http://127.0.0.1:5000/callback"
+)
+
+
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401)  # Authorization required
+        else:
+            return function()
+
+    return wrapper
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=os.environ.get("GOOGLE_CLIENT_ID")
+    )
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect("/profile")
+'''
+
