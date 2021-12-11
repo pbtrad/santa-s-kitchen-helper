@@ -123,3 +123,13 @@ body {
     height: 100px;
 }
 
+/* Profile page */
+.user-avatar {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.hide {
+    display: none;
+}
