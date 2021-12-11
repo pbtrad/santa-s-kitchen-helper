@@ -1,6 +1,5 @@
 from calendar import monthrange
 from datetime import datetime
-from authlib.integrations.flask_client import OAuth
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -12,18 +11,11 @@ from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 import bcrypt
-from google.oauth2 import id_token
-from google_auth_oauthlib.flow import Flow
-import google.auth.transport.requests
 from pip._vendor import cachecontrol
 import requests
 from os import PathLike
-
 if os.path.exists("env.py"):
     import env
-
-from dotenv import load_dotenv
-load_dotenv()
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -150,7 +142,22 @@ def profile():
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
-        return render_template('profile.html', user=user)
+        families = list(db.families.find({"members": user["_id"]}))
+        eventIds = []
+        for family in families:
+            event_array = family["events"]
+            if event_array:
+                for event in event_array:
+                    eventIds.append(event)
+        events = []
+        for id in eventIds:
+            events.append(db.families.find_one({"_id": ObjectId(id)}))
+        return render_template(
+            'profile.html',
+             user=user,
+            families=families,
+            events=events
+        )
     else:
         return redirect(url_for("login"))
 
