@@ -26,7 +26,7 @@ db = client.kitchenHelper
 
 mongo = PyMongo(app)
 
-records = db.register
+records = db.users
 
 @app.route("/")
 def hello_world():
@@ -103,42 +103,7 @@ def login():
             return render_template('login.html', message=message)
     return render_template('login.html', message=message)
 # Login
-'''
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        # check if username exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(
-                    request.form.get("username")))
-                return redirect(url_for("profile", username=session["user"]))
-            else:
-                # invalid password match
-                flash("Incorrect Username and/or Password")
-                return redirect(url_for("login"))
-
-        else:
-            # username doesn't exist
-            flash("Incorrect Username and/or Password")
-            return redirect(url_for("login"))
-        #To be rendered on modal
-    return render_template("login.html")
-'''
-'''
-# Logout
-@app.route("/logout")
-def logout():
-    flash("You are now logged out")
-    session.pop("user")
-    return redirect(url_for("login"))
-'''
 
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
@@ -161,13 +126,7 @@ def profile():
 
 
     # mongo.db.users.find(user_info)
-'''
-    if session["user"]:
-        return render_template(
-            "profile.html", username=username, profile=profile,
-            user=user)
-    return redirect(url_for("login"))
-'''
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
