@@ -1,29 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<!-- Floating text and transparent circle -->
-<div class="container-fluid calendar-background">
-    <div class="row justify-content-center" style="position: relative;">
-        <div id="calendar-container" class="col-10 calendar-container">
-            <!-- Creates curved SVG text -->
-            <svg id="calendarText" viewBox="0 0 100 100" width="100%" height="100%">
-                <!-- <svg id="calendarText" viewBox="0 0 100 100" height=100 width=100> -->
-                <!-- <svg style="height:auto width:auto;"> -->
-                <path id="CurveHeader" stroke="transparent" fill="transparent" d=" m 0 120 a 10 10, 0, 0, 1, 180 0" />
-                <text class="svg-font">
-                    <textpath class="header-name-shadow" href="#CurveHeader" letter-spacing="2" startOffset="50%"
-                        text-anchor="middle" style="background-color: green;">
-                        Santa's Kitchen Helper
-                    </textpath>
-                </text>
-            </svg>
-        </div>
-        <!-- Calendar peep view -->
-        <div class="col-12 col-lg-10" style="position: absolute;">
-            <div id="calendar-image" class="calendar-image"></div>
-        </div>
-    </div>
-</div>
-
 
 <div class="container-fluid event-container">
     <form action="POST" class="event-form">
@@ -127,46 +103,3 @@
 
 {% endblock %}
 
-{% block scripts %}
-<!-- Currently without use, if SVG plays well with calendar -->
-<script type="text/javascript">
-    // Sets the size of the calendar text
-    function resizePathText() {
-        // Finds user screen x and y
-        let height = document.body.offsetHeight;
-        let width = document.body.offsetWidth;
-        // Modifies user screen x
-        let halfWidth = Math.floor(width / 2);
-        let quarterWidth = Math.floor(width / 4);
-        // finds container width
-        let colWidth = document.getElementById("calendar-container").offsetWidth;
-        let colHeight = document.getElementById("calendar-container").offsetHeight;
-        let quarterColWidth = -1 * Math.floor(colWidth / 13);
-        // Sets contianer x according to user screen x
-
-        document.getElementById("calendarText").setAttribute("width", colWidth + "px");
-        document.getElementById("calendarText").setAttribute("height", halfWidth + "px");
-        document.getElementById("calendarText").setAttribute("viewBox", quarterColWidth + " 0 " + String(quarterWidth) + " " + String(quarterWidth));
-
-        document.getElementById("calendar-image").style.width = quarterWidth + "px"
-        document.getElementById("calendar-image").style.height = quarterWidth + "px"
-
-
-    }
-    // Original size set
-    resizePathText();
-    // Uses event to recall size set
-    // window.onresize = resizePathText;
-
-    function reduceCalenderView() {
-        let width = document.body.offsetWidth;
-        let quarterWidth = Math.floor(width / 4);
-        document.getElementById("calendar-image").style.width = quarterWidth + "px"
-        document.getElementById("calendar-image").style.height = quarterWidth + "px"
-    }
-
-    window.onresize = reduceCalenderView;
-
-
-</script>
-{% endblock %}
