@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-    <!-- Floating text and transparent circle -->
-    <div class="container-fluid calendar-background">
-        <div class="row justify-content-center">
-            <!-- Calendar peep view -->
-            <div class="col-12 col-lg-10 mt-5 " style="position: relative;">
-                <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
-                <div id="calendar-image" class="calendar-image mt-3">
-                    <div class="calendar-overlay"></div>
-                        <a href="#" class="login-button link-plain">Login</a>
-                </div>
+<!-- Floating text and transparent circle -->
+<div class="container-fluid calendar-background">
+    <div class="row justify-content-center">
+        <!-- Calendar peep view -->
+        <div class="col-12 col-lg-10 mt-5 " style="position: relative;">
+            <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
+            <div id="calendar-image" class="calendar-image mt-3">
+                <div class="calendar-overlay"></div>
+                <a href="#" class="login-button link-plain">Login</a>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-        // Changes the size of the calendar peep view 
-        function reduceCalenderView() {
-            let width = document.body.offsetWidth;
-            let quarterWidth = Math.floor(width / 4);
-            document.getElementById("calendar-image").style.width = quarterWidth + "px";
-            document.getElementById("calendar-image").style.height = quarterWidth + "px";
-        }
+<script type="text/javascript">
+    // Changes the size of the calendar peep view 
+    function reduceCalenderView() {
+        let width = document.body.offsetWidth;
+        let quarterWidth = Math.floor(width / 4);
+        document.getElementById("calendar-image").style.width = quarterWidth + "px";
+        document.getElementById("calendar-image").style.height = quarterWidth + "px";
+    }
 
-        window.onresize = reduceCalenderView;
-        reduceCalenderView();
-    </script>
+    window.onresize = reduceCalenderView;
+    reduceCalenderView();
+</script>
 {% endblock %}
