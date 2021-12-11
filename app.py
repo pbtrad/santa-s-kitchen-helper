@@ -1,5 +1,6 @@
 from calendar import monthrange
 from datetime import datetime
+import datetime
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -49,7 +50,6 @@ def hello_world():
             logged_in = 1
     except KeyError:
         logged_in = 0
-
 
     users = list(db.users.find())
     return render_template("index.html",
@@ -143,6 +143,7 @@ def profile():
     if "email" in session:
         user = records.find_one({"email": session["email"]})
         families = list(db.families.find({"members": user["_id"]}))
+        #create eventlist
         eventIds = []
         for family in families:
             event_array = family["events"]
@@ -152,11 +153,19 @@ def profile():
         events = []
         for id in eventIds:
             events.append(db.families.find_one({"_id": ObjectId(id)}))
+        #create datelist
+        date_list = []
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        year = datetime.date.today().year
+        for month in range(1, 13):
+            date_list.append([months[month - 1], monthrange(year,month)[1]])
         return render_template(
             'profile.html',
-             user=user,
+            user=user,
             families=families,
-            events=events
+            events=events,
+            date_list=date_list,
+            year=year
         )
     else:
         return redirect(url_for("login"))
