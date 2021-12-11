@@ -52,8 +52,17 @@ records = db.users
 @app.route("/")
 def hello_world():
     # displays DB call format and users
+    try:
+        if session['email']:
+            logged_in = 1
+    except KeyError:
+        logged_in = 0
+
+
     users = list(db.users.find())
-    return render_template("index.html", users=users)
+    return render_template("index.html",
+        users=users, logged_in=logged_in
+    )
 
 
 # Registration

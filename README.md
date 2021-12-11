@@ -37,7 +37,7 @@ Introduction/Overview
 
 #### Typograhpy
 
-Heading font: [https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
+Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
 
 [Back to Contents](#contents)
 
@@ -57,7 +57,7 @@ Heading font: [https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query
 
 ### Tools
 
-- Font Awesome: [https://fontawesome.com/](https://fontawesome.com/)
+- [Font Awesome](https://fontawesome.com/)
 
 [Back to Contents](#contents)
 
@@ -76,6 +76,14 @@ Heading font: [https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query
 ---
 
 ## Credits and Acknowledgments
+
+### Code
+
+- [Active Navbar Class](https://stackoverflow.com/questions/55895502/dynamically-setting-active-class-with-flask-and-jinja2/55895621#55895621)
+
+### Images
+
+- [Candy Cane Logo/Favicon](https://www.flaticon.com/authors/freepik)
 
 Team 7 🎄
 

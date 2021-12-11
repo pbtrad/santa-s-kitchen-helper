@@ -1,10 +1,13 @@
 {% extends "base.html" %}
+{% set active_page = 'profile' %}
 {% block content %}
+<!-- Header -->
+<div class="row">
+    <h1 class="col text-center x-mas-text mt-5">Profile Page</h1>
+</div>
 
 <div class="row">
-    <h1 class="col text-center">Profile Page</h1>
-</div>
-<div class="row">
+    <!-- Avatar and edit profile -->
     <div class="col-12 col-md-6 col-lg-3">
         <div class="row justify-content-center">
             <h3 class="col-12 text-center">{{ user.name }}'s Profile</h3>
@@ -13,6 +16,7 @@
                 Edit Profile
             </button>
         </div>
+        <!-- Create event modal -->
         <div class="row">
             <div class="form-container-fluid col-12 mx-auto hide" id="edit-profile-form">
                 <form method="POST" action="{{ url_for('edit_profile', user_id=user._id) }}">
@@ -46,22 +50,44 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-9">
-    </div>    
+    <!-- Create new event button -->
+    <div class="col-12 col-md-6 col-lg-9" style="position: relative;">
+        <div class="col- text-center">
+            <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create A New Event
+            </button>
+        </div>
+    </div>
 </div>
 
+<!-- Previous Container -->
+<div class="row">
+    <div class="col-4">
+        <h3 class="x-mas-text">Previous Events</h3>
+        <div class="row">
+            <div class="col-12">
 
+            </div>
+        </div>
+    </div>
 
+    <!-- Upcoming Container -->
+    <div class="col-8">
+        <h3 class="x-mas-text">Upcoming Events</h3>
+        <div class="row">
+            <div class="col-12">
+                
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-<div class="text-center pt-5 mt-5">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Create Event
-    </button>
-</div>
+
 <!-- Modal for creating event -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
