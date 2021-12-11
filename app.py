@@ -1,6 +1,6 @@
 from calendar import monthrange
 from datetime import datetime
-from authlib.integrations.flask_client import OAuth
+import datetime
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -57,7 +57,6 @@ def hello_world():
             logged_in = 1
     except KeyError:
         logged_in = 0
-
 
     users = list(db.users.find())
     return render_template("index.html",
@@ -150,7 +149,17 @@ def profile():
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
-        return render_template('profile.html', user=user)
+
+        # Creates dates variable
+        date_list = []
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        year = datetime.date.today().year
+        for month in range(1, 13):
+            date_list.append([months[month - 1], monthrange(year,month)[1]])
+        print(date_list)
+
+        return render_template('profile.html',
+            user=user, date_list=date_list, year=year)
     else:
         return redirect(url_for("login"))
 
