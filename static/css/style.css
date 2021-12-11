@@ -46,7 +46,8 @@ body {
 	background-color: var(--white);
 }
 
-.navbar-brand img {
+.navbar-brand img,
+.offcanvas-header img {
 	width: 40px;
 }
 
@@ -57,25 +58,69 @@ body {
 
 .nav-item {
     background-color: var(--white);
-	border: 2px solid var(--red);
-    border-radius: 5px;
-	font-weight: bold;
-    padding: 6px 12px;
+    border: 2px solid var(--red);
+    border-radius: 2px;
+    box-shadow: 2px 2px var(--black);
 }
 
-.nav-link {
+.nav-item a {
     color: var(--red);
-    padding: 0;
+    font-weight: 600;
 }
 
-.nav-item > .nav-link:hover {
+.nav-item .active {
+    background-color: var(--red);
     color: var(--white);
 }
 
-.nav-item:hover {
+.nav-item a:hover, 
+.nav-item a:focus {
+    color: var(--white);
+}
+
+.nav-item:hover, 
+.nav-item:focus{
     background-color: var(--red);
-    border-color: var(--white);
-	box-shadow: none;
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.sidenav-btn {
+    background-color: var(--white);
+    border: 2px solid var(--green);
+    border-radius: 2px;
+    box-shadow: 2px 2px var(--black);
+}
+
+.sidenav-btn i {
+    color: var(--green);
+    font-size: 1.2rem;
+}
+
+.sidenav-btn i:hover {
+    color: var(--white);
+}
+
+.sidenav-btn:hover,
+.sidenav-btn:focus {
+    background-color: var(--green);
+    border: 2px solid var(--green);
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.flex-column {
+    gap: 15px;
+}
+
+.offcanvas-header h5 {
+    font-family: var(--heading-font);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.offcanvas-header a.nav-link {
+    text-align: center;
 }
 
 /* -------------------- Index */
