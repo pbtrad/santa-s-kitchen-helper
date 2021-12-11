@@ -55,15 +55,53 @@
             </div>
         </div>
     </div>
-    <!-- Create new event button -->
-    <div class="col-12 col-md-6 col-lg-9" style="position: relative;">
-        <div class="col- text-center">
-            <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Create A New Event
-            </button>
+
+    <!-- event buttons  -->
+    <div class="col-12 col-md-6 col-lg-9 mt-5">
+        <div class="row">
+
+            <!-- Create new event button -->
+            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
+                <div class="col text-center">
+                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Create A New Event
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
+                <div class="col text-center">
+                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Add A New Event to Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
+                <div class="col text-center">
+                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create a New family
+                </button>
+            </div>
         </div>
     </div>
 </div>
+
+</div>
+
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-12">
+            <select name="all_families_name" id="all_families_name">
+                {% for family in all_families %}
+                    <option value="{{family.name}}">{{family.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
 
 <!-- Previous Container -->
 <div class="row">
@@ -132,6 +170,18 @@
                         </div>
                     </fieldset>
 
+                    <!-- Family -->
+                    <div class="form-group">
+                        <fieldset class="mt-1">
+                            <legend for="event_description" style="margin-bottom: 0;">Date</legend>
+                            <select name="family" id="family">
+                                {% for family in families %}
+                                    <option value="{{ family[0] }}">{{ family[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </fieldset>
+                    </div>
+
                     <!-- Event Description -->
                     <div class="form-group mt-2">
                         <label for="event_description">Event Description</label>
@@ -167,6 +217,7 @@
                             Cancel
                         </button>
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
