@@ -211,6 +211,25 @@ body {
     text-shadow: 1px 1px #333;
 }
 
+/* -------------------- Profile */
+
+.custom-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* transform: translateY(-50%); */
+    padding: .5em .75em;
+    border-radius: 5px;
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, .5);
+    margin-bottom: .5rem;
+    width: fit-content;
+    transition-duration: .25s;
+    color: #fff!important;
+    border: 2px solid #1bc732!important;
+    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
+    text-shadow: 1px 1px #333;
+}
 
 /* Event create/edit page */
 
