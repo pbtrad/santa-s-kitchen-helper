@@ -64,6 +64,7 @@ body {
                 inset 2px 2px 2px #5f5f5fb9,
                 inset -2px -2px 2px #5f5f5fb9;
 }
+
 /* login button */
 .login-button {
     position: absolute;
@@ -81,3 +82,44 @@ body {
     background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
     text-shadow: 1px 1px #333;
 }
+
+
+/* Event create/edit page */
+
+.event-container {
+    background-color: #F9FCFB;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.event-form * {
+    margin: 0;
+    padding: 0;
+}
+
+.event-form p {
+    font-weight: 500;
+}
+
+.event-form input {
+    width: 100%;
+}
+
+.event-form .row {
+    margin: 10px 0 10px 0;
+}
+
+.add-button {
+    border: none;
+    background: none;
+    margin-left: 10px;
+}
+
+.form-bottom-button {
+    padding: 3px 7px;
+}
+
+.food-list-row {
+    height: 100px;
+}
+
