@@ -119,11 +119,35 @@ def logout():
 def profile():
     # grab session users username from database
     if "email" in session:
-        email = session["email"]
-        return render_template('profile.html', email=email)
+        user = records.find_one({"email": session["email"]})
+        return render_template('profile.html', user=user)
     else:
         return redirect(url_for("login"))
 
+
+@app.route("/profile/edit<user_id>", methods=["GET", "POST"])
+def edit_profile(user_id):
+    if "email" not in session:
+        flash("You need to login to perform this action")
+        return redirect(url_for('home'))
+    user = records.find_one({"_id": ObjectId(user_id)})
+    print(user)
+    print(user_id)
+    if request.method == "POST":
+        if request.form.get('username'):
+            user['name'] = request.form.get('username')
+        if request.form.get('email'):
+            user['email'] = request.form.get('email')
+        """if request.form.get('password'):
+            if check_password_hash(
+                    user["password"], request.form.get("old_password")):
+                user['password'] = generate_password_hash(
+                    request.form.get("password"))"""
+        db.users.update_one(
+            {"_id": ObjectId(user_id)},
+            {"$set": user}
+        )
+    return redirect(url_for('profile'))
 
     # mongo.db.users.find(user_info)
 

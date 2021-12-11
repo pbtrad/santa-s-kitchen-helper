@@ -60,3 +60,13 @@ body {
     /* border: solid 2px #21BF73; */
 }
 
+/* Profile page */
+.user-avatar {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.hide {
+    display: none;
+}
