@@ -1,4 +1,5 @@
-import datetime
+
+from datetime import datetime
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -117,15 +118,37 @@ def logout():
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
+    
+   
+    events = list(mongo.db.events.find(
+        {"email": session["email"]}).sort("date_posted", -1))
     # grab session users username from database
     if "email" in session:
         email = session["email"]
-        return render_template('profile.html', email=email)
+        return render_template('profile.html', email=email, events=events)
     else:
         return redirect(url_for("login"))
 
 
-    # mongo.db.users.find(user_info)
+# Create Event
+
+@app.route("/event", methods=["GET", "POST"])
+def event():
+    if request.method == "POST":
+        event = {
+            "name": request.form.get("name"),
+            "date": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            "event": request.form.get("event_food"),
+            "email": session["email"],
+            "family": request.form.get("family"),
+            "description": request.form.get("description"),
+            "active": request.form.get("active"),
+        }
+        mongo.db.events.insert_one(event)
+        flash("Event Successfully Added")
+        return redirect(url_for("profile"))
+    events = mongo.db.events.find().sort("date_posted", -1)
+    return render_template("profile.html", events=events)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
