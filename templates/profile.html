@@ -98,30 +98,62 @@
             </div>
             <div class="modal-body">
                 <form action="{{ url_for('event') }}" method="POST">
+                    <!-- Event Name -->
                     <div class="form-group">
                         <label for="name">Event Name<span class="require">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" minlength="5" maxlength="50"
                             required />
                     </div>
+
+                    <!-- date -->
                     <div class="form-group">
+                        <fieldset class="mt-1">
+                            <legend for="event_description" style="margin-bottom: 0;">Date</legend>
+                            <select name="date_month" id="date_month">
+                                {% for month in date_list %}
+                                <option value="{{ loop.index0 }}">{{ month[0] }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="date_day" id="date_day">
+                                {% for day in range(1, 32) %}
+                                <option value="{{ loop.index }}">{{ day }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="date_year" id="date_year">
+                                {% for year in range(year, year + 5) %}
+                                <option value="year">{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </fieldset>
+
+                    <!-- Event Description -->
+                    <div class="form-group mt-2">
                         <label for="event_description">Event Description</label>
                         <textarea rows="10" class="form-control" name="description" id="description" minlength="25"
                             maxlength="1000" required></textarea>
                     </div>
+
+                    <!-- Food -->
                     <input type="checkbox" name="active" id="active" value="active">
                     <div class="form-group">
                         <label for="food">Food</label>
                         <input type="text" class="form-control" id="food" name="food" minlength="5" maxlength="50" />
                     </div>
+
+                    <!-- Family -->
                     <div class="form-group">
                         <label for="family">Family</label>
                         <input type="text" class="form-control" id="family" name="family" minlength="5"
                             maxlength="50" />
                     </div>
 
+                    <!-- subtext requirement -->
                     <div class="form-group">
                         <p><span class="require">*</span> - required fields</p>
                     </div>
+
+                    <!-- Submit Button -->
                     <div class="form-group">
                         <button type="submit">
                             Create
