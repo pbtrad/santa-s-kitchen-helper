@@ -1,10 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-.color-codes{
+.color-codes {
     color: #FD5E53;
     color: #F9FCFB;
     color: #B0EACD;
     color: #21BF73;
+}
+
+:root {
+	--red: #ad251b;
+	--green: #1aa864;
+	--light-green: #b0eacd;
+	--white: #f9fcfb;
+	--black: #012023;
+
+	--heading-font: "Emilys Candy", sans-serif;
 }
 
 /* -------------------- General */
@@ -29,6 +39,88 @@ body {
     text-shadow: 2px 2px 4px #010203,
                 -2px -2px 6px #010203;
     color: #faf9f6
+}
+
+/* ----- Navbar */
+.navbar-bg {
+	background-color: var(--white);
+}
+
+.navbar-brand img,
+.offcanvas-header img {
+	width: 40px;
+}
+
+.navbar-nav {
+	display: flex;
+	gap: 15px;
+}
+
+.nav-item {
+    background-color: var(--white);
+    border: 2px solid var(--red);
+    border-radius: 2px;
+    box-shadow: 2px 2px var(--black);
+}
+
+.nav-item a {
+    color: var(--red);
+    font-weight: 600;
+}
+
+.nav-item .active {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.nav-item a:hover, 
+.nav-item a:focus {
+    color: var(--white);
+}
+
+.nav-item:hover, 
+.nav-item:focus{
+    background-color: var(--red);
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.sidenav-btn {
+    background-color: var(--white);
+    border: 2px solid var(--green);
+    border-radius: 2px;
+    box-shadow: 2px 2px var(--black);
+}
+
+.sidenav-btn i {
+    color: var(--green);
+    font-size: 1.2rem;
+}
+
+.sidenav-btn i:hover {
+    color: var(--white);
+}
+
+.sidenav-btn:hover,
+.sidenav-btn:focus {
+    background-color: var(--green);
+    border: 2px solid var(--green);
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.flex-column {
+    gap: 15px;
+}
+
+.offcanvas-header h5 {
+    font-family: var(--heading-font);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.offcanvas-header a.nav-link {
+    text-align: center;
 }
 
 /* -------------------- Index */
