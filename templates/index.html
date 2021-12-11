@@ -1,15 +1,53 @@
 {% extends "base.html" %}
 {% set active_page = 'home' %}
 {% block content %}
-<!-- Floating text and transparent circle -->
-<div class="container-fluid calendar-background">
-    <div class="row justify-content-center">
-        <!-- Calendar peep view -->
-        <div class="col-12 col-lg-10 mt-5 " style="position: relative;">
-            <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
-            <div id="calendar-image" class="calendar-image mt-3">
-                <div class="calendar-overlay"></div>
-                <a href="#" class="login-button link-plain">Login</a>
+    <!-- Floating text and transparent circle -->
+    <div class="container-fluid calendar-background">
+        <div class="row justify-content-center">
+            <div class="col-10 santa-letter">
+
+                <!-- <div class="text-center pt-5 mt-5">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Letter to Santa
+                    </button>
+                </div> -->
+                <div class="modal hide fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content back-transparent remove-border center-y">
+                            <!-- <div class="modal-header remove-border">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div> -->
+                            <div class="modal-body paper-background" >
+                                <h2> Dear Santa</h2>
+                                <p>
+                                    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
+                                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                                    architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas 
+                                    sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione 
+                                    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit 
+                                    amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut 
+                                    labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum 
+                                    exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi 
+                                    consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam 
+                                    nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+                                </p>
+                            </div>
+                            <div class="modal-footer remove-border">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Calendar peep view -->
+            <div class="col-12 col-lg-10 mt-5 calendar-container">
+                <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
+                <div id="calendar-image" class="calendar-image mt-3">
+                    <div class="calendar-overlay"></div>
+                    <a href="{{ url_for('login')}}" class="login-button link-plain">Login</a>
+                </div>
             </div>
         </div>
     </div>
@@ -18,16 +56,21 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript">
-    // Changes the size of the calendar peep view 
-    function reduceCalenderView() {
-        let width = document.body.offsetWidth;
-        let quarterWidth = Math.floor(width / 4);
-        document.getElementById("calendar-image").style.width = quarterWidth + "px";
-        document.getElementById("calendar-image").style.height = quarterWidth + "px";
-    }
+    <script type="text/javascript">
+        // Open modal when index page loads
+        $(document).ready(function() {
+            $('#exampleModal').modal('show');
+        })
 
-    window.onresize = reduceCalenderView;
-    reduceCalenderView();
-</script>
+        // Changes the size of the calendar peep view
+        function reduceCalenderView() {
+            let width = document.body.offsetWidth;
+            let quarterWidth = Math.floor(width / 4);
+            document.getElementById("calendar-image").style.width = quarterWidth + "px";
+            document.getElementById("calendar-image").style.height = quarterWidth + "px";
+        }
+
+        window.onresize = reduceCalenderView;
+        reduceCalenderView();
+    </script>
 {% endblock %}
