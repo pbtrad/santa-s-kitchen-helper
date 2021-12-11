@@ -141,8 +141,6 @@ def edit_profile(user_id):
         flash("You need to login to perform this action")
         return redirect(url_for('home'))
     user = records.find_one({"_id": ObjectId(user_id)})
-    print(user)
-    print(user_id)
     if request.method == "POST":
         if request.form.get('username'):
             user['name'] = request.form.get('username')
@@ -167,18 +165,40 @@ def event():
     if request.method == "POST":
         event = {
             "name": request.form.get("name"),
-            "date": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
             "event": request.form.get("event_food"),
             "email": session["email"],
             "family": request.form.get("family"),
             "description": request.form.get("description"),
             "active": request.form.get("active"),
         }
-        mongo.db.events.insert_one(event)
+        db.events.insert_one(event)
         flash("Event Successfully Added")
         return redirect(url_for("profile"))
-    events = mongo.db.events.find().sort("date_posted", -1)
+    events = db.events.find().sort("date_posted", -1)
     return render_template("profile.html", events=events)
+
+
+@app.route("/family", methods=["GET", "POST"])
+def family():
+    if request.method == "POST":
+        family_name = request.form.get('family_name')
+        family_found = db.families.find_one({"name": family_name})
+        if family_found:
+            flash("Family name already exists")
+            return redirect(url_for("profile"))
+        else:
+            user = records.find_one({"email": session["email"]})
+            family = {
+                "name": family_name,
+                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "events": [],
+                "members": [user["_id"]]
+            }
+            db.families.insert_one(family)
+            flash("Family Successfully Added")
+            return redirect(url_for("profile"))
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
