@@ -27,30 +27,34 @@
                     <ul class="navbar-nav">
                         {% if session.email %}
                         <li class="nav-item">
-                            <a class="nav-link">Events</a>
+                            <a class="nav-link {{ 'active' if active_page == 'events' }}">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('profile')}}">Profile</a>
+                            <a class="nav-link {{ 'active' if active_page == 'profile' }}"
+                                href="{{ url_for('profile')}}">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link">Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for('hello_world')}}">Home</a>
+                            <a class="nav-link {{ 'active' if active_page == 'home' }}"
+                                href="{{ url_for('hello_world')}}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login')}}">Login</a>
+                            <a class="nav-link {{ 'active' if active_page == 'login' }}"
+                                href="{{ url_for('login')}}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register')}}">Register</a>
+                            <a class="nav-link {{ 'active' if active_page == 'register' }}"
+                                href="{{ url_for('register')}}">Register</a>
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link">Contact</a>
+                            <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -71,30 +75,34 @@
                         <ul class="nav flex-column">
                             {% if session.email %}
                             <li class="nav-item">
-                                <a class="nav-link">Events</a>
+                                <a class="nav-link {{ 'active' if active_page == 'events' }}">Events</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('profile')}}">Profile</a>
+                                <a class="nav-link {{ 'active' if active_page == 'profile' }}"
+                                    href="{{ url_for('profile')}}">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link">Logout</a>
                             </li>
                             {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('hello_world')}}">Home</a>
+                                <a class="nav-link {{ 'active' if active_page == 'home' }}"
+                                    href="{{ url_for('hello_world')}}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link {{ 'active' if active_page == 'about' }}" href="#">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('login')}}">Login</a>
+                                <a class="nav-link {{ 'active' if active_page == 'login' }}"
+                                    href="{{ url_for('login')}}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('register')}}">Register</a>
+                                <a class="nav-link {{ 'active' if active_page == 'register' }}"
+                                    href="{{ url_for('register')}}">Register</a>
                             </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link">Contact</a>
+                                <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
                             </li>
                         </ul>
                     </div>
