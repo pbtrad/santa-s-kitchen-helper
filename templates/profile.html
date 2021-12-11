@@ -2,63 +2,129 @@
 {% set active_page = 'profile' %}
 {% block content %}
 
-<h1>Profile Page</h1>
-    <h3>{{ user }}'s Profile</h3>
-    <a href="{{ url_for('logout') }}">Log Out</a>
-    <div class="text-center pt-5 mt-5">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Create Event
-        </button>
+<div class="row">
+    <h1 class="col text-center">Profile Page</h1>
+</div>
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="row justify-content-center">
+            <h3 class="col-12 text-center">{{ user.name }}'s Profile</h3>
+            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar">
+            <button class="btn btn-primary col-6" onclick="showEdit();">
+                Edit Profile
+            </button>
         </div>
-      
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
+        <div class="row">
+            <div class="form-container-fluid col-12 mx-auto hide" id="edit-profile-form">
+                <form method="POST" action="{{ url_for('edit_profile', user_id=user._id) }}">
+                    <div class="input-group mb-3" id="user_username">
+                        <span class="input-group-text" id="username">Username</span>
+                        <input type="text" class="form-control" value="{{ user.name }}" aria-label="Username"
+                            aria-describedby="username" name="username" required>
+                    </div>
+        
+                    <div class="input-group mb-3" id="user_email">
+                        <span class="input-group-text" id="email">Email</span>
+                        <input type="text" class="form-control" value="{{ user.email }}" aria-label="Email"
+                            aria-describedby="email" name="email">
+                    </div>
+                    <div class="input-group mb-3" id="user_password">
+                        <span class="input-group-text" id="password">New Password</span>
+                        <input type="text" class="form-control" placeholder="Enter new password" aria-label="New Password"
+                            aria-describedby="Change password" name="password">
+                    </div>
+                    <div class="input-group mb-3" id="user_old_password">
+                        <span class="input-group-text" id="old_password">Old Password</span>
+                        <input type="text" class="form-control" placeholder="Enter previous password" aria-label="Old Password"
+                            aria-describedby="previous password" name="old_password">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end">Update</button>
+                </form>
+                <button class="btn btn-secondary"
+                onclick="showEdit();">
+                Close
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-9">
+    </div>    
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+<div class="text-center pt-5 mt-5">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Create Event
+    </button>
+</div>
+<!-- Modal for creating event -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-    <form action="{{ url_for('event') }}" method="POST">
-        <div class="form-group">
-            <label for="name">Event Name<span class="require">*</span></label>
-            <input type="text" class="form-control" id="name" name="name" minlength="5"
-                maxlength="50" required />
-        </div>
-        <div class="form-group">
-            <label for="event_description">Event Description</label>
-            <textarea rows="10" class="form-control" name="description" id="description" minlength="25"
-                maxlength="1000" required></textarea>
-        </div>
-        <input type="checkbox" name="active" id="active" value="active">
-        <div class="form-group">
-            <label for="food">Food</label>
-            <input type="text" class="form-control" id="food" name="food" minlength="5"
-                maxlength="50" />
-        </div>
-        <div class="form-group">
-            <label for="family">Family</label>
-            <input type="text" class="form-control" id="family" name="family" minlength="5"
-                maxlength="50" />
-        </div>
+                <form action="{{ url_for('event') }}" method="POST">
+                    <div class="form-group">
+                        <label for="name">Event Name<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" minlength="5" maxlength="50"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <label for="event_description">Event Description</label>
+                        <textarea rows="10" class="form-control" name="description" id="description" minlength="25"
+                            maxlength="1000" required></textarea>
+                    </div>
+                    <input type="checkbox" name="active" id="active" value="active">
+                    <div class="form-group">
+                        <label for="food">Food</label>
+                        <input type="text" class="form-control" id="food" name="food" minlength="5" maxlength="50" />
+                    </div>
+                    <div class="form-group">
+                        <label for="family">Family</label>
+                        <input type="text" class="form-control" id="family" name="family" minlength="5"
+                            maxlength="50" />
+                    </div>
 
-        <div class="form-group">
-            <p><span class="require">*</span> - required fields</p>
+                    <div class="form-group">
+                        <p><span class="require">*</span> - required fields</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">
+                            Create
+                        </button>
+                        <button>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="form-group">
-            <button type="submit">
-                Create
-            </button>
-            <button>
-                Cancel
-            </button>
-        </div>
-    </form>
+    </div>
 </div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+{% for event in events %}
+<div class="container h-100 w-50 bg-light">
+    {{ event.name }} {{ event.date }}
 </div>
+<div class="container h-100 w-50 bg-light">
+    {{ event.family }}
 </div>
+<div class="container h-100 w-50 bg-light">
+    {{ event.description }}
 </div>
-</div>
+{% endfor %}
+
+
 {% endblock %}

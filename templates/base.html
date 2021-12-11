@@ -22,9 +22,18 @@
                 <a class="navbar-brand" href="{{ url_for('hello_world')}}">
                     <img src="{{ url_for('static', filename='images/candy-cane.png') }}" alt="Candy Cane Icon">
                 </a>
+<<<<<<< HEAD
                 <!-- Desktop Nav -->
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
+=======
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggler">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+>>>>>>> 3d8d3ae60f8bb42544cfc70c9c2f5ef182fa51ce
                         {% if session.email %}
                         <li class="nav-item">
                             <a class="nav-link {{ 'active' if active_page == 'events' }}">Events</a>
