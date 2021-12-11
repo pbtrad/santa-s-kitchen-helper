@@ -17,37 +17,37 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-bg">
+        <nav class="navbar navbar-expand-lg navbar-bg px-3 py-2">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url_for('hello_world')}}">
                     <img src="{{ url_for('static', filename='images/candy-cane.png') }}" alt="">
                 </a>
                 <!-- Desktop Nav -->
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if session.user %}
-                        <li class="nav-item">
-                            <a class="nav-link">Events</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('profile')}}">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Logout</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('event')}}">Events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('profile')}}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout')}}">Logout</a>
+                            </li>
                         {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('hello_world')}}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login')}}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register')}}">Register</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('hello_world')}}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login')}}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('register')}}">Register</a>
+                            </li>
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link">Contact</a>
@@ -59,7 +59,7 @@
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabel">Santa's Kitchen Helper</h5>

@@ -8,8 +8,8 @@
 }
 
 :root {
-	--dark-red: #ad251b;
-	--green: #21bf73;
+	--red: #ad251b;
+	--green: #1aa864;
 	--light-green: #b0eacd;
 	--white: #f9fcfb;
 	--black: #012023;
@@ -40,27 +40,33 @@ body {
 }
 
 .nav-item {
-	border: 3px solid var(--dark-red);
-	box-shadow: 3px 3px var(--black);
-	padding: 4px 8px;
-}
-
-.nav-item:hover {
-	box-shadow: none;
-	transform: translate(3px, 3px);
+    background-color: var(--white);
+	border: 2px solid var(--red);
+    border-radius: 5px;
+	font-weight: bold;
+    padding: 6px 12px;
 }
 
 .nav-link {
-	color: var(--black);
-	font-weight: bold;
-	padding: 0;
-	text-transform: uppercase;
+    color: var(--red);
+    padding: 0;
 }
+
+.nav-item > .nav-link:hover {
+    color: var(--white);
+}
+
+.nav-item:hover {
+    background-color: var(--red);
+    border-color: var(--white);
+	box-shadow: none;
+}
+
 
 /* -------------------- Index */
 /* ----- General */
 /* ----- Calendar */
-/* contianer */
+/* container */
 .calendar-container {
     /* position: relative; */
 }
