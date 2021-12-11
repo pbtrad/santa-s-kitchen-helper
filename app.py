@@ -1,6 +1,7 @@
 from calendar import monthrange
-from datetime import datetime
+#from datetime import datetime
 import datetime
+import re
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -142,6 +143,7 @@ def profile():
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
+        all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
         #create eventlist
         eventIds = []
@@ -165,13 +167,14 @@ def profile():
             families=families,
             events=events,
             date_list=date_list,
-            year=year
+            year=year,
+            all_families=all_families
         )
     else:
         return redirect(url_for("login"))
 
 
-@app.route("/profile/edit<user_id>", methods=["GET", "POST"])
+@app.route("/profile/edit/<user_id>", methods=["GET", "POST"])
 def edit_profile(user_id):
     if "email" not in session:
         flash("You need to login to perform this action")
@@ -199,18 +202,34 @@ def edit_profile(user_id):
 @app.route("/event", methods=["GET", "POST"])
 def event():
     if request.method == "POST":
-        event = {
-            "name": request.form.get("name"),
-            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
-            "event": request.form.get("event_food"),
-            "email": session["email"],
-            "family": request.form.get("family"),
-            "description": request.form.get("description"),
-            "active": request.form.get("active"),
-        }
-        db.events.insert_one(event)
-        flash("Event Successfully Added")
-        return redirect(url_for("profile"))
+        event_name = request.form.get('name')
+        event_found = db.events.find_one({"name": event_name})
+        if event_found:
+            flash('Event name already exists')
+            return redirect(url_for('profile'))
+        else:
+            family_name = request.form.get("family")
+            event = {
+                "name": request.form.get("name"),
+                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "event": request.form.get("event_food"),
+                "email": session["email"],
+                "family": family_name,
+                "description": request.form.get("description"),
+                "active": request.form.get("active"),
+            }
+            _id = db.events.insert_one(event).inserted_id
+            #add event to families event list
+            family = db.families.find_one({"name": family_name})
+            events = family["events"]
+            events.append(_id)
+            family["events"] = events
+            db.families.update_one(
+            {"_id": family["_id"]},
+            {"$set": family}
+            )
+            flash("Event Successfully Added")
+            return redirect(url_for("profile"))
     events = db.events.find().sort("date_posted", -1)
     return render_template("profile.html", events=events)
 
@@ -227,13 +246,28 @@ def family():
             user = records.find_one({"email": session["email"]})
             family = {
                 "name": family_name,
-                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
                 "events": [],
                 "members": [user["_id"]]
             }
             db.families.insert_one(family)
             flash("Family Successfully Added")
             return redirect(url_for("profile"))
+
+
+@app.route("/add_to_family/<user_id>", methods=["GET", "POST"])
+def add_to_family(user_id):
+    if request.method == 'POST':
+        family_name = request.form.get("all_families_name")
+        family = db.families.find_one({"name": family_name})
+        members = family["members"]
+        members.append(user_id)
+        family["members"] = members
+        db.families.update_one(
+            {"_id": family["_id"]},
+            {"$set": family}
+        )
+        return redirect(url_for("profile"))
 
 
 if __name__ == "__main__":
