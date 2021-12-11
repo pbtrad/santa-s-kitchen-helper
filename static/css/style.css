@@ -31,9 +31,46 @@ body {
     color: #faf9f6
 }
 
+/* .modal-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(51, 51, 51, 0.692);
+} */
+
 /* -------------------- Index */
 /* ----- General */
+
+/* ----- Modal */
+.center-y {
+    top: -20%;
+    transform: translateY(20%);
+}
+
+.back-transparent {
+    background-color: transparent;
+}
+
+.remove-border {
+    border: none;
+}
+
+.paper-background {
+    position: relative;
+    background-position: 0% 50%;
+    background: repeating-linear-gradient(rgb(255, 255, 240), rgb(255, 255, 240) 20px, rgba(77, 146, 211, .5)20px 22px),
+                linear-gradient(to bottom, rgb(226, 14, 14) 22px, rgba(0,0,0,0) 22px 100px);
+    background-color: #faf9f6;
+    filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.5));
+    text-align: left;
+    margin: 1rem;
+}
 /* ----- Calendar */
+.calendar-container {
+    position: relative;
+    top: -20%;
+    transform: translateY(20%);
+}
 
 /* name text shadow */
 .header-name-shadow {
@@ -51,7 +88,7 @@ body {
 }
 /* calendar dummy image */
 .calendar-image {
-    position: absolute;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
     height: 500px;
