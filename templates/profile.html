@@ -2,6 +2,62 @@
 {% block content %}
 
 <h1>Profile Page</h1>
-    <h3>{{ username }}'s Profile</h3>
+    <h3>{{ user }}'s Profile</h3>
     <a href="{{ url_for('logout') }}">Log Out</a>
+    <div class="text-center pt-5 mt-5">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Create Event
+        </button>
+        </div>
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+    <form action="{{ url_for('event') }}" method="POST">
+        <div class="form-group">
+            <label for="name">Event Name<span class="require">*</span></label>
+            <input type="text" class="form-control" id="name" name="name" minlength="5"
+                maxlength="50" required />
+        </div>
+        <div class="form-group">
+            <label for="event_description">Event Description</label>
+            <textarea rows="10" class="form-control" name="description" id="description" minlength="25"
+                maxlength="1000" required></textarea>
+        </div>
+        <input type="checkbox" name="active" id="active" value="active">
+        <div class="form-group">
+            <label for="food">Food</label>
+            <input type="text" class="form-control" id="food" name="food" minlength="5"
+                maxlength="50" />
+        </div>
+        <div class="form-group">
+            <label for="family">Family</label>
+            <input type="text" class="form-control" id="family" name="family" minlength="5"
+                maxlength="50" />
+        </div>
+
+        <div class="form-group">
+            <p><span class="require">*</span> - required fields</p>
+        </div>
+        <div class="form-group">
+            <button type="submit">
+                Create
+            </button>
+            <button>
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
