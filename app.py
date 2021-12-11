@@ -12,18 +12,11 @@ from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 import bcrypt
-from google.oauth2 import id_token
-from google_auth_oauthlib.flow import Flow
-import google.auth.transport.requests
 from pip._vendor import cachecontrol
 import requests
 from os import PathLike
-
 if os.path.exists("env.py"):
     import env
-
-from dotenv import load_dotenv
-load_dotenv()
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -149,17 +142,31 @@ def profile():
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
-
-        # Creates dates variable
+        families = list(db.families.find({"members": user["_id"]}))
+        #create eventlist
+        eventIds = []
+        for family in families:
+            event_array = family["events"]
+            if event_array:
+                for event in event_array:
+                    eventIds.append(event)
+        events = []
+        for id in eventIds:
+            events.append(db.families.find_one({"_id": ObjectId(id)}))
+        #create datelist
         date_list = []
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
-        print(date_list)
-
-        return render_template('profile.html',
-            user=user, date_list=date_list, year=year)
+        return render_template(
+            'profile.html',
+            user=user,
+            families=families,
+            events=events,
+            date_list=date_list,
+            year=year
+        )
     else:
         return redirect(url_for("login"))
 
@@ -170,8 +177,6 @@ def edit_profile(user_id):
         flash("You need to login to perform this action")
         return redirect(url_for('home'))
     user = records.find_one({"_id": ObjectId(user_id)})
-    print(user)
-    print(user_id)
     if request.method == "POST":
         if request.form.get('username'):
             user['name'] = request.form.get('username')
@@ -196,18 +201,40 @@ def event():
     if request.method == "POST":
         event = {
             "name": request.form.get("name"),
-            "date": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
+            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
             "event": request.form.get("event_food"),
             "email": session["email"],
             "family": request.form.get("family"),
             "description": request.form.get("description"),
             "active": request.form.get("active"),
         }
-        mongo.db.events.insert_one(event)
+        db.events.insert_one(event)
         flash("Event Successfully Added")
         return redirect(url_for("profile"))
-    events = mongo.db.events.find().sort("date_posted", -1)
+    events = db.events.find().sort("date_posted", -1)
     return render_template("profile.html", events=events)
+
+
+@app.route("/family", methods=["GET", "POST"])
+def family():
+    if request.method == "POST":
+        family_name = request.form.get('family_name')
+        family_found = db.families.find_one({"name": family_name})
+        if family_found:
+            flash("Family name already exists")
+            return redirect(url_for("profile"))
+        else:
+            user = records.find_one({"email": session["email"]})
+            family = {
+                "name": family_name,
+                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "events": [],
+                "members": [user["_id"]]
+            }
+            db.families.insert_one(family)
+            flash("Family Successfully Added")
+            return redirect(url_for("profile"))
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
