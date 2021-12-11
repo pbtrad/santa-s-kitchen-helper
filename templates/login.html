@@ -1,22 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3 class="text-center text-light">Log In</h3>
+<div class="text-center pt-5 mt-5">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Login
+  </button>
+  </div>
 
-<div class="card">
-    <div class="row">
-      <form action="" method="post">
-        <div class="form-group">
-            <label for="InputEmail">Email address</label>
-            <input name="email" class="form-control" id="InputEmail"  placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
           <div class="form-group">
-            <label for="InputPassword">Password</label>
-            <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+              <label for="InputEmail">Email address</label>
+              <input name="email" class="form-control" id="InputEmail"  placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+            <div class="form-group">
+              <label for="InputPassword">Password</label>
+              <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
+</div>
+
   {% endblock %}
