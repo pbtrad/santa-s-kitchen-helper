@@ -136,3 +136,14 @@ body {
 .letter-body p {
     margin: 10px 30px;
 }
+
+/* Profile page */
+.user-avatar {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.hide {
+    display: none;
+}
