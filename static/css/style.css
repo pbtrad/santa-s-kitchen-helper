@@ -228,11 +228,14 @@ body {
     height: 5rem;
 }
 
+
+
 .custom-button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
     /* transform: translateY(-50%); */
     padding: .5em .75em;
     border-radius: 5px;
