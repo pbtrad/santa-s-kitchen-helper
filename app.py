@@ -156,8 +156,6 @@ def profile():
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
 
-        print("-------------------------------")
-
         findNotFam = {}
         findNotFam["$or"] = []
         # for fam in all_families:
@@ -176,13 +174,6 @@ def profile():
         test = db.families.find({"members": user["_id"]})
 
         # test = db.families.find({"events": "*"})
-
-        for te in test:
-            print(te)
-            print()
-
-
-
 
         # print(test)
 
@@ -215,7 +206,6 @@ def profile():
         test = db.families.find({"members": {"$not": { user['_id']}}})
         # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
         # print(db.families.count({"members": {"$not": { user['_id']}}}))
-        print("-------------------------------")
 
         # print(all_familiess)
         #create eventlist
@@ -234,10 +224,6 @@ def profile():
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
-        print(datetime.datetime.now())
-
-
-
 
 
         # join family list
@@ -349,7 +335,7 @@ def family():
             user = records.find_one({"email": session["email"]})
             family = {
                 "name": family_name,
-                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
                 "events": [],
                 "members": [user["_id"]]
             }
@@ -362,6 +348,7 @@ def family():
 def add_to_family(user_id):
     if request.method == 'POST':
         family_name = request.form.get("all_families_name")
+        print(family_name)
         family = db.families.find_one({"name": family_name})
         print(family)
         members = family["members"]
