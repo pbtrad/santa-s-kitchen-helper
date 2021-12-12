@@ -77,10 +77,6 @@ Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?sub
 
 ## Credits and Acknowledgments
 
-### Code
-
-- [Active Navbar Class](https://stackoverflow.com/questions/55895502/dynamically-setting-active-class-with-flask-and-jinja2/55895621#55895621)
-
 ### Images
 
 - [Candy Cane Logo/Favicon](https://www.flaticon.com/authors/freepik)
