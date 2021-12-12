@@ -76,9 +76,16 @@ body {
 	gap: 15px;
 }
 
+.navbar-nav li {
+    padding: 0;
+}
+
+.navbar-nav li a {
+    padding: .375rem .75rem;
+}
+
 .nav-link {
     color: var(--white);
-    padding: 0 !important;
     text-shadow: 1px 1px var(--grey);
 }
 
