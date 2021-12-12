@@ -101,12 +101,10 @@
 <!-- Previous Container -->
 <div class="row justify-content-between mt-5">
 
-
-
     <div class="col-3">
         <h3 class="x-mas-text">Previous Events</h3>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 event-container">
 
             </div>
         </div>
@@ -116,22 +114,27 @@
     <div class="col-7">
         <h3 class="x-mas-text">Upcoming Events</h3>
         <div class="row">
-            <div class="col-12 event-container">
+            <div class="col-12 event-container" style="min-height: 15rem;">
                 {% for event in event_name_list %}
-                   <strong>{{ event[0] }}</strong>:
-                    {% for for_layer in event %}
-                        {% for for_layer1 in for_layer %}
-                            {% for food in for_layer1[1]  %}
-                                {% if loop.first %}
-                                    Bring These Dishes:
-                                {% endif %}
-                                    <strong>{{ food }}</strong>
-                                {% if not loop.last %}
-                                    and
-                                {% endif %}
-                            {% endfor %}
+
+                <!-- {{event}} -->
+                {% if event == "" %}
+                    {% else %}
+                   <strong>{{ event }}</strong>:
+                    {% endif %}
+
+                        <!-- {% if loop.first %}
+                            Bring These Dishes:
+                        {% endif %} -->
+                    
+                        {% for food_item in event %}
+                            <strong>{{ food_item }}</strong>
                         {% endfor %}
-                    {% endfor %}
+                    
+                        <!-- {% if not loop.last %}
+                            and
+                        {% endif %} -->
+
                     <br>
                 {% endfor %}
             <div class="col-12">
