@@ -2,6 +2,15 @@
 {% block title %}Register System{% endblock %}
 
 {% block content %}
-<h1>You are signed out!</h1>
-
+<div class="row justify-content-center form-container">
+  <div class="col-sm-12 col-md-4 align-self-center">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">You've successfully signed out!</h5>
+        <p>Click the button below to log back in again</p>
+        <a href="{{ url_for('login')}}" class="btn btn-green">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

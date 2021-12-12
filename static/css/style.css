@@ -17,6 +17,7 @@
 body {
     background: linear-gradient(to right, rgba(173, 37, 27, 0.3), rgba(26, 168, 100, 0.3)),
         url("../images/christmas-wallpaper.jpg") no-repeat center center / cover;
+    background-attachment: fixed;
     height: 100vh;
 }
 
@@ -120,7 +121,8 @@ gap: 15px;
 }
 
 /* ----- Calendar */
-.calendar-container {
+.calendar-container,
+.form-container {
     height: 80vh;
 }
 
@@ -140,15 +142,8 @@ gap: 15px;
     height: 5rem;
 }
 
-
-
 .custom-button {
     position: relative;
-    /* position: absolute; */
-    /* left: 50%; */
-    /* top: 50%; */
-    /* transform: translate(-50%, -50%); */
-    /* transform: translateY(-50%); */
     padding: .5em .75em;
     border-radius: 5px;
     box-shadow: 3px 3px 2px rgba(0, 0, 0, .5);
@@ -177,6 +172,60 @@ gap: 15px;
 .blue-button {
     background: linear-gradient(45deg, #00B0BD, #00EAFC, #00B0BD);
     border: 2px solid #00EAFC!important;
+}
+
+.user-avatar {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.hide {
+    display: none;
+}
+
+/* --------------- Contact */
+.contact-container {
+    color: #fafafa;
+}
+
+.member-row {
+    background: rgba(0, 0, 0, 0.8);
+    margin: 20px;
+    padding: 15px;
+    border-radius: 25px;
+    border: 2px solid #fafafa
+}
+
+.member-row .row {
+    margin: 10px 0;
+}
+
+.member-name hr {
+    border: 2px solid #fafafa;
+    border-radius: 2px;
+    opacity: 1;
+}
+
+.member-row .member-social {
+    margin-top: 0;
+}
+
+.member-social a {
+    text-decoration: none;
+    color: #fafafa;
+}
+
+.member-social a i {
+    font-size: 50px;
+}
+
+/* --------------- Media Queries */
+@media screen and (min-width: 500px) {
+    .santa-letter {
+        background-image: url(../images/santa-letter-md-lg.svg);
+        padding: 7%;
+    }
 }
 
 /* Event create/edit page */
@@ -216,73 +265,4 @@ gap: 15px;
 
 .food-list-row {
     height: 100px;
-}
-
-/* Santa letter modal style */
-.santa-letter {
-    background-image: url(../images/santa-letter-sm.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding: 10%;
-    font-family: 'Fuzzy Bubbles', sans-serif;
-}
-
-.santa-letter h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Contact page style */
-
-.contact-container {
-    color: #fafafa;
-}
-
-.member-row {
-    background: rgba(0, 0, 0, 0.8);
-    margin: 20px;
-    padding: 15px;
-    border-radius: 25px;
-    border: 2px solid #fafafa
-}
-
-.member-row .row {
-    margin: 10px 0;
-}
-
-.member-name hr {
-    border: 2px solid #fafafa;
-    border-radius: 2px;
-    opacity: 1;
-}
-
-.member-row .member-social {
-    margin-top: 0;
-}
-
-.member-social a {
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.member-social a i {
-    font-size: 50px;
-}
-
-/* Profile page */
-.user-avatar {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-.hide {
-    display: none;
-}
-
-@media screen and (min-width: 500px) {
-    .santa-letter {
-        background-image: url(../images/santa-letter-md-lg.svg);
-        padding: 7%;
-    }
-}
+} */
