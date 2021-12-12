@@ -76,16 +76,6 @@ body {
 	gap: 15px;
 }
 
-.nav-link {
-    color: var(--white);
-    padding: 0 !important;
-    text-shadow: 1px 1px var(--grey);
-}
-
-.nav-link:hover {
-    color: var(--white);
-}
-
 .offcanvas-header h5 {
     font-family: var(--heading-font);
     font-size: 1.6rem;

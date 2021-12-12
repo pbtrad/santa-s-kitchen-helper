@@ -14,46 +14,30 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
-    <title>Santa's Kitchen Helper {% block extra_title %}{% endblock %}</title>
+    <title>Santa's Kitchen Helper {% block title %}{% endblock %}</title>
 </head>
 
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-bg px-3 py-2">
+        <nav class="navbar navbar-expand-lg navbar-bg p-2">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url_for('hello_world')}}">
                     <img src="{{ url_for('static', filename='images/candy-cane.png') }}" alt="Candy Cane Icon">
                 </a>
                 <!-- Desktop Nav -->
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <div class="navbar-nav">
                         {% if session.email %}
-                        <li class="btn btn-red">
-                            <a class="nav-link"
-                                href="{{ url_for('profile')}}">Profile</a>
-                        </li>
-                        <li class="btn btn-red">
-                            <a class="nav-link" href="{{ url_for('logout')}}">Logout</a>
-                        </li>
+                        <a class="btn btn-red" href="{{ url_for('profile')}}">Profile</a>
+                        <a class="btn btn-red" href="{{ url_for('logout')}}">Logout</a>
                         {% else %}
-                        <li class="btn btn-red">
-                            <a class="nav-link"
-                                href="{{ url_for('hello_world')}}">About</a>
-                        </li>
-                        <li class="btn btn-red">
-                            <a class="nav-link"
-                                href="{{ url_for('login')}}">Login</a>
-                        </li>
-                        <li class="btn btn-red">
-                            <a class="nav-link"
-                                href="{{ url_for('register')}}">Register</a>
-                        </li>
+                        <a class="btn btn-red" href="{{ url_for('hello_world')}}">About</a>
+                        <a class="btn btn-red" href="{{ url_for('login')}}">Login</a>
+                        <a class="btn btn-red" href="{{ url_for('register')}}">Register</a>
                         {% endif %}
-                        <li class="btn btn-red">
-                            <a class="nav-link" href="{{ url_for('contact')}}">Contact</a>
-                        </li>
-                    </ul>
+                        <a class="btn btn-red" href="{{ url_for('contact')}}">Contact</a>
+                    </div>
                 </div>
                 <!-- Side Nav -->
                 <button class="btn btn-red d-lg-none" type="button" data-bs-toggle="offcanvas"
@@ -71,34 +55,17 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <ul class="nav flex-column">
+                        <div class="nav flex-column">
                             {% if session.email %}
-                            <li class="btn btn-red">
-                                <a class="nav-link"
-                                    href="{{ url_for('profile')}}">Profile</a>
-                            </li>
-                            <li class="btn btn-red">
-                                <a class="nav-link">Logout</a>
-                            </li>
+                            <a class="btn btn-red" href="{{ url_for('profile')}}">Profile</a>
+                            <a class="btn btn-red" href="{{ url_for('logout')}}">Logout</a>
                             {% else %}
-                            <li class="btn btn-red">
-                                <a class="nav-link"
-                                    href="{{ url_for('hello_world')}}">About</a>
-                            </li>
-                            <li class="btn btn-red">
-                                <a class="nav-link"
-                                    href="{{ url_for('login')}}">Login</a>
-                            </li>
-                            <li class="btn btn-red">
-                                <a class="nav-link"
-                                    href="{{ url_for('register')}}">Register</a>
-                            </li>
+                            <a class="btn btn-red" href="{{ url_for('hello_world')}}">About</a>
+                            <a class="btn btn-red" href="{{ url_for('login')}}">Login</a>
+                            <a class="btn btn-red" href="{{ url_for('register')}}">Register</a>
                             {% endif %}
-                            <li class="bnt btn-red">
-                                <a class="nav-link"
-                                    href="{{ url_for('contact')}}">Contact</a>
-                            </li>
-                        </ul>
+                            <a class="btn btn-red" href="{{ url_for('contact')}}">Contact</a>
+                        </div>
                     </div>
                 </div>
             </div>
