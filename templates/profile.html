@@ -9,9 +9,9 @@
 <div class="row">
     <!-- Avatar and edit profile -->
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="row justify-content-center">
+        <div class="justify-content-center">
             <!-- <h3 class="col-12 text-center x-mas-text">{{ user.name|title }}'s Profile</h3> -->
-            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar mt-5">
+            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar mt-5 box-shadow">
             <button class="custom-button blue-button col-6 mt-3" onclick="showEdit();">
                 Edit Profile
             </button>
@@ -119,14 +119,14 @@
         <div class="row">
             <div class="col-12 event-container">
                 {% for event in event_name_list %}
-                    {{ event[0] }}:
+                   <strong>{{ event[0] }}</strong>:
                     {% for for_layer in event %}
                         {% for for_layer1 in for_layer %}
                             {% for food in for_layer1[1]  %}
                                 {% if loop.first %}
                                     Bring These Dishes:
                                 {% endif %}
-                                    {{ food }}
+                                    <strong>{{ food }}</strong>
                                 {% if not loop.last %}
                                     and
                                 {% endif %}
