@@ -1,40 +1,32 @@
 {% extends "base.html" %}
 {% set active_page = 'login' %}
 {% block content %}
-
-<div class="text-center pt-5 mt-5">
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Login
-  </button>
-  </div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+<div class="row justify-content-center form-container">
+  <div class="col-sm-12 col-md-8 align-self-center">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Login</h5>
         <form action="" method="post">
           <div class="form-group">
-              <label for="InputEmail">Email address</label>
-              <input name="email" class="form-control validate" id="InputEmail" type="email" placeholder="Enter email" required>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="InputEmail">Email address</label>
+            <input name="email" class="form-control validate" id="InputEmail" type="email" placeholder="Enter email"
+              required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
-            <div class="form-group">
-              <label for="InputPassword">Password</label>
-              <input type="password" name="password" class="form-control validate" type="password" id="InputPassword" minlength="5" maxlength="15"
-              pattern="^[a-zA-Z0-9]{5,15}$" placeholder="Password" required>
+          <div class="form-group">
+            <label for="InputPassword">Password</label>
+            <input type="password" name="password" class="form-control validate" id="InputPassword" minlength="5"
+              maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" placeholder="Password" required>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-green mt-3">Submit</button>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <div class="card-text mt-3">
+          <p>Don't have an account? Click the button below to register an account.</p>
+          <a href="{{ url_for('register')}}" class="btn btn-red">Sign Up</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-  {% endblock %}
+{% endblock %}

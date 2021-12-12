@@ -1,54 +1,44 @@
 {% extends "base.html" %}
 {% set active_page = 'register' %}
 {% block content %}
-<div class="text-center pt-5 mt-5">
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Register
-</button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Register</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
+<div class="row justify-content-center form-container">
+  <div class="col-sm-12 col-md-8 align-self-center">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Register</h5>
         <form action="" method="post">
           <div class="form-group">
-              <label for="Username">Username</label>
-              <input name="username" class="form-control required" type="text" minlength="5" maxlength="15"
-              pattern="^[a-zA-Z0-9]{5,15}$" id="inputUserName" aria-describedby="emailHelp" placeholder="Enter username" required>
-              <small id="userName" class="form-text text-muted">Please enter your username</small>
-        </div>
-        <div class="form-group">
-              <label for="InputEmail">Email address</label>
-              <input name="email" class="form-control required" type="email" id="InputEmail"  placeholder="Enter email" required>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="InputPassword">Password</label>
-          <input type="password" name="password1" type="password" class="form-control validate" minlength="5" maxlength="15"
-          pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword" placeholder="Password" required>
-        </div>
-      
-          <div class="form-group">
-          <label for="InputPassword2">Repeat Password</label>
-          <input type="password" name="password2" type="password" class="form-control validate" minlength="5" maxlength="15"
-          pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword2" placeholder="Repeat Password" required>
-      
+            <label for="Username">Username</label>
+            <input name="username" class="form-control required" type="text" minlength="5" maxlength="15"
+              pattern="^[a-zA-Z0-9]{5,15}$" id="inputUserName" aria-describedby="emailHelp" placeholder="Enter username"
+              required>
+            <small id="userName" class="form-text text-muted">Please enter your username</small>
           </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      
-      
-      </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div class="form-group">
+            <label for="InputEmail">Email address</label>
+            <input name="email" class="form-control required" type="email" id="InputEmail" placeholder="Enter email"
+              required>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="InputPassword">Password</label>
+            <input type="password" name="password1" class="form-control validate" minlength="5"
+              maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword" placeholder="Password" required>
+          </div>
+
+          <div class="form-group">
+            <label for="InputPassword2">Repeat Password</label>
+            <input type="password" name="password2" class="form-control validate" minlength="5"
+              maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword2" placeholder="Repeat Password" required>
+          </div>
+          <button type="submit" class="btn btn-green mt-3">Submit</button>
+        </form>
+        <div class="card-text mt-3">
+          <p>Already have an account? Click the button below to login.</p>
+          <a href="{{ url_for('login')}}" class="btn btn-red">Login</a>
+        </div>
       </div>
     </div>
   </div>
-</div>    
-    {% endblock %}
+</div>
+  {% endblock %}
