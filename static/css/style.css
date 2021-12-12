@@ -277,9 +277,10 @@ body {
     padding: 0;
     width: 100%;
     height: 100%; */
-    background-image: url(../images/santa-letter.png);
-    background-size: 100% 100%;
-    padding: 7%;
+    background-image: url(../images/santa-letter-sm.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 10%;
     font-family: 'Fuzzy Bubbles', sans-serif;
 }
 
@@ -297,4 +298,11 @@ body {
 
 .hide {
     display: none;
+}
+
+@media screen and (min-width: 500px) {
+    .santa-letter {
+        background-image: url(../images/santa-letter-md-lg.svg);
+        padding: 7%;
+    }
 }
