@@ -69,41 +69,44 @@
                 </div>
             </div>
             
-            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
+            <!-- <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
                 <div class="col text-center">
                     <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Add A New Event to Profile
                     </button>
                 </div>
-            </div>
+            </div> -->
             
-            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
+            <!-- <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
                 <div class="col text-center">
                     <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#familyModal">
                     Create a New family
                 </button>
             </div>
+        </div> -->
+        <!-- family container -->
+        <div class="col-12 col-md-4 col-lg-6">
+            <!-- <div class="row"> -->
+                <!-- <div class="col-12 event-container"> -->
+                     <!-- url_for('add_to_family', user_id=user._id)  -->
+                    <form method="POST" action="">
+                        <select name="all_families_name" id="all_families_name">
+                            {% for family in join_family %}
+                                <option value="{{family.name}}">{{family.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-success">Join Family</button>
+                    </form>
+                <!-- </div> -->
+            <!-- </div> -->
         </div>
     </div>
-</div>
+    </div>
 
 </div>
 
-<!-- family container -->
-<div class="col-12">
-    <div class="row">
-        <div class="col-12">
-            <form method="POST" action="{{ url_for('add_to_family', user_id=user._id) }}">
-                <select name="all_families_name" id="all_families_name">
-                    {% for family in all_families %}
-                        <option value="{{family.name}}">{{family.name}}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-success">Join Family</button>
-            </form>
-        </div>
-    </div>
-</div>
+
+<!-- row break -->
 
 
 <!-- Previous Container -->
@@ -111,8 +114,13 @@
     <div class="col-4">
         <h3 class="x-mas-text">Previous Events</h3>
         <div class="row">
-            <div class="col-12">
+            <div class="col-10 event-container">
+                <h1>
 
+                    <br>
+
+
+                </h1>
             </div>
         </div>
     </div>
@@ -121,8 +129,10 @@
     <div class="col-8">
         <h3 class="x-mas-text">Upcoming Events</h3>
         <div class="row">
-            <div class="col-12">
-                
+            <div class="col-12 event-container">
+                {% for event in all_events_list %}
+                    {{ event }}
+                {% endfor %}
             </div>
         </div>
     </div>
