@@ -220,6 +220,13 @@ body {
 
 /* -------------------- Profile */
 
+.event-container {
+    background-color: #faf9f6;
+    color: #333;
+    border: 2px solid #333;
+    height: 5rem;
+}
+
 .custom-button {
     position: absolute;
     left: 50%;
