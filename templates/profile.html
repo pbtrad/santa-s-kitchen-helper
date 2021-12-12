@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% set active_page = 'profile' %}
 {% block content %}
+{% if message  %}
+    <div class="alert alert-secondary w-50" role="alert">
+        <p>{{ message }}</p>
+    </div>
+{% endif %}
 <!-- Header -->
 <div class="row">
     <h1 class="col text-center x-mas-text mt-5">{{ user.name|title }}'s Profile Page</h1>
