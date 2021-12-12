@@ -1,55 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap');
-
-.color-codes {
-    color: #FD5E53;
-    color: #F9FCFB;
-    color: #B0EACD;
-    color: #21BF73;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&family=Emilys+Candy&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-	--red: #ad251b;
-	--green: #1aa864;
-	--light-green: #b0eacd;
+	--dark-red: #ad251b;
+    --red: #fd5e53;
+	--dark-green: #138722;
+    --green: #1bc732;
+    
 	--white: #f9fcfb;
-	--black: #012023;
+    --grey: #333;
+	--black: #010203;
 
 	--heading-font: "Emilys Candy", sans-serif;
 }
 
 /* -------------------- General */
-/* ----- General */
 body {
-    background: url("../images/holiday-background.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(to right, rgba(173, 37, 27, 0.3), rgba(26, 168, 100, 0.3)),
+        url("../images/christmas-wallpaper.jpg") no-repeat center center / cover;
+    height: 100vh;
 }
 
-.link-plain,
-.link-plain:hover,
-.link-plain:link,
-.link-plain:visited{
-    color: #faf9f6;
-    text-decoration: none;
-}
-
-.x-mas-text {
+.xmas-text {
+    color: var(--white);
     font-family: "Emilys Candy", sans-serif;
-    filter: drop-shadow(1px 1px 2px #010203);
-    text-shadow: 2px 2px 4px #010203,
-                -2px -2px 6px #010203;
-    color: #faf9f6
+    font-size: 2.5rem;
+    filter: drop-shadow(1px 1px 2px var(--black));
+    text-shadow: 2px 2px 4px var(--black),
+                -2px -2px 6px var(--black);
 }
 
-/* ----- Navbar */
+.box-shadow {
+    box-shadow: 2px 2px 4px rgba(51, 51, 51, 0.692),
+        -2px -2px 4px rgba(51, 51, 51, 0.692),
+        inset 2px 2px 2px #5f5f5fb9,
+        inset -2px -2px 2px #5f5f5fb9;
+}
+
+/* ----- Buttons */
+.btn {
+    border-radius: 2px;
+    box-shadow: 2px 2px var(--grey);
+    color: var(--white);
+    text-shadow: 1px 1px var(--grey);
+}
+
+.btn:hover {
+    box-shadow: none;
+    color: var(--white);
+    transform: translate(2px, 2px);
+}
+
+.btn-green {
+    background: linear-gradient(45deg, var(--dark-green), var(--green), var(--dark-green) );
+    border-color: var(--dark-green);
+}
+
+.btn-red {
+    background: linear-gradient(45deg, var(--dark-red), var(--red), var(--dark-red) );
+    border-color: var(--dark-red);
+}
+
+/* -------------------- Navbar */
 .navbar-bg {
 	background-color: var(--white);
 }
 
 .navbar-brand img,
 .offcanvas-header img {
-	width: 40px;
+	width: 45px;
 }
 
 .navbar-nav {
@@ -57,61 +75,14 @@ body {
 	gap: 15px;
 }
 
-.nav-item {
-    background-color: var(--white);
-    border: 2px solid var(--red);
-    border-radius: 2px;
-    box-shadow: 2px 2px var(--black);
-}
-
-.nav-item a {
-    color: var(--red);
-    font-weight: 600;
-}
-
-.nav-item .active {
-    background-color: var(--red);
+.nav-link {
     color: var(--white);
+    padding: 0 !important;
+    text-shadow: 1px 1px var(--grey);
 }
 
-.nav-item a:hover, 
-.nav-item a:focus {
+.nav-link:hover {
     color: var(--white);
-}
-
-.nav-item:hover, 
-.nav-item:focus{
-    background-color: var(--red);
-    box-shadow: none;
-    transform: translate(2px, 2px);
-}
-
-.sidenav-btn {
-    background-color: var(--white);
-    border: 2px solid var(--green);
-    border-radius: 2px;
-    box-shadow: 2px 2px var(--black);
-}
-
-.sidenav-btn i {
-    color: var(--green);
-    font-size: 1.2rem;
-}
-
-.sidenav-btn i:hover {
-    color: var(--white);
-}
-
-.sidenav-btn:hover,
-.sidenav-btn:focus {
-    background-color: var(--green);
-    border: 2px solid var(--green);
-    box-shadow: none;
-    transform: translate(2px, 2px);
-}
-
-.flex-column {
-    gap: 15px;
 }
 
 .offcanvas-header h5 {
@@ -124,92 +95,40 @@ body {
     text-align: center;
 }
 
+.offcanvas-body .flex-column {
+gap: 15px;
+}
+
 /* -------------------- Index */
-/* ----- General */
-
 /* ----- Modal */
-.center-y {
-    top: -20%;
-    transform: translateY(20%);
-}
-
-.back-transparent {
+.santa-modal {
     background-color: transparent;
-}
-
-.remove-border {
     border: none;
 }
 
-.paper-background {
-    position: relative;
-    background-position: 0% 50%;
-    background: repeating-linear-gradient(rgb(255, 255, 240), rgb(255, 255, 240) 20px, rgba(77, 146, 211, .5)20px 22px),
-                linear-gradient(to bottom, rgb(226, 14, 14) 22px, rgba(0,0,0,0) 22px 100px);
-    background-color: #faf9f6;
-    box-shadow: 2px 2px 4px rgba(51, 51, 51, 0.692),
-                -2px -2px 4px rgba(51, 51, 51, 0.692),
-                inset 2px 2px 2px #5f5f5fb9,
-                inset -2px -2px 2px #5f5f5fb9;
-    text-shadow: 1px 1px 2px #010203;
-    color: #010203;
-    text-align: left;
-    margin: 1rem;
-
+.santa-letter {
+    background-image: url(../images/santa-letter-sm.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 10%;
+    font-family: 'Fuzzy Bubbles', sans-serif;
 }
+
+.santa-letter h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 /* ----- Calendar */
 .calendar-container {
-    position: relative;
-    top: -20%;
-    transform: translateY(20%);
+    height: 80vh;
 }
 
-/* name text shadow */
-.header-name-shadow {
-    filter: drop-shadow(1px 1px 2px #010203);
-    text-shadow: 2px 2px 4px #010203,
-                -2px -2px 6px #010203;
-}
-/* mutes background */
-.calendar-overlay {
-    position: absolute;
-    background-color: #3a3a3a83;
-    height: 100%;
-    width: 100%;
+.calendar-bg {
+    background: url('../images/calendar.jpg') no-repeat center center / cover;
     border-radius: 50%;
-}
-/* calendar dummy image */
-.calendar-image {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 500px;
-    width:  500px;
-    border-radius: 50%;
-    background-color: #B0EACD;
-    background: url("../images/dummy-calendar.jpg");
-    box-shadow: 2px 2px 4px rgba(51, 51, 51, 0.692),
-                -2px -2px 4px rgba(51, 51, 51, 0.692),
-                inset 2px 2px 2px #5f5f5fb9,
-                inset -2px -2px 2px #5f5f5fb9;
-}
-
-/* login button */
-.login-button {
-    position: absolute;
-    left:50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: .5em .75em;
-    border-radius: 5px;
-    box-shadow: 3px 3px 2px rgba(0, 0, 0, .5);
-    margin-bottom: .5rem;
-    width: fit-content;
-    transition-duration: .25s;
-    color: #fff!important;
-    border: 2px solid #1bc732!important;
-    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
-    text-shadow: 1px 1px #333;
+    height: 300px;
+    width: 300px;
 }
 
 /* -------------------- Profile */
@@ -260,13 +179,9 @@ body {
     border: 2px solid #00EAFC!important;
 }
 
-.event-text {
-
-}
-
 /* Event create/edit page */
 
-.event-container {
+/* .event-container {
     background-color: #F9FCFB;
     color: #000;
     border: 2px solid #000;
@@ -301,25 +216,7 @@ body {
 
 .food-list-row {
     height: 100px;
-}
-
-/* Santa letter modal style */
-.santa-letter {
-    /* margin: 20px auto;
-    padding: 0;
-    width: 100%;
-    height: 100%; */
-    background-image: url(../images/santa-letter-sm.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding: 10%;
-    font-family: 'Fuzzy Bubbles', sans-serif;
-}
-
-.santa-letter h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+} */
 
 /* Profile page */
 .user-avatar {
