@@ -41,7 +41,6 @@ mongo = PyMongo(app)
 
 records = db.users
 
-
 @app.route("/")
 def hello_world():
     # displays DB call format and users
@@ -56,6 +55,10 @@ def hello_world():
         users=users, logged_in=logged_in
     )
 
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 # Registration
 @app.route("/register", methods=["GET", "POST"])

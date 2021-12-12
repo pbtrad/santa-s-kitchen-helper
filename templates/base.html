@@ -50,8 +50,8 @@
                                 href="{{ url_for('register')}}">Register</a>
                         </li>
                         {% endif %}
-                        <li class="btn btn-red">
-                            <a class="nav-link">Contact</a>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if active_page == 'contact' }}" href="{{ url_for('contact')}}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -94,8 +94,9 @@
                                     href="{{ url_for('register')}}">Register</a>
                             </li>
                             {% endif %}
-                            <li class="btn btn-red">
-                                <a class="nav-link">Contact</a>
+                            <li class="nav-item">
+                                <a class="nav-link {{ 'active' if active_page == 'contact' }}"
+                                    href="{{ url_for('contact')}}">Contact</a>
                             </li>
                         </ul>
                     </div>
