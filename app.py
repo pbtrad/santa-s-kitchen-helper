@@ -1,7 +1,6 @@
 from calendar import monthrange
-#from datetime import datetime
+from datetime import datetime
 import datetime
-import re
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -13,17 +12,17 @@ from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 import bcrypt
-from pip._vendor import cachecontrol
+# from pip._vendor import cachecontrol
 import requests
-from os import PathLike
+# from os import PathLike
 if os.path.exists("env.py"):
     import env
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+# os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
 
-app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+# app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
 # mongo envs
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -34,8 +33,8 @@ client = MongoClient(os.environ['MONGO_URI'], tlsCAFile=certifi.where())
 db = client.kitchenHelper
 
 # Google Credentials
-app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
-app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
+# app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
+# app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
 
 
 mongo = PyMongo(app)
@@ -74,16 +73,13 @@ def register():
         user_found = records.find_one({"name": user})
         email_found = records.find_one({"email": email})
         if user_found:
-            #message = 'There already is a user by that name'
-            flash('This user already exists')
+            message = 'There already is a user by that name'
             return render_template('register.html', message=message)
         if email_found:
-            #message = 'This email already exists in database'
-            flash('This email is already in use')
+            message = 'This email already exists in database'
             return render_template('register.html', message=message)
         if password1 != password2:
-            #message = 'Passwords should match!'
-            flash('Passwords should match')
+            message = 'Passwords should match!'
             return render_template('register.html', message=message)
         else:
             #hash the password and encode it
@@ -96,7 +92,6 @@ def register():
             #find the new created account and its email
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
-            flash('Your account has been created! You are now able to log in')
             #if registered redirect to logged in as the registered user
             return render_template('profile.html', email=new_email)
     return render_template("register.html")
@@ -119,8 +114,6 @@ def login():
             #encode the password and check if it matches
             if bcrypt.checkpw(password.encode('utf-8'), passwordcheck):
                 session["email"] = email_val
-                flash("Welcome, {}".format(
-                    request.form.get("username")))
                 return redirect(url_for('profile'))
             else:
                 if "email" in session:
@@ -143,6 +136,17 @@ def logout():
         return render_template('register.html')
 
 
+
+    # working not and aggragators
+    # test = db.tset.find({"name":{"$ne": "1"}})
+    # test = db.tset.find(
+    #     {"$and": [
+    #         {"name": {"$ne": "1"}},
+    #         {"name": {"$ne": "2"}}
+    #     ]}
+    # )
+
+
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -151,6 +155,59 @@ def profile():
         user = records.find_one({"email": session["email"]})
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
+
+        findNotFam = {}
+        findNotFam["$or"] = []
+        # for fam in all_families:
+            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
+
+        # test= db.families.find({"members":{"$ne": user["_id"]}})
+        
+
+        # test = db.families.find({""})
+
+
+
+
+        test = all_families
+        test = db.families.find({"members": {"$ne": user["_id"]}})
+        test = db.families.find({"members": user["_id"]})
+
+        # test = db.families.find({"events": "*"})
+
+        # print(test)
+
+        # print(findNotFam)
+
+        # print(user["_id"])
+
+        # print(db.families.find({"$not": [{"members": user["_id"]}]}))
+
+        # for test in db.families.find({"$not": [{"members": user["_id"]}]}):
+            # print(test)
+
+
+        # print(all_families)
+        # dump = []
+        # for fam in families:
+            # dump.append(fam['members'])
+            # print(fam['members'][1])
+
+
+
+        # ("iam dump")
+        # print(dump)
+
+        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
+
+
+        test = db.families.find({"members": {"$not": { user['_id']}}})
+        # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
+        # print(db.families.count({"members": {"$not": { user['_id']}}}))
+
+        # print(all_familiess)
         #create eventlist
         eventIds = []
         for family in families:
@@ -159,28 +216,50 @@ def profile():
                 for event in event_array:
                     eventIds.append(event)
         events = []
-        for id in eventIds:
-            events.append(db.families.find_one({"_id": id}))
-        #create datelist
+        # for id in eventIds:
+        #     events.append(db.families.find_one({"_id": ObjectId(id)}))
+        # create datelist
         date_list = []
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
+
+
+        # join family list
+        # returns all families the user is NOT a part of
+        join_family = db.families.find({"members": {"$ne": user["_id"]}})
+
+        # in family list
+        # returns all families the user IS a part of
+        in_family = db.families.find({"members": user["_id"]})
+
+        # all user family events
+        # returns all active events for user
+        all_events_list = []
+        for family in in_family:
+            all_events_list.append(family['events'])
+
+
+
+
+        events = ["somthng"]
+
         return render_template(
             'profile.html',
             user=user,
+            join_family=join_family,
             families=families,
-            events=events,
+            all_events_list=all_events_list,
             date_list=date_list,
             year=year,
-            all_families=all_families
+            test=test
         )
     else:
         return redirect(url_for("login"))
 
 
-@app.route("/profile/edit/<user_id>", methods=["GET", "POST"])
+@app.route("/profile/edit<user_id>", methods=["GET", "POST"])
 def edit_profile(user_id):
     if "email" not in session:
         flash("You need to login to perform this action")
@@ -269,6 +348,7 @@ def family():
 def add_to_family(user_id):
     if request.method == 'POST':
         family_name = request.form.get("all_families_name")
+        print(family_name)
         family = db.families.find_one({"name": family_name})
         print(family)
         members = family["members"]
@@ -292,45 +372,34 @@ if __name__ == "__main__":
 
 '''
 # GOOGLE LOGIN
-
 client_secrets_file = os.path.join(os.PathLike.Path(__file__).parent, "client_secret.json")
-
 flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
     redirect_uri="http://127.0.0.1:5000/callback"
 )
-
-
 def login_is_required(function):
     def wrapper(*args, **kwargs):
         if "google_id" not in session:
             return abort(401)  # Authorization required
         else:
             return function()
-
     return wrapper
-
 @app.route("/callback")
 def callback():
     flow.fetch_token(authorization_response=request.url)
-
     if not session["state"] == request.args["state"]:
         abort(500)  # State does not match!
-
     credentials = flow.credentials
     request_session = requests.session()
     cached_session = cachecontrol.CacheControl(request_session)
     token_request = google.auth.transport.requests.Request(session=cached_session)
-
     id_info = id_token.verify_oauth2_token(
         id_token=credentials._id_token,
         request=token_request,
         audience=os.environ.get("GOOGLE_CLIENT_ID")
     )
-
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     return redirect("/profile")
 '''
-
