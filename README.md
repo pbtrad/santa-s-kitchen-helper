@@ -84,6 +84,8 @@ Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?sub
 ### Images
 
 - [Candy Cane Logo/Favicon](https://www.flaticon.com/authors/freepik)
+- [Background Image](https://unsplash.com/photos/7VOyZ0-iO0o)
+- [Calendar Image](https://unsplash.com/photos/bwOAixLG0uc)
 
 Team 7 🎄
 
