@@ -3,23 +3,21 @@
 {% block content %}
 <!-- Header -->
 <div class="row">
-    <h1 class="col text-center x-mas-text mt-5">Profile Page</h1>
+    <h1 class="col text-center x-mas-text mt-5">{{ user.name|title }}'s Profile Page</h1>
 </div>
 
 <div class="row">
     <!-- Avatar and edit profile -->
     <div class="col-12 col-md-6 col-lg-3">
-        <div class="row justify-content-center">
-            <h3 class="col-12 text-center">{{ user.name }}'s Profile</h3>
-            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar">
-            <button class="btn btn-primary col-6" onclick="showEdit();">
+        <div class="justify-content-center">
+            <!-- <h3 class="col-12 text-center x-mas-text">{{ user.name|title }}'s Profile</h3> -->
+            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar mt-5 box-shadow">
+            <button class="custom-button blue-button col-6 mt-3" onclick="showEdit();">
                 Edit Profile
             </button>
         </div>
         <div class="row justify-content-center">
-            <button class="btn btn-success col-6" data-bs-toggle="modal" data-bs-target="#familyModal">
-                Create Family
-            </button>
+
         </div>
         <!-- Edit profile form -->
         <div class="row">
@@ -30,7 +28,7 @@
                         <input type="text" class="form-control" value="{{ user.name }}" aria-label="Username"
                             aria-describedby="username" name="username" required>
                     </div>
-        
+
                     <div class="input-group mb-3" id="user_email">
                         <span class="input-group-text" id="email">Email</span>
                         <input type="text" class="form-control" value="{{ user.email }}" aria-label="Email"
@@ -58,31 +56,38 @@
 
     <!-- event buttons  -->
     <div class="col-12 col-md-6 col-lg-9 mt-5">
-        <div class="row">
+        <div class="row justify-content-around">
 
             <!-- Create new event button -->
             <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
-                <div class="col text-center">
-                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Create A New Event
-                    </button>
-                </div>
+                <h3 class="x-mas-text text-center">Create a New Event or Family</h3>
+                    <div class="text-center">
+                        <button type="button" class="mt-3 green-button custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Create A New Event
+                        </button>
+                        <button class="custom-button magenta-button col-6" data-bs-toggle="modal" data-bs-target="#familyModal">
+                            Create Family
+                        </button>
+                    </div>
             </div>
-            
-            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
-                <div class="col text-center">
-                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add A New Event to Profile
-                    </button>
-                </div>
+
+            <div class="col-12 col-md-2 col-lg-3">
+                <form method="POST" action="{{ url_for('add_to_family', user_id=user._id) }}">
+                    <h3 class="x-mas-text text-center">Join a new family</h3>
+                    <div class="row justify-content-center">
+                        <select class="mx-auto" name="all_families_name" id="all_families_name">
+                            {% for family in join_family %}
+                                <option value="{{family.name}}">{{family.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="teal-button custom-button mt-3">Join Family</button>
+                    </div>
+                </form>
             </div>
-            
-            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
-                <div class="col text-center">
-                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#familyModal">
-                    Create a New family
-                </button>
+
+
             </div>
+
         </div>
     </div>
 </div>
@@ -90,25 +95,15 @@
 </div>
 
 
-<div class="col-12">
-    <div class="row">
-        <div class="col-12">
-            <form method="POST" action="{{ url_for('add_to_family', user_id=user._id) }}">
-                <select name="all_families_name" id="all_families_name">
-                    {% for family in all_families %}
-                        <option value="{{family.name}}">{{family.name}}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-success">Join Family</button>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 
 <!-- Previous Container -->
-<div class="row">
-    <div class="col-4">
+<div class="row justify-content-between mt-5">
+
+
+
+    <div class="col-3">
         <h3 class="x-mas-text">Previous Events</h3>
         <div class="row">
             <div class="col-12">
@@ -118,9 +113,27 @@
     </div>
 
     <!-- Upcoming Container -->
-    <div class="col-8">
+    <div class="col-7">
         <h3 class="x-mas-text">Upcoming Events</h3>
         <div class="row">
+            <div class="col-12 event-container">
+                {% for event in event_name_list %}
+                   <strong>{{ event[0] }}</strong>:
+                    {% for for_layer in event %}
+                        {% for for_layer1 in for_layer %}
+                            {% for food in for_layer1[1]  %}
+                                {% if loop.first %}
+                                    Bring These Dishes:
+                                {% endif %}
+                                    <strong>{{ food }}</strong>
+                                {% if not loop.last %}
+                                    and
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                    <br>
+                {% endfor %}
             <div class="col-12">
                 
             </div>

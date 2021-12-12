@@ -1,5 +1,5 @@
 from calendar import monthrange
-from datetime import datetime
+# from datetime import datetime
 import datetime
 import certifi
 from flask import (
@@ -156,6 +156,7 @@ def profile():
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
 
+        print("-------------------------------")
         findNotFam = {}
         findNotFam["$or"] = []
         # for fam in all_families:
@@ -177,24 +178,8 @@ def profile():
 
         # print(test)
 
-        # print(findNotFam)
 
-        # print(user["_id"])
-
-        # print(db.families.find({"$not": [{"members": user["_id"]}]}))
-
-        # for test in db.families.find({"$not": [{"members": user["_id"]}]}):
-            # print(test)
-
-
-        # print(all_families)
-        # dump = []
-        # for fam in families:
-            # dump.append(fam['members'])
-            # print(fam['members'][1])
-
-
-
+        print("-------------------------------")
         # ("iam dump")
         # print(dump)
 
@@ -224,6 +209,10 @@ def profile():
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
+        # print(datetime.datetime.now())
+
+
+
 
 
         # join family list
@@ -234,14 +223,53 @@ def profile():
         # returns all families the user IS a part of
         in_family = db.families.find({"members": user["_id"]})
 
-        # all user family events
-        # returns all active events for user
-        all_events_list = []
-        for family in in_family:
-            all_events_list.append(family['events'])
+        # # all user family events
+        # # returns all active events for user
+        # all_events_list = []
+        # for family in in_family:
+        #     all_events_list.append(family['events'])
+
+        # All events from all familes user is a part of
+        events_list = {}
+        events_list["$or"] = []
+        # Aggregates family list into events list
+        for family in db.families.find({"members": user["_id"]}):
+            for event in family["events"]:
+                events_list["$or"].append({"_id": ObjectId(event)})
+        # searches events
+        events_list = db.events.find(events_list)
+        # build name list for front end
+        event_name_list = []
+        for event_name in events_list:
+            food_list = []
+            for food in event_name['food']:
+                # if food == "":
+                #     food_list.append(False)
+                # else:
+                food_list.append(food)
+            event_name_list.append([event_name['name'], food_list])
+            
+            # print(event_name)
+            # print()
+            # print(event_name['name'])
+            print(event_name['food'])
+            # event_name_list.append(event_name['name'])  original
+
+
+        print("-------------------------------------")
+
+        
 
 
 
+
+        # print(te)
+        # for t in te:
+        #     print(t["name"])
+
+        print("-------------------------------------")
+
+        #61b49681ac8316b54be9b8ce patrik
 
         events = ["somthng"]
 
@@ -250,9 +278,10 @@ def profile():
             user=user,
             join_family=join_family,
             families=families,
-            all_events_list=all_events_list,
+            # all_events_list=all_events_list,
             date_list=date_list,
             year=year,
+            event_name_list=event_name_list,
             test=test
         )
     else:
