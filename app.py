@@ -1,7 +1,6 @@
 from calendar import monthrange
-#from datetime import datetime
+from datetime import datetime
 import datetime
-import re
 import certifi
 from flask import (
     Flask, url_for, render_template,
@@ -137,6 +136,17 @@ def logout():
         return render_template('register.html')
 
 
+
+    # working not and aggragators
+    # test = db.tset.find({"name":{"$ne": "1"}})
+    # test = db.tset.find(
+    #     {"$and": [
+    #         {"name": {"$ne": "1"}},
+    #         {"name": {"$ne": "2"}}
+    #     ]}
+    # )
+
+
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -145,6 +155,69 @@ def profile():
         user = records.find_one({"email": session["email"]})
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
+
+        print("-------------------------------")
+
+        findNotFam = {}
+        findNotFam["$or"] = []
+        # for fam in all_families:
+            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
+
+        # test= db.families.find({"members":{"$ne": user["_id"]}})
+        
+
+        # test = db.families.find({""})
+
+
+
+
+        test = all_families
+        test = db.families.find({"members": {"$ne": user["_id"]}})
+        test = db.families.find({"members": user["_id"]})
+
+        # test = db.families.find({"events": "*"})
+
+        for te in test:
+            print(te)
+            print()
+
+
+
+
+        # print(test)
+
+        # print(findNotFam)
+
+        # print(user["_id"])
+
+        # print(db.families.find({"$not": [{"members": user["_id"]}]}))
+
+        # for test in db.families.find({"$not": [{"members": user["_id"]}]}):
+            # print(test)
+
+
+        # print(all_families)
+        # dump = []
+        # for fam in families:
+            # dump.append(fam['members'])
+            # print(fam['members'][1])
+
+
+
+        # ("iam dump")
+        # print(dump)
+
+        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
+
+
+        test = db.families.find({"members": {"$not": { user['_id']}}})
+        # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
+        # print(db.families.count({"members": {"$not": { user['_id']}}}))
+        print("-------------------------------")
+
+        # print(all_familiess)
         #create eventlist
         eventIds = []
         for family in families:
@@ -153,29 +226,54 @@ def profile():
                 for event in event_array:
                     eventIds.append(event)
         events = []
-        for id in eventIds:
-            events.append(db.families.find_one({"_id": id}))
-        #create datelist
+        # for id in eventIds:
+        #     events.append(db.families.find_one({"_id": ObjectId(id)}))
+        # create datelist
         date_list = []
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
         print(datetime.datetime.now())
+
+
+
+
+
+        # join family list
+        # returns all families the user is NOT a part of
+        join_family = db.families.find({"members": {"$ne": user["_id"]}})
+
+        # in family list
+        # returns all families the user IS a part of
+        in_family = db.families.find({"members": user["_id"]})
+
+        # all user family events
+        # returns all active events for user
+        all_events_list = []
+        for family in in_family:
+            all_events_list.append(family['events'])
+
+
+
+
+        events = ["somthng"]
+
         return render_template(
             'profile.html',
             user=user,
+            join_family=join_family,
             families=families,
-            events=events,
+            all_events_list=all_events_list,
             date_list=date_list,
             year=year,
-            all_families=all_families
+            test=test
         )
     else:
         return redirect(url_for("login"))
 
 
-@app.route("/profile/edit/<user_id>", methods=["GET", "POST"])
+@app.route("/profile/edit<user_id>", methods=["GET", "POST"])
 def edit_profile(user_id):
     if "email" not in session:
         flash("You need to login to perform this action")
@@ -251,7 +349,7 @@ def family():
             user = records.find_one({"email": session["email"]})
             family = {
                 "name": family_name,
-                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
                 "events": [],
                 "members": [user["_id"]]
             }
