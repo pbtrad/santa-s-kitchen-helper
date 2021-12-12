@@ -3,6 +3,7 @@ document.getElementById("InputEmail").addEventListener("change", emailValidation
 document.getElementById("InputPassword").addEventListener("change", passwordValidationStep);
 document.getElementById("inputUserName").addEventListener("change", usernameValidationStep);
 
+
 function usernameValidationStep(event) {
     event.preventDefault();
 
@@ -11,7 +12,7 @@ function usernameValidationStep(event) {
 }
 
 function usernameValidation(username) {
-    let regUser = /^(?=.*[a-z])(?=.*[A-Z]).{5,15}$/;
+    let regUser = /^[a-zA-Z]{5,15}$/;
     if (username.value.trim() === ""){
         document.getElementById("username-validation-field").innerHTML = "Username cannot be empty.";
         document.getElementById("inputUserName").style.border = "2px solid red";
@@ -19,7 +20,7 @@ function usernameValidation(username) {
         document.getElementById("username-validation-field").innerHTML = "Username must have between 5-15 letters. Acceptable: a-z, A-Z";
         document.getElementById("inputUserName").style.border = "2px solid red";
     } else if (regUser.test(username.value)){
-        document.getElementById("username-validation-field").innerHTML = " ";
+        document.getElementById("username-validation-field").innerHTML = "&nbsp;&nbsp;";
         document.getElementById("inputUserName").style.border = "2px solid green";
     }
 }
@@ -45,7 +46,7 @@ function emailValidation(email) {
         document.getElementById("email-validation-field").innerHTML = "Please provide a valid email.";
         document.getElementById("InputEmail").style.border = "2px solid red";
     } else if (regEmail.test(email.value)){
-        document.getElementById("email-validation-field").innerHTML = " ";
+        document.getElementById("email-validation-field").innerHTML = "&nbsp;&nbsp;";
         document.getElementById("InputEmail").style.border = "2px solid green";
     }
 }
@@ -62,7 +63,7 @@ function passwordValidationStep(event) {
  * if password field passes regex.
  */
 function passwordValidation(password) {
-    let regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    let regPass = /^(?=.*\d)(?=.*[a-zA-Z]).{8,50}$/;
     if (password.value.trim() === ""){
         document.getElementById("password-validation-field").innerHTML = "Password cannot be empty.";
         document.getElementById("InputPassword").style.border = "2px solid red";
@@ -70,7 +71,7 @@ function passwordValidation(password) {
         document.getElementById("password-validation-field").innerHTML = "Password must have more than 8 letters and at least 1 number. Acceptable: a-z, A-Z, 0-9";
         document.getElementById("InputPassword").style.border = "2px solid red";
     } else if (regPass.test(password.value)){
-        document.getElementById("password-validation-field").innerHTML = " ";
+        document.getElementById("password-validation-field").innerHTML = "&nbsp;&nbsp;";
         document.getElementById("InputPassword").style.border = "2px solid green";
     }
 }
