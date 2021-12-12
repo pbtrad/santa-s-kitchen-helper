@@ -42,13 +42,6 @@ body {
     color: #faf9f6
 }
 
-.box-shadow {
-    box-shadow: 2px 2px 4px rgba(51, 51, 51, 0.692),
-        -2px -2px 4px rgba(51, 51, 51, 0.692),
-        inset 2px 2px 2px #5f5f5fb9,
-        inset -2px -2px 2px #5f5f5fb9;
-}
-
 /* ----- Navbar */
 .navbar-bg {
 	background-color: var(--white);
@@ -228,11 +221,14 @@ body {
     height: 5rem;
 }
 
+
+
 .custom-button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
     /* transform: translateY(-50%); */
     padding: .5em .75em;
     border-radius: 5px;
@@ -241,9 +237,31 @@ body {
     width: fit-content;
     transition-duration: .25s;
     color: #fff!important;
-    border: 2px solid #1bc732!important;
-    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
     text-shadow: 1px 1px #333;
+}
+
+.green-button {
+    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
+    border: 2px solid #1bc732!important;
+}
+
+.magenta-button {
+    background: linear-gradient(45deg, #6D1D7A, #B026C7, #6D1D7A);
+    border: 2px solid #B026C7!important;
+}
+
+.teal-button {
+    background: linear-gradient(45deg, #1A8766, #26C796, #1A8766);
+    border: 2px solid #26C796!important;
+}
+
+.blue-button {
+    background: linear-gradient(45deg, #00B0BD, #00EAFC, #00B0BD);
+    border: 2px solid #00EAFC!important;
+}
+
+.event-text {
+
 }
 
 /* Event create/edit page */
