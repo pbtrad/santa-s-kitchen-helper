@@ -42,13 +42,6 @@ body {
     color: #faf9f6
 }
 
-.box-shadow {
-    box-shadow: 2px 2px 4px rgba(51, 51, 51, 0.692),
-        -2px -2px 4px rgba(51, 51, 51, 0.692),
-        inset 2px 2px 2px #5f5f5fb9,
-        inset -2px -2px 2px #5f5f5fb9;
-}
-
 /* ----- Navbar */
 .navbar-bg {
 	background-color: var(--white);
@@ -220,13 +213,6 @@ body {
 }
 
 /* -------------------- Profile */
-
-.event-container {
-    background-color: #faf9f6;
-    color: #333;
-    border: 2px solid #333;
-    height: 5rem;
-}
 
 .custom-button {
     position: absolute;
