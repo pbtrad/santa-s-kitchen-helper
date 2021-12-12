@@ -158,17 +158,6 @@ def profile():
 
         print("-------------------------------")
 
-        findNotFam = {}
-        findNotFam["$or"] = []
-        # for fam in all_families:
-            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
-
-        # test= db.families.find({"members":{"$ne": user["_id"]}})
-        
-
-        # test = db.families.find({""})
-
-
 
 
         test = all_families
@@ -186,35 +175,7 @@ def profile():
 
         # print(test)
 
-        # print(findNotFam)
 
-        # print(user["_id"])
-
-        # print(db.families.find({"$not": [{"members": user["_id"]}]}))
-
-        # for test in db.families.find({"$not": [{"members": user["_id"]}]}):
-            # print(test)
-
-
-        # print(all_families)
-        # dump = []
-        # for fam in families:
-            # dump.append(fam['members'])
-            # print(fam['members'][1])
-
-
-
-        # ("iam dump")
-        # print(dump)
-
-        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
-
-
-        test = db.families.find({"members": {"$not": { user['_id']}}})
-        # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
-        # print(db.families.count({"members": {"$not": { user['_id']}}}))
         print("-------------------------------")
 
         # print(all_familiess)
