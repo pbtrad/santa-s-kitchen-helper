@@ -71,6 +71,85 @@ Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?sub
 
 ## Deployment
 
+Santa's Kitchen Helper is deployed at https://santas-kitchen-helper.herokuapp.com/ on Heroku.
+
+**Cloning Santa's Kitchen Helper from GitHub:
+
+Install the following:
+
+* Git
+* PIP
+* Python3
+
+Create an account at [MongoDB](https://www.mongodb.com/3) to construct database.
+
+* 1: Clone Santa's Kitchen Helper repository using Git by typing the following command into the terminal.
+
+```
+git clone https://github.com/pbtrad/santa-s-kitchen-helper.git
+```
+
+* 2: Go to this folder in your terminal.
+* 3: Enter the following command into your terminal to create virtual environment
+
+```
+virtualenv venv 
+```
+
+* 4: Intialize the environment by entering the following command.
+
+```
+source venv\bin\activate
+```
+
+* 5: Install the requirements and dependancies from the requirements.txt file.
+
+```
+pip3 install -r requirements.txt
+```
+
+* 6: In an IDE create an env.py file where SECRET_KEY and MONGO_URI can be stored, then follow the schema in the schema file.
+* 7: Run the application by entering.
+
+```
+flask run
+```
+
+or
+
+```
+python3 app.py
+```
+
+**Deploying the website to Heroku**:
+
+* 1: Create a requirements.txt file by entering the following command.
+
+```
+pip3 freeze > requirements.txt
+```
+
+* 2: Create a Procfile.
+
+```
+echo web: python app.py > Procfile
+```
+
+* 3: Push files to your repository.
+* 4: On Heroku dashboard create a new app.
+* 5: Select deployment method and select GitHub.
+* 6: On the dashboard set config variables:
+
+| Key  | Value |
+| ------------- | ------------- |
+| IP  | 0.0.0.0  |
+| PORT  | 5000  |
+| MONGO_URI | mongodb+srv://:@<cluster_name>-qtxun.mongodb.net/<database_name>?retryWrites=true&w=majority  |
+| SECRET_KEY | "your_secret_key" |
+
+* 7: Select the deploy button on the Heroku dashboard.
+* 8: Your site is deployed by Heroku.
+
 [Back to Contents](#contents)
 
 ---
