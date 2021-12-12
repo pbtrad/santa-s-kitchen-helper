@@ -1,88 +1,80 @@
 {% extends "base.html" %}
 {% set active_page = 'home' %}
 {% block content %}
-    <!-- Floating text and transparent circle -->
-    <div class="container-fluid calendar-background">
-        <div class="row justify-content-center">
-            <div class="col-10">
-
-                <!-- <div class="text-center pt-5 mt-5">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Letter to Santa
-                    </button>
-                </div> -->
-                <div class="modal hide fade"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content back-transparent remove-border center-y">
-                            <!-- <div class="modal-header remove-border">
-                                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div> -->
-                            <div class="modal-body santa-letter" >
-                                <h2> Dear Santa,</h2>
-                                <p>
-                                    This year I want a very different gift for Christmas.<br>
-                                    Every past year, it took my family so much time to organise the holiday events.<br>
-                                    There were so many phone calls, so much chaos and eventually people still forgot what they were supposed to do or bring. <br>
-                                    I still haven't forgiven uncle Bob for not bringing his famous gingerbread cookies!<br>
-                                    <br>
-                                    For that reason, I want my present to be one of your elves, so they can help us with the events.<br>
-                                    Preferrably, he could make a list of all our family events and show them on a shared board.<br>
-                                    On that board, I also want to have what food will be present. It is important to have the right expectations, you know.<br>
-                                    That way, each person could tell the elf what they will bring to the event and the elf will note it.<br>
-                                    <br>
-                                    This would help everyone enjoy Christmas so much more. <br>
-                                    <br>
-                                    Yours sincerely, <br>
-                                    A big fan<br>
-                                    <br>
-                                    P.S. If none of your elves are available, a PlayStation 5 will do.
-                                </p>
-                            </div>
-                            <div class="modal-footer remove-border">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
+<!-- Floating text and transparent circle -->
+<!-- <div class="container-fluid calendar-background">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <div class="modal hide fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content back-transparent remove-border center-y">
+                        <div class="modal-body santa-letter">
+                            <h2> Dear Santa,</h2>
+                            <p>
+                                This year I want a very different gift for Christmas.<br>
+                                Every past year, it took my family so much time to organise the holiday events.<br>
+                                There were so many phone calls, so much chaos and eventually people still forgot what
+                                they were supposed to do or bring. <br>
+                                I still haven't forgiven uncle Bob for not bringing his famous gingerbread cookies!<br>
+                                <br>
+                                For that reason, I want my present to be one of your elves, so they can help us with the
+                                events.<br>
+                                Preferrably, he could make a list of all our family events and show them on a shared
+                                board.<br>
+                                On that board, I also want to have what food will be present. It is important to have
+                                the right expectations, you know.<br>
+                                That way, each person could tell the elf what they will bring to the event and the elf
+                                will note it.<br>
+                                <br>
+                                This would help everyone enjoy Christmas so much more. <br>
+                                <br>
+                                Yours sincerely, <br>
+                                A big fan<br>
+                                <br>
+                                P.S. If none of your elves are available, a PlayStation 5 will do.
+                            </p>
+                        </div>
+                        <div class="modal-footer remove-border">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- Calendar peep view -->
-            <div class="col-12 col-lg-10 mt-5 calendar-container">
-                <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
-                <div id="calendar-image" class="calendar-image mt-3">
-                    <div class="calendar-overlay"></div>
-                    <a href="{{ url_for('login')}}" class="login-button link-plain">Login</a>
-                </div>
+
+        </div> -->
+        <!-- Calendar peep view -->
+        <div class="col-12 col-lg-10 mt-5 calendar-container">
+            <h1 class="text-center x-mas-text">Santa's Kitchen Helper</h1>
+            <div id="calendar-image" class="calendar-image mt-3">
+                <div class="calendar-overlay"></div>
+                <a href="{{ url_for('login')}}" class="login-button link-plain">Login</a>
             </div>
         </div>
     </div>
 </div>
-
-<div class="container-fluid contact-container">
-    
 </div>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-        // Open modal when index page loads
-        $(document).ready(function() {
-            let logged_in = ({{ logged_in }});
-            if (logged_in != 1){
-                $('#exampleModal').modal('show');
-            }
+<script type="text/javascript">
+    // Open modal when index page loads
+    $(document).ready(function () {
+        let logged_in = ({{ logged_in }});
+    if (logged_in != 1) {
+        $('#exampleModal').modal('show');
+    }
         })
 
-        // Changes the size of the calendar peep view
-        function reduceCalenderView() {
-            let width = document.body.offsetWidth;
-            let quarterWidth = Math.floor(width / 4);
-            document.getElementById("calendar-image").style.width = quarterWidth + "px";
-            document.getElementById("calendar-image").style.height = quarterWidth + "px";
-        }
+    // Changes the size of the calendar peep view
+    function reduceCalenderView() {
+        let width = document.body.offsetWidth;
+        let quarterWidth = Math.floor(width / 4);
+        document.getElementById("calendar-image").style.width = quarterWidth + "px";
+        document.getElementById("calendar-image").style.height = quarterWidth + "px";
+    }
 
-        window.onresize = reduceCalenderView;
-        reduceCalenderView();
-    </script>
+    window.onresize = reduceCalenderView;
+    reduceCalenderView();
+</script>
 {% endblock %}
