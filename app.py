@@ -19,11 +19,11 @@ from os import PathLike
 if os.path.exists("env.py"):
     import env
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+# os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
 
-app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+# app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
 # mongo envs
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -34,8 +34,8 @@ client = MongoClient(os.environ['MONGO_URI'], tlsCAFile=certifi.where())
 db = client.kitchenHelper
 
 # Google Credentials
-app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
-app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
+# app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
+# app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
 
 
 mongo = PyMongo(app)
