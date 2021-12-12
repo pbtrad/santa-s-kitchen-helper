@@ -12,17 +12,17 @@ from pymongo.mongo_client import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 import bcrypt
-from pip._vendor import cachecontrol
+# from pip._vendor import cachecontrol
 import requests
-from os import PathLike
+# from os import PathLike
 if os.path.exists("env.py"):
     import env
 
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+# os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
 
-app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+# app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
 # mongo envs
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
@@ -33,8 +33,8 @@ client = MongoClient(os.environ['MONGO_URI'], tlsCAFile=certifi.where())
 db = client.kitchenHelper
 
 # Google Credentials
-app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
-app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
+# app.config["GOOGLE_CLIENT_ID"] = os.environ.get("GOOGLE_CLIENT_ID")
+# app.config["GOOGLE_CLIENT_SECRET"] = os.environ.get("GOOGLE_CLIENT_SECRET")
 
 
 mongo = PyMongo(app)
@@ -159,6 +159,7 @@ def profile():
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
+        print(datetime.datetime.now())
         return render_template(
             'profile.html',
             user=user,
