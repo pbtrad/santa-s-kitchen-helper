@@ -1,5 +1,5 @@
-document.getElementById("FORMIDHERE").addEventListener("submit", validationStep);
-document.getElementById("EMAILFIELDIDHERE").addEventListener("change", emailValidation);
+document.getElementById("registration-form").addEventListener("submit", validationStep);
+document.getElementById("InputEmail").addEventListener("change", emailValidation);
 document.getElementById("PASSWORDFIELDIDHERE").addEventListener("change", passwordValidation);
 
 /**
@@ -8,17 +8,17 @@ document.getElementById("PASSWORDFIELDIDHERE").addEventListener("change", passwo
  * if email field passes regex.
  */
 function emailValidation() {
-    email = document.getElementById("EMAILFIELDIDHERE");
+    email = document.getElementById("InputEmail");
     let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (email.value.trim() === ""){
         document.getElementById("email-validation-message").innerHTML = "Email cannot be empty.";
-        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid red";
+        document.getElementById("InputEmail").style.border = "2px solid red";
     } else if (!regEmail.test(email.value)){
         document.getElementById("email-validation-message").innerHTML = "Please provide a valid email.";
-        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid red";
+        document.getElementById("InputEmail").style.border = "2px solid red";
     } else if (regEmail.test(email.value)){
         document.getElementById("email-validation-message").innerHTML = " ";
-        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid green";
+        document.getElementById("InputEmail").style.border = "2px solid green";
     }
 }
 
