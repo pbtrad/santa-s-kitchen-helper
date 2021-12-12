@@ -140,11 +140,14 @@ gap: 15px;
     height: 5rem;
 }
 
+
+
 .custom-button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    /* position: absolute; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
     /* transform: translateY(-50%); */
     padding: .5em .75em;
     border-radius: 5px;
@@ -153,9 +156,27 @@ gap: 15px;
     width: fit-content;
     transition-duration: .25s;
     color: #fff!important;
-    border: 2px solid #1bc732!important;
-    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
     text-shadow: 1px 1px #333;
+}
+
+.green-button {
+    background: linear-gradient(45deg, #138722, #1bc732, #18AD2C);
+    border: 2px solid #1bc732!important;
+}
+
+.magenta-button {
+    background: linear-gradient(45deg, #6D1D7A, #B026C7, #6D1D7A);
+    border: 2px solid #B026C7!important;
+}
+
+.teal-button {
+    background: linear-gradient(45deg, #1A8766, #26C796, #1A8766);
+    border: 2px solid #26C796!important;
+}
+
+.blue-button {
+    background: linear-gradient(45deg, #00B0BD, #00EAFC, #00B0BD);
+    border: 2px solid #00EAFC!important;
 }
 
 /* Event create/edit page */
