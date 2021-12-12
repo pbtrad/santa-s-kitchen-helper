@@ -246,44 +246,46 @@ def profile():
         events_list = db.events.find(events_list)
         # build name list for front end
         event_name_list = []
-        for event_name in events_list:
-            food_list = []
-            for food in event_name['food']:
-                if food == "" or []:
-                    # food_list.append("False")
-                    print(food, "im food False")
-                else:
-                    food_list += [db.users.find_one({"_id": food[0]},{"name": 1, "_id": 0})['name']] #name
-                    for food_item in food[1]:
-                        print(food[1], "IO am food") #food items
-                        food_list += [food_item]
+        try:
+            for event_name in events_list:
+                food_list = []
+                for food in event_name['food']:
+                    if food == "" or []:
+                        # food_list.append("False")
+                        print(food, "im food False")
+                    else:
+                        food_list += [db.users.find_one({"_id": food[0]},{"name": 1, "_id": 0})['name']] #name
+                        for food_item in food[1]:
+                            print(food[1], "IO am food") #food items
+                            food_list += [food_item]
 
 
-                    # for food_item in food:
-                    #     print(food_item, "I am food item")
-                    #     print(type(food_item))
-                        # print(db.users.find_one({"_id": food_item[0]}))
-                        # print(food_item[1])
+                        # for food_item in food:
+                        #     print(food_item, "I am food item")
+                        #     print(type(food_item))
+                            # print(db.users.find_one({"_id": food_item[0]}))
+                            # print(food_item[1])
 
-                    # food_list.append(food)
-                    # print(food_list.append(food), "i am error")
-                    # print(db.users.find_one({"_id": food}), "look at me")
-                    # print(food, "im food")
-            event_name_list += event_name['name'], food_list
-
-
-
-            # 61b49681ac8316b54be9b8ce
-
-            print(event_name["name"], "i am  name")
+                        # food_list.append(food)
+                        # print(food_list.append(food), "i am error")
+                        # print(db.users.find_one({"_id": food}), "look at me")
+                        # print(food, "im food")
+                event_name_list += event_name['name'], food_list
 
 
-            # print(event_name)
-            # print()
-            # print(event_name['name'])
-            print(event_name['food'])
-            # event_name_list.append(event_name['name'])  original
 
+                # 61b49681ac8316b54be9b8ce
+
+                print(event_name["name"], "i am  name")
+
+
+                # print(event_name)
+                # print()
+                # print(event_name['name'])
+                print(event_name['food'])
+                # event_name_list.append(event_name['name'])  original
+        except:
+            pass
 
         print("-------------------------------------")
 
