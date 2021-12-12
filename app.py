@@ -162,35 +162,12 @@ def profile():
         # try:
 
         print("-------------------------------")
-        findNotFam = {}
-        findNotFam["$or"] = []
-        # for fam in all_families:
-            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
-
-        # test= db.families.find({"members":{"$ne": user["_id"]}})
-        
-
-        # test = db.families.find({""})
 
 
-
-
-        test = all_families
-        test = db.families.find({"members": {"$ne": user["_id"]}})
-        test = db.families.find({"members": user["_id"]})
-
-        # test = db.families.find({"events": "*"})
-
-        # print(test)
 
 
         print("-------------------------------")
-        # ("iam dump")
-        # print(dump)
 
-        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
 
 
         test = db.families.find({"members": {"$not": { user['_id']}}})
@@ -238,15 +215,18 @@ def profile():
         events_list = {}
         events_list["$or"] = []
         # Aggregates family list into events list
-        for family in db.families.find({"members": user["_id"]}):
-            for event in family["events"]:
-                events_list["$or"].append({"_id": ObjectId(event)})
-                
+        try: 
+            for family in db.families.find({"members": user["_id"]}):
+                for event in family["events"]:
+                    events_list["$or"].append({"_id": ObjectId(event)})
+        except:
+            pass
         # searches events
         events_list = db.events.find(events_list)
         # build name list for front end
         event_name_list = []
-        try:
+        
+        try: #  Must have for new users
             for event_name in events_list:
                 food_list = []
                 for food in event_name['food']:
@@ -299,6 +279,9 @@ def profile():
         # print(te)
         # for t in te:
         #     print(t["name"])
+        # print("I am time delta!!!!!!")
+        # print(datetime.dateime.now())
+
 
         print("-------------------------------------")
 

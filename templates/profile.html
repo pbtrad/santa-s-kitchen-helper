@@ -113,6 +113,9 @@
     <!-- Upcoming Container -->
     <div class="col-7">
         <h3 class="x-mas-text">Upcoming Events</h3>
+        <button class="custom-button magenta-button col-6" data-bs-toggle="modal" data-bs-target="#bringDish">
+            Bring Dish
+        </button>
         <div class="row">
             <div class="col-12 event-container" style="min-height: 15rem;">
                 {% for event in event_name_list %}
@@ -263,6 +266,66 @@
     </div>
 </div>
 
+<!-- Modal for Adding food to events -->
+<div class="modal fade" id="bringDish" tabindex="-1" aria-labelledby="bringDishLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bringDishLabel">Bring Dish</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('family') }}" method="POST">
+                    <div class="form-group">
+
+
+                        <div class="form-group">
+                            <fieldset class="mt-1">
+                                <legend for="event_description" style="margin-bottom: 0;">Family</legend>
+                                <select name="family" id="family">
+                                    {% for family in families %}
+                                        <option value="{{ family.name }}">{{ family.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </fieldset>
+                        </div>
+
+
+                        <span id="dishNumber"><span>1</span></span>
+
+                        <div id="addDish" class="custom-button magenta-button col-6">
+                            Add dish
+                        </div>
+                        <div id="removeDish" class="custom-button magenta-button col-6">
+                            Remove dish
+                        </div>
+<div class="addRemoveLocation " >
+
+    <input type="hidden" name="dishTotal" id="dishTotal" value="1">
+
+</div>
+                        
+                        <label for="name">Dish Name<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <p><span class="require">*</span> - required fields</p>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% for event in events %}
 <div class="container h-100 w-50 bg-light">
     {{ event.name }} {{ event.date }}
@@ -276,4 +339,5 @@
 {% endfor %}
 
 
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
 {% endblock %}
