@@ -12,24 +12,28 @@
             <input name="username" class="form-control required" type="text" minlength="5" maxlength="15"
               pattern="^[a-zA-Z0-9]{5,15}$" id="inputUserName" aria-describedby="emailHelp" placeholder="Enter username"
               required>
+              <p id="email-validation-field">&nbsp;&nbsp;</p>
             <small id="userName" class="form-text text-muted">Please enter your username</small>
           </div>
           <div class="form-group">
             <label for="InputEmail">Email address</label>
             <input name="email" class="form-control required" type="email" id="InputEmail" placeholder="Enter email"
               required>
+            <p id="email-validation-field">&nbsp;&nbsp;</p>
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           <div class="form-group">
             <label for="InputPassword">Password</label>
             <input type="password" name="password1" class="form-control validate" minlength="5"
               maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword" placeholder="Password" required>
+              <p id="password-validation-field">&nbsp;&nbsp;</p>
           </div>
 
           <div class="form-group">
             <label for="InputPassword2">Repeat Password</label>
             <input type="password" name="password2" class="form-control validate" minlength="5"
               maxlength="15" pattern="^[a-zA-Z0-9]{5,15}$" id="InputPassword2" placeholder="Repeat Password" required>
+              <p id="password-repeat-validation-field">&nbsp;&nbsp;</p>
           </div>
           <button type="submit" class="btn btn-green mt-3">Submit</button>
         </form>
@@ -41,4 +45,8 @@
     </div>
   </div>
 </div>
-  {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+<script src="../static/js/script.js"></script>
+{% endblock %}
