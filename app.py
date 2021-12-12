@@ -235,7 +235,7 @@ def profile():
         # Aggregates family list into events list
         for family in db.families.find({"members": user["_id"]}):
             for event in family["events"]:
-                events_list["$or"].append({"_id": ObjectId(event)})
+                events_list["$or"].append({"_id": event})
         # searches events
         events_list = db.events.find(events_list)
         # build name list for front end
@@ -332,6 +332,7 @@ def event():
                 "family": family_name,
                 "description": request.form.get("description"),
                 "active": request.form.get("active"),
+                "food": []
             }
             _id = db.events.insert_one(event).inserted_id
             print(_id)
