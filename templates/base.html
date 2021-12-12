@@ -29,47 +29,43 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if session.email %}
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'events' }}">Events</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'profile' }}"
+                        <li class="btn btn-red">
+                            <a class="nav-link"
                                 href="{{ url_for('profile')}}">Profile</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="btn btn-red">
                             <a class="nav-link" href="{{ url_for('logout')}}">Logout</a>
                         </li>
                         {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'home' }}"
-                                href="{{ url_for('hello_world')}}">Home</a>
+                        <li class="btn btn-red">
+                            <a class="nav-link"
+                                href="{{ url_for('hello_world')}}">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'login' }}"
+                        <li class="btn btn-red">
+                            <a class="nav-link"
                                 href="{{ url_for('login')}}">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'register' }}"
+                        <li class="btn btn-red">
+                            <a class="nav-link"
                                 href="{{ url_for('register')}}">Register</a>
                         </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
+                        <li class="btn btn-red">
+                            <a class="nav-link">Contact</a>
                         </li>
                     </ul>
                 </div>
                 <!-- Side Nav -->
-                <button class="sidenav-btn btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas"
+                <button class="btn btn-red d-lg-none" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header align-items-center">
-                        <img src="{{ url_for('static', filename='images/candy-cane.png') }}" alt="Candy Cane Icon">
+                        <a class="navbar-brand" href="{{ url_for('hello_world')}}">
+                            <img src="{{ url_for('static', filename='images/candy-cane.png') }}" alt="Candy Cane Icon">
+                        </a>
                         <h5 id="offcanvasRightLabel">Santa's Kitchen Helper</h5>
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
@@ -77,35 +73,29 @@
                     <div class="offcanvas-body">
                         <ul class="nav flex-column">
                             {% if session.email %}
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'events' }}">Events</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'profile' }}"
+                            <li class="btn btn-red">
+                                <a class="nav-link"
                                     href="{{ url_for('profile')}}">Profile</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="btn btn-red">
                                 <a class="nav-link">Logout</a>
                             </li>
                             {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'home' }}"
-                                    href="{{ url_for('hello_world')}}">Home</a>
+                            <li class="btn btn-red">
+                                <a class="nav-link"
+                                    href="{{ url_for('hello_world')}}">About</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'about' }}" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'login' }}"
+                            <li class="btn btn-red">
+                                <a class="nav-link"
                                     href="{{ url_for('login')}}">Login</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'register' }}"
+                            <li class="btn btn-red">
+                                <a class="nav-link"
                                     href="{{ url_for('register')}}">Register</a>
                             </li>
                             {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
+                            <li class="btn btn-red">
+                                <a class="nav-link">Contact</a>
                             </li>
                         </ul>
                     </div>
