@@ -1,28 +1,33 @@
-document.getElementById("login-form").addEventListener("change", validationStep);
-document.getElementById("login-form").addEventListener("submit", validationStep);
+document.getElementById("FORMIDHERE").addEventListener("submit", validationStep);
+document.getElementById("EMAILFIELDIDHERE").addEventListener("change", emailValidation);
+document.getElementById("PASSWORDFIELDIDHERE").addEventListener("change", passwordValidation);
 
-/**
- * Starts the validation for the form
- * @param {Automatically added} event 
- */
-function validationStep(event) {
-    event.preventDefault();
-
-    let emailField = document.getElementById("InputEmail");
-    let firstCheck = emailValidation(emailField);
-    let secondCheck = passwordValidation(passwordField)
-}
-
-function emailValidation(email) {
+function emailValidation() {
+    email = document.getElementById("EMAILFIELDIDHERE");
     let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (email.value.trim() === ""){
         document.getElementById("email-validation-message").innerHTML = "Email cannot be empty.";
-        document.getElementById("InputEmail").style.border = "2px solid red";
+        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid red";
     } else if (!regEmail.test(email.value)){
         document.getElementById("email-validation-message").innerHTML = "Please provide a valid email.";
-        document.getElementById("InputEmail").style.border = "2px solid red";
+        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid red";
     } else if (regEmail.test(email.value)){
-        document.getElementById("email-validation-message").innerHTML = "";
+        document.getElementById("email-validation-message").innerHTML = " ";
+        document.getElementById("EMAILFIELDIDHERE").style.border = "2px solid green";
+    }
+}
+
+function passwordValidation(password) {
+    password = document.getElementById("");
+    let regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (email.value.trim() === ""){
+        document.getElementById("pass-validation-message").innerHTML = "Password cannot be empty.";
+        document.getElementById("").style.border = "2px solid red";
+    } else if (!regPass.test(email.value)){
+        document.getElementById("pass-validation-message").innerHTML = "Password must have more than 8 letters and at least 1 number. Acceptable: a-z, A-Z, 0-9";
+        document.getElementById("").style.border = "2px solid red";
+    } else if (regPass.test(email.value)){
+        document.getElementById("pass-validation-message").innerHTML = " ";
         document.getElementById("InputEmail").style.border = "2px solid green";
     }
 }
