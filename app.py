@@ -154,7 +154,7 @@ def profile():
                     eventIds.append(event)
         events = []
         for id in eventIds:
-            events.append(db.families.find_one({"_id": ObjectId(id)}))
+            events.append(db.families.find_one({"_id": id}))
         #create datelist
         date_list = []
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -209,6 +209,7 @@ def event():
             return redirect(url_for('profile'))
         else:
             family_name = request.form.get("family")
+            print(family_name)
             event = {
                 "name": request.form.get("name"),
                 "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
@@ -219,16 +220,19 @@ def event():
                 "active": request.form.get("active"),
             }
             _id = db.events.insert_one(event).inserted_id
+            print(_id)
             #add event to families event list
             family = db.families.find_one({"name": family_name})
+            print(family)
             events = family["events"]
             events.append(_id)
             family["events"] = events
             db.families.update_one(
-            {"_id": family["_id"]},
+            {"_id": ObjectId(family["_id"])},
             {"$set": family}
             )
             flash("Event Successfully Added")
+            print('we got here')
             return redirect(url_for("profile"))
     events = db.events.find().sort("date_posted", -1)
     return render_template("profile.html", events=events)
@@ -260,9 +264,13 @@ def add_to_family(user_id):
     if request.method == 'POST':
         family_name = request.form.get("all_families_name")
         family = db.families.find_one({"name": family_name})
+        print(family)
         members = family["members"]
-        members.append(user_id)
+        print(members)
+        members.append(ObjectId(user_id))
+        print(members)
         family["members"] = members
+        print(family)
         db.families.update_one(
             {"_id": family["_id"]},
             {"$set": family}

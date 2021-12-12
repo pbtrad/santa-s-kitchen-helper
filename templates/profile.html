@@ -79,7 +79,7 @@
             
             <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
                 <div class="col text-center">
-                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="custom-button" data-bs-toggle="modal" data-bs-target="#familyModal">
                     Create a New family
                 </button>
             </div>
@@ -93,11 +93,14 @@
 <div class="col-12">
     <div class="row">
         <div class="col-12">
-            <select name="all_families_name" id="all_families_name">
-                {% for family in all_families %}
-                    <option value="{{family.name}}">{{family.name}}</option>
-                {% endfor %}
-            </select>
+            <form method="POST" action="{{ url_for('add_to_family', user_id=user._id) }}">
+                <select name="all_families_name" id="all_families_name">
+                    {% for family in all_families %}
+                        <option value="{{family.name}}">{{family.name}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-success">Join Family</button>
+            </form>
         </div>
     </div>
 </div>
@@ -136,7 +139,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -173,10 +176,10 @@
                     <!-- Family -->
                     <div class="form-group">
                         <fieldset class="mt-1">
-                            <legend for="event_description" style="margin-bottom: 0;">Date</legend>
+                            <legend for="event_description" style="margin-bottom: 0;">Family</legend>
                             <select name="family" id="family">
                                 {% for family in families %}
-                                    <option value="{{ family[0] }}">{{ family[1] }}</option>
+                                    <option value="{{ family.name }}">{{ family.name }}</option>
                                 {% endfor %}
                             </select>
                         </fieldset>
@@ -185,7 +188,7 @@
                     <!-- Event Description -->
                     <div class="form-group mt-2">
                         <label for="event_description">Event Description</label>
-                        <textarea rows="10" class="form-control" name="description" id="description" minlength="25"
+                        <textarea rows="10" class="form-control" name="description" id="description" minlength="1"
                             maxlength="1000" required></textarea>
                     </div>
 
@@ -195,14 +198,6 @@
                         <label for="food">Food</label>
                         <input type="text" class="form-control" id="food" name="food" minlength="5" maxlength="50" />
                     </div>
-
-                    <!-- Family -->
-                    <div class="form-group">
-                        <label for="family">Family</label>
-                        <input type="text" class="form-control" id="family" name="family" minlength="5"
-                            maxlength="50" />
-                    </div>
-
                     <!-- subtext requirement -->
                     <div class="form-group">
                         <p><span class="require">*</span> - required fields</p>
@@ -232,7 +227,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="familyModalLabel">Login</h5>
+                <h5 class="modal-title" id="familyModalLabel">Create Family</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
