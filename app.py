@@ -159,36 +159,15 @@ def profile():
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
 
+        # try:
+
         print("-------------------------------")
-        findNotFam = {}
-        findNotFam["$or"] = []
-        # for fam in all_families:
-            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
-
-        # test= db.families.find({"members":{"$ne": user["_id"]}})
-        
-
-        # test = db.families.find({""})
 
 
-
-
-        test = all_families
-        test = db.families.find({"members": {"$ne": user["_id"]}})
-        test = db.families.find({"members": user["_id"]})
-
-        # test = db.families.find({"events": "*"})
-
-        # print(test)
 
 
         print("-------------------------------")
-        # ("iam dump")
-        # print(dump)
 
-        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
-        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
 
 
         test = db.families.find({"members": {"$not": { user['_id']}}})
@@ -236,46 +215,81 @@ def profile():
         events_list = {}
         events_list["$or"] = []
         # Aggregates family list into events list
-        for family in db.families.find({"members": user["_id"]}):
-            for event in family["events"]:
-                events_list["$or"].append({"_id": event})
+        try: 
+            for family in db.families.find({"members": user["_id"]}):
+                for event in family["events"]:
+                    events_list["$or"].append({"_id": ObjectId(event)})
+        except:
+            pass
         # searches events
         events_list = db.events.find(events_list)
         # build name list for front end
         event_name_list = []
-        for event_name in events_list:
-            food_list = []
-            for food in event_name['food']:
-                # if food == "":
-                #     food_list.append(False)
-                # else:
-                food_list.append(food)
-            event_name_list.append([event_name['name'], food_list])
-            
-            # print(event_name)
-            # print()
-            # print(event_name['name'])
-            print(event_name['food'])
-            # event_name_list.append(event_name['name'])  original
+        
+        try: #  Must have for new users
+            for event_name in events_list:
+                food_list = []
+                for food in event_name['food']:
+                    if food == "" or []:
+                        # food_list.append("False")
+                        print(food, "im food False")
+                    else:
+                        food_list += [db.users.find_one({"_id": food[0]},{"name": 1, "_id": 0})['name']] #name
+                        for food_item in food[1]:
+                            print(food[1], "IO am food") #food items
+                            food_list += [food_item]
 
+
+                        # for food_item in food:
+                        #     print(food_item, "I am food item")
+                        #     print(type(food_item))
+                            # print(db.users.find_one({"_id": food_item[0]}))
+                            # print(food_item[1])
+
+                        # food_list.append(food)
+                        # print(food_list.append(food), "i am error")
+                        # print(db.users.find_one({"_id": food}), "look at me")
+                        # print(food, "im food")
+                event_name_list += event_name['name'], food_list
+
+
+
+                # 61b49681ac8316b54be9b8ce
+
+                print(event_name["name"], "i am  name")
+
+
+                # print(event_name)
+                # print()
+                # print(event_name['name'])
+                print(event_name['food'])
+                # event_name_list.append(event_name['name'])  original
+        except:
+            pass
 
         print("-------------------------------------")
 
         
-
-
+        print(event_name_list, "I am evetn name list finihs")
+        for te in event_name_list:
+            print(te)
+            # print()
 
 
         # print(te)
         # for t in te:
         #     print(t["name"])
+        # print("I am time delta!!!!!!")
+        # print(datetime.dateime.now())
+
 
         print("-------------------------------------")
 
         #61b49681ac8316b54be9b8ce patrik
 
         events = ["somthng"]
-
+        # except:
+        #     pass
         return render_template(
             'profile.html',
             user=user,
