@@ -2,8 +2,12 @@
 document.getElementById("InputEmail").addEventListener("change", emailValidationStep);
 document.getElementById("InputPassword").addEventListener("change", passwordValidationStep);
 document.getElementById("inputUserName").addEventListener("change", usernameValidationStep);
+document.getElementById("InputPassword2").addEventListener("change", sPasswordValidationStep);
 
-
+/**
+ * Prevents default behaviour and calls username validation function.
+ * @param {Change event} event 
+ */
 function usernameValidationStep(event) {
     event.preventDefault();
 
@@ -11,6 +15,11 @@ function usernameValidationStep(event) {
     let usernameCheck = usernameValidation(usernameField);
 }
 
+/**
+ * Gets username from username field
+ * Checks if it is empty and, if not,
+ * if username field passes regex.
+ */
 function usernameValidation(username) {
     let regUser = /^[a-zA-Z]{5,15}$/;
     if (username.value.trim() === ""){
@@ -25,6 +34,10 @@ function usernameValidation(username) {
     }
 }
 
+/**
+ * Prevents default behaviour and calls email validation function.
+ * @param {Change event} event 
+ */
 function emailValidationStep(event) {
     event.preventDefault();
 
@@ -51,6 +64,10 @@ function emailValidation(email) {
     }
 }
 
+/**
+ * Prevents default behaviour and calls password validation function.
+ * @param {Change event} event 
+ */
 function passwordValidationStep(event) {
     event.preventDefault();
 
@@ -76,3 +93,32 @@ function passwordValidation(password) {
     }
 }
 
+/**
+ * Prevents default behaviour and calls second password validation function.
+ * @param {Change event} event 
+ */
+function sPasswordValidationStep(event) {
+    event.preventDefault();
+
+    fPassword = document.getElementById("InputPassword");
+    sPassword = document.getElementById("InputPassword2");
+    let sPasswordCheck = sPasswordValidation(fPassword, sPassword);
+}
+
+/**
+ * Gets second password from matching field
+ * Checks if it is empty and, if not,
+ * if second password matches first.
+ */
+function sPasswordValidation(password, check) {
+    if (password.value.trim() === ""){
+        document.getElementById("password-repeat-validation-field").innerHTML = "Password cannot be empty.";
+        document.getElementById("InputPassword2").style.border = "2px solid red";
+    } else if (password.value != check.value){
+        document.getElementById("password-repeat-validation-field").innerHTML = "Passwords do not match.";
+        document.getElementById("InputPassword2").style.border = "2px solid red";
+    } else if (password.value == check.value){
+        document.getElementById("password-repeat-validation-field").innerHTML = "&nbsp;&nbsp;";
+        document.getElementById("InputPassword2").style.border = "2px solid green";
+    }
+}
