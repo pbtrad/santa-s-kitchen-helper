@@ -74,13 +74,16 @@ def register():
         user_found = records.find_one({"name": user})
         email_found = records.find_one({"email": email})
         if user_found:
-            message = 'There already is a user by that name'
+            #message = 'There already is a user by that name'
+            flash('This user already exists')
             return render_template('register.html', message=message)
         if email_found:
-            message = 'This email already exists in database'
+            #message = 'This email already exists in database'
+            flash('This email is already in use')
             return render_template('register.html', message=message)
         if password1 != password2:
-            message = 'Passwords should match!'
+            #message = 'Passwords should match!'
+            flash('Passwords should match')
             return render_template('register.html', message=message)
         else:
             #hash the password and encode it
@@ -93,6 +96,7 @@ def register():
             #find the new created account and its email
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
+            flash('Your account has been created! You are now able to log in')
             #if registered redirect to logged in as the registered user
             return render_template('profile.html', email=new_email)
     return render_template("register.html")
@@ -115,6 +119,8 @@ def login():
             #encode the password and check if it matches
             if bcrypt.checkpw(password.encode('utf-8'), passwordcheck):
                 session["email"] = email_val
+                flash("Welcome, {}".format(
+                    request.form.get("username")))
                 return redirect(url_for('profile'))
             else:
                 if "email" in session:
