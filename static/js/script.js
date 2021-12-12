@@ -2,6 +2,11 @@ document.getElementById("FORMIDHERE").addEventListener("submit", validationStep)
 document.getElementById("EMAILFIELDIDHERE").addEventListener("change", emailValidation);
 document.getElementById("PASSWORDFIELDIDHERE").addEventListener("change", passwordValidation);
 
+/**
+ * Gets email from email field
+ * Checks if it is empty and, if not,
+ * if email field passes regex.
+ */
 function emailValidation() {
     email = document.getElementById("EMAILFIELDIDHERE");
     let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
@@ -17,6 +22,11 @@ function emailValidation() {
     }
 }
 
+/**
+ * Gets password from password field
+ * Checks if it is empty and, if not,
+ * if password field passes regex.
+ */
 function passwordValidation(password) {
     password = document.getElementById("");
     let regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
