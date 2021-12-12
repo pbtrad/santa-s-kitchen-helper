@@ -93,12 +93,13 @@ def register():
             records.insert_one(user_input)
             
             #find the new created account and its email
+            year = datetime.date.today().year
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
-            # session = user_data['email']
+            #session['email'] = user_data
             #if registered redirect to logged in as the registered user
-            return render_template('profile.html', email=new_email,
-                user=user_data)
+            return render_template('profile.html', email=new_email, 
+                user=user_data, year=year)
     return render_template("register.html")
 
 
