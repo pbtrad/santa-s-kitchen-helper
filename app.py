@@ -95,9 +95,12 @@ def register():
             #find the new created account and its email
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
+            session['email'] = user_data
             #if registered redirect to logged in as the registered user
-            return render_template('profile.html', email=new_email)
+            return render_template('profile.html', email=new_email, 
+                user=user_data)
     return render_template("register.html")
+
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -153,6 +156,7 @@ def logout():
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
+    year = 2021
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
@@ -284,7 +288,7 @@ def profile():
 
 
         print("-------------------------------------")
-
+        print(year)
         #61b49681ac8316b54be9b8ce patrik
 
         events = ["somthng"]
@@ -302,7 +306,8 @@ def profile():
             test=test
         )
     else:
-        return redirect(url_for("login"))
+        # return redirect(url_for("login"))
+        return url_for("login")
 
 
 @app.route("/profile/edit<user_id>", methods=["GET", "POST"])
