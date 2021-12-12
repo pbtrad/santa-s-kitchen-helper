@@ -57,7 +57,7 @@
                         </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
+                            <a class="nav-link {{ 'active' if active_page == 'contact' }}" href="{{ url_for('contact')}}">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -105,7 +105,8 @@
                             </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link {{ 'active' if active_page == 'contact' }}">Contact</a>
+                                <a class="nav-link {{ 'active' if active_page == 'contact' }}"
+                                    href="{{ url_for('contact')}}">Contact</a>
                             </li>
                         </ul>
                     </div>
