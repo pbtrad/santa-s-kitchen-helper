@@ -1,10 +1,17 @@
-document.getElementById("submit-button").addEventListener("click", formSubmit);
-document.getElementById("InputEmail").addEventListener("change", emailValidationStep);
-document.getElementById("InputPassword").addEventListener("change", passwordValidationStep);
-document.getElementById("inputUserName").addEventListener("change", usernameValidationStep);
-document.getElementById("InputPassword2").addEventListener("change", sPasswordValidationStep);
+let registrationForm = document.getElementById("registration-form")
+let logInForm = document.getElementById("login-form")
 
-
+if (logInForm == null) {
+    document.getElementById("register-submit").addEventListener("click", submitRegistration);
+    document.getElementById("InputEmail").addEventListener("change", emailValidationStep);
+    document.getElementById("InputPassword").addEventListener("change", passwordValidationStep);
+    document.getElementById("inputUserName").addEventListener("change", usernameValidationStep);
+    document.getElementById("InputPassword2").addEventListener("change", sPasswordValidationStep);
+} else if (registrationForm == null) {
+    document.getElementById("login-submit").addEventListener("click", submitLogin);
+    document.getElementById("InputEmail").addEventListener("change", emailValidationStep);
+    document.getElementById("InputPassword").addEventListener("change", passwordValidationStep);
+}
 
 /**
  * Prevents default behaviour and calls username validation function.
@@ -116,7 +123,7 @@ function sPasswordValidationStep(event) {
  * if second password matches first.
  */
 function sPasswordValidation(password, check) {
-    if (password.value.trim() === ""){
+    if (check.value.trim() === ""){
         document.getElementById("password-repeat-validation-field").innerHTML = "Password cannot be empty.";
         document.getElementById("InputPassword2").style.border = "2px solid red";
     } else if (password.value != check.value){
@@ -129,31 +136,30 @@ function sPasswordValidation(password, check) {
     }
 }
 
-function formSubmit() {
-    let registrationForm = document.getElementById("registration-form")
-    let logInForm = document.getElementById("login-form")
+function submitRegistration(event) {
+    event.preventDefault();
+    let usernameField = document.getElementById("inputUserName");
+    let emailField = document.getElementById("InputEmail");
+    let passwordField = document.getElementById("InputPassword");
+    let sPassword = document.getElementById("InputPassword2");
+    let usernameCheck = usernameValidation(usernameField);
+    let emailCheck = emailValidation(emailField);
+    let passwordCheck = passwordValidation(passwordField);
+    let sPasswordCheck = sPasswordValidation(passwordField, sPassword);
 
-    if (!logInForm) {
-        let usernameField = document.getElementById("inputUserName");
-        let emailField = document.getElementById("InputEmail");
-        let passwordField = document.getElementById("InputPassword");
-        let sPassword = document.getElementById("InputPassword2");
-        let usernameCheck = usernameValidation(usernameField);
-        let emailCheck = emailValidation(emailField);
-        let passwordCheck = passwordValidation(passwordField);
-        let sPasswordCheck = sPasswordValidation(passwordField, sPassword);
+    if (usernameCheck == true && emailCheck == true && passwordCheck == true && sPasswordCheck == true) {
+        document.getElementById("registration-form").submit()
+    }
+}
 
-        if (usernameCheck == emailCheck == passwordCheck == sPasswordCheck == true) {
-            document.getElementById("registration-form").submit()
-        }
-    } else if (!registrationForm) {
-        let emailField = document.getElementById("InputEmail");
-        let passwordField = document.getElementById("InputPassword");
-        let emailCheck = emailValidation(emailField);
-        let passwordCheck = passwordValidation(passwordField);
+function submitLogin(event) {
+    event.preventDefault();
+    let emailField = document.getElementById("InputEmail");
+    let passwordField = document.getElementById("InputPassword");
+    let emailCheck = emailValidation(emailField);
+    let passwordCheck = passwordValidation(passwordField);
 
-        if (emailCheck == passwordCheck == true) {
-            document.getElementById("login-form").submit();
-        }
+    if (emailCheck == true && passwordCheck == true) {
+        document.getElementById("login-form").submit();
     }
 }
