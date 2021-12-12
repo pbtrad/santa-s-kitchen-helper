@@ -157,6 +157,16 @@ def profile():
         families = list(db.families.find({"members": user["_id"]}))
 
         print("-------------------------------")
+        findNotFam = {}
+        findNotFam["$or"] = []
+        # for fam in all_families:
+            # findNotFam["$ne"].append({"members":{"$ne": user["_id"]}})
+
+        # test= db.families.find({"members":{"$ne": user["_id"]}})
+        
+
+        # test = db.families.find({""})
+
 
 
 
@@ -166,17 +176,21 @@ def profile():
 
         # test = db.families.find({"events": "*"})
 
-        for te in test:
-            print(te)
-            print()
-
-
-
-
         # print(test)
 
 
         print("-------------------------------")
+        # ("iam dump")
+        # print(dump)
+
+        # db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # test = db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}})
+        # print(db.families.find({"_exists": True}, {"$inc": {"_id": user["_id"]}}))
+
+
+        test = db.families.find({"members": {"$not": { user['_id']}}})
+        # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
+        # print(db.families.count({"members": {"$not": { user['_id']}}}))
 
         # print(all_familiess)
         #create eventlist
@@ -229,6 +243,9 @@ def profile():
         for event_name in events_list:
             food_list = []
             for food in event_name['food']:
+                # if food == "":
+                #     food_list.append(False)
+                # else:
                 food_list.append(food)
             event_name_list.append([event_name['name'], food_list])
             
@@ -347,7 +364,7 @@ def family():
             user = records.find_one({"email": session["email"]})
             family = {
                 "name": family_name,
-                "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
                 "events": [],
                 "members": [user["_id"]]
             }
@@ -360,6 +377,7 @@ def family():
 def add_to_family(user_id):
     if request.method == 'POST':
         family_name = request.form.get("all_families_name")
+        print(family_name)
         family = db.families.find_one({"name": family_name})
         print(family)
         members = family["members"]

@@ -89,7 +89,7 @@
             <!-- <div class="row"> -->
                 <!-- <div class="col-12 event-container"> -->
                      <!-- url_for('add_to_family', user_id=user._id)  -->
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ url_for('add_to_family', user_id=user._id) }}">
                         <select name="all_families_name" id="all_families_name">
                             {% for family in join_family %}
                                 <option value="{{family.name}}">{{family.name}}</option>
