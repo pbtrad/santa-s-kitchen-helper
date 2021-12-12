@@ -75,9 +75,9 @@ function passwordValidation(password) {
     }
 }
 
-const showEdit = () => {
-    let form = document.getElementById('edit-profile-form');
-    form.classList.toggle('hide');
-}
+// const showEdit = () => {
+//     let form = document.getElementById('edit-profile-form');
+//     form.classList.toggle('hide');
+// }
 
 
