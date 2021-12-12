@@ -95,9 +95,9 @@ def register():
             #find the new created account and its email
             user_data = records.find_one({"email": email})
             new_email = user_data['email']
-            session['email'] = user_data
+            # session = user_data['email']
             #if registered redirect to logged in as the registered user
-            return render_template('profile.html', email=new_email, 
+            return render_template('profile.html', email=new_email,
                 user=user_data)
     return render_template("register.html")
 
@@ -151,15 +151,16 @@ def logout():
     #         {"name": {"$ne": "2"}}
     #     ]}
     # )
+        # test = db.families.find({"members": {"$not": { user['_id']}}})
 
 
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    year = 2021
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
+        userDoc = db.users.find_one({"email": session['email']})
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
 
@@ -219,57 +220,91 @@ def profile():
         events_list = {}
         events_list["$or"] = []
         # Aggregates family list into events list
-        try: 
-            for family in db.families.find({"members": user["_id"]}):
-                for event in family["events"]:
-                    events_list["$or"].append({"_id": ObjectId(event)})
-        except:
-            pass
+        # try:
+        for family in db.families.find({"members": user["_id"]}):
+            for event in family["events"]:
+                events_list["$or"].append({"_id": ObjectId(event)})
+        # except:
+        #     pass
         # searches events
         events_list = db.events.find(events_list)
+
+        # print(events_list)
+        # for te in events_list:
+        #     print(te)
+        #     print()
+
         # build name list for front end
         event_name_list = []
         
-        try: #  Must have for new users
-            for event_name in events_list:
-                food_list = []
-                for food in event_name['food']:
-                    if food == "" or []:
-                        # food_list.append("False")
-                        print(food, "im food False")
-                    else:
-                        food_list += [db.users.find_one({"_id": food[0]},{"name": 1, "_id": 0})['name']] #name
+        # try: #  Must have for new users
+        for event_name in events_list:
+            food_list = []
+            for food in event_name['food']:
+                print(len(food), "-----------------amfood start")
+                print(food, "-----------------amfood start")
+
+                print()
+                if food == "" or []:
+                    # food_list.append("False")
+                    print(food, "im food False")
+                else:
+                    try:
+                        is_bringing = True
+                        # print(db.users.find_one({"_id": food[0]})['email'], "-----------AM NAME")
+                        # print(userDoc['email'], "--------------am user-------------")
+                        event_person_id = db.users.find_one({"_id": food[0]})['email']
+                        if event_person_id == userDoc["email"]:
+                            food_list += [db.users.find_one({"_id": food[0]})['name']] #name
+                        else:
+                            is_bringing = False
+                    except TypeError:
+                        print("---------Type error through upcomming events list--------")
+                    if is_bringing:
                         for food_item in food[1]:
                             print(food[1], "IO am food") #food items
                             food_list += [food_item]
 
+            print(food_list, "I am food list ----------MN")
 
-                        # for food_item in food:
-                        #     print(food_item, "I am food item")
-                        #     print(type(food_item))
-                            # print(db.users.find_one({"_id": food_item[0]}))
-                            # print(food_item[1])
+                    # for food_item in food:
+                    #     print(food_item, "I am food item")
+                    #     print(type(food_item))
+                        # print(db.users.find_one({"_id": food_item[0]}))
+                        # print(food_item[1])
 
-                        # food_list.append(food)
-                        # print(food_list.append(food), "i am error")
-                        # print(db.users.find_one({"_id": food}), "look at me")
-                        # print(food, "im food")
-                event_name_list += event_name['name'], food_list
+                    # food_list.append(food)
+                    # print(food_list.append(food), "i am error")
+                    # print(db.users.find_one({"_id": food}), "look at me")
+                    # print(food, "im food")
+
+            print(food_list, "---------------a am food list----------------")
+            if food_list != []:
+                event_name_list += [[event_name['name'], food_list]]
+            else:
+                event_name_list += [[event_name['name']]]
 
 
 
-                # 61b49681ac8316b54be9b8ce
 
-                print(event_name["name"], "i am  name")
+            print(food_list, "I am food list ----------------------")
+            print(event_name['name'], "I am event name----------------------")
 
 
-                # print(event_name)
-                # print()
-                # print(event_name['name'])
-                print(event_name['food'])
-                # event_name_list.append(event_name['name'])  original
-        except:
-            pass
+
+
+            # 61b49681ac8316b54be9b8ce
+
+            print(event_name["name"], "i am  name")
+
+
+            # print(event_name)
+            # print()
+            # print(event_name['name'])
+            print(event_name['food'])
+            # event_name_list.append(event_name['name'])  original
+        # except:
+        #     pass
 
         print("-------------------------------------")
 
@@ -306,8 +341,8 @@ def profile():
             test=test
         )
     else:
-        # return redirect(url_for("login"))
-        return url_for("login")
+        return redirect(url_for("login"))
+        # return url_for("login")
 
 
 @app.route("/profile/edit<user_id>", methods=["GET", "POST"])

@@ -124,25 +124,28 @@
 
         <div class="row">
             <div class="col-12 event-container" style="min-height: 15rem;">
-                {% for event in event_name_list %}
+
+                {% for name in event_name_list %}
 
                 <!-- {{event}} -->
                 {% if event == "" %}
                     {% else %}
-                   <strong>{{ event }}</strong>:
-                    {% endif %}
+                   <strong>{{ name[0] }}</strong>:
 
-                        <!-- {% if loop.first %}
+                    {% endif %}
+                    
+                    
+
+
+                        {% if loop.first %}
                             Bring These Dishes:
-                        {% endif %} -->
-                    
-                        {% for food_item in event %}
-                            <strong>{{ food_item }}</strong>
-                        {% endfor %}
-                    
-                        <!-- {% if not loop.last %}
+                        {% endif %}
+                    {% for food in name[1] %}
+                        <strong>{{ food }}</strong>
+                        {% if not loop.last %}
                             and
-                        {% endif %} -->
+                        {% endif %}
+                    {% endfor %}
 
                     <br>
                 {% endfor %}
