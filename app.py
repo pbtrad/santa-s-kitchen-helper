@@ -218,6 +218,8 @@ def profile():
         for family in db.families.find({"members": user["_id"]}):
             for event in family["events"]:
                 events_list["$or"].append({"_id": ObjectId(event)})
+
+
         # except:
         #     pass
         # searches events
@@ -232,14 +234,31 @@ def profile():
         try:
             for time_check in events_list:
                 event_date = time_check['date']
-                if datetime.datetime(int(event_date[6:10]), int(event_date[0:2]), int(event_date[3:5])) > datetime.datetime.now():
+                day = event_date[0:2].replace("-","")
+                print(day, ">>>>>>>>>>>>>>>>>>>>")
+
+                if datetime.datetime(int(event_date[6:10]), int(event_date[3:5]), int(day) ) > datetime.datetime.now():
                     upcoming_events.append(time_check)
                 else:
                     previous_events.append(time_check)
 
             bring_dish_events = upcoming_events
-        except:
-            pass
+        except Exception as e:
+            print(e)
+            print("I have lost events")
+
+
+
+
+        print("--------------------------------")
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+
+        print (events_list)
+        for event in events_list:
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            print(event)
+        print("---------------------------------")
+
 
         # Creates list with event, and food brought
         for event_name in upcoming_events:
@@ -254,15 +273,44 @@ def profile():
                         is_bringing = False
                 except TypeError:
                     print("---------Type error through upcomming events list--------")
-                if is_bringing:
+
+                print("------------------------")
+                print(1)
+                for event in food:
+                    print(event)
+                    somelist = []
+                    somelist.append(event)
+                print("------------------------")
+
+
+                # if is_bringing:
                     
-                    for food_item in food[1]:
-                        food_list += [food_item]
+                for food_item in food[1]:
+                    food_list += [food_item]
+
+                # food_list = []
+                # iteration = 0
+                for food_item in food:
+
+                    food_list.append(food_item)
+
+                print(food_list, "---------foodlist")
+            print("------------------------")
+            print(2)
+            # for event in food:
+            #     print(food_list)
+            print("------------------------")
+
 
             if food_list != []:
                 event_name_list += [[event_name['name'], food_list]]
             else:
                 event_name_list += [[event_name['name']]]
+
+        print("------------------------")
+        for event in event_name_list:
+            print(event)
+        print("------------------------")
 
 
         event_name_list_previous = []
@@ -295,9 +343,7 @@ def profile():
         except UnboundLocalError:
             pass
         
-        #61b49681ac8316b54be9b8ce patrik
 
-        events = ["somthng"]
         # except:
         #     pass
         return render_template(
