@@ -195,7 +195,34 @@ Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?que
 
 #### User stories covered: 9
 
+### Upcoming events:
+![Upcoming events image](/assets/readme/user-stories/upcoming-events.png)
+* Shows all events that have not happened yet.
+* Shows dishes that will be brought
+
+#### User stories covered: 8
+
+### Past events:
+![Past events image](/assets/readme/user-stories/past-events.png)
+* Shows all events that have happened.
+* Shows dishes that were brought
+
+#### User stories covered: 11
+
+### Bring dish:
+![Bring dish button image](/assets/readme/user-stories/bring-dish-button.png)
+![Bring dish modal image](/assets/readme/user-stories/bring-dish-modal.png)
+* Provides the option to add to dishes that will be brought to event.
+* Gives option to choose which event.
+
+#### User stories covered: 10
+
 ### Features Left to be Implemented
+
+1. See event date and details.
+2. Join family by code and hide families.
+3. Add comments to events.
+
 
 [Back to Contents](#contents)
 
@@ -350,13 +377,13 @@ Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?que
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-|  |  |  | Works as expected |
-|  |  |  | Works as expected |
+| Upcoming events | Navigate to Profile page and look at upcoming events | See upcoming events | Works as expected |
+| Past events | Navigate to Profile page and look at past events | See past events | Works as expected |
 
 <details><summary>Screenshots</summary>
 
-![Proof image]()
-![Proof image]()
+![Upcoming events image](/assets/readme/user-stories/upcoming-events.png)
+![Past events image](/assets/readme/user-stories/past-events.png)
 
 </details>
 
@@ -378,13 +405,13 @@ Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?que
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-|  |  |  | Works as expected |
-|  |  |  | Works as expected |
+| Bring dish | Navigate to profile page, click "Bring dish", choose event, complete form | dishes are submitted | Works as expected |
 
 <details><summary>Screenshots</summary>
 
-![Proof image]()
-![Proof image]()
+![Bring dish button image](/assets/readme/user-stories/bring-dish-button.png)
+![Bring dish modal image](/assets/readme/user-stories/bring-dish-modal.png)
+![Bring dish completed image](/assets/readme/user-stories/bring-dish-complete.png)
 
 </details>
 
@@ -392,13 +419,11 @@ Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?que
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-|  |  |  | Works as expected |
-|  |  |  | Works as expected |
+| Past events | Navigate to Profile page and look at past events | See past events | Works as expected |
 
 <details><summary>Screenshots</summary>
 
-![Proof image]()
-![Proof image]()
+![Past events image](/assets/readme/user-stories/past-events.png)
 
 </details>
 
@@ -526,7 +551,7 @@ echo web: python app.py > Procfile
 - [Background Image](https://unsplash.com/photos/7VOyZ0-iO0o)
 - [Calendar Image](https://unsplash.com/photos/bwOAixLG0uc)
 
-Team 7 🎄
+Santa's Kitchen Nightmare 🎄
 
 [Back to Contents](#contents)
 
