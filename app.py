@@ -274,7 +274,7 @@ def profile():
                 except TypeError:
                     print("---------Type error through upcomming events list--------")
 
-                print("------------------------")
+                print("-----------somelisteventlist-------------")
                 print(1)
                 for event in food:
                     print(event)
@@ -284,15 +284,15 @@ def profile():
 
 
                 # if is_bringing:
-                    
+
                 for food_item in food[1]:
                     food_list += [food_item]
 
                 # food_list = []
                 # iteration = 0
-                for food_item in food:
+                # for food_item in food:
 
-                    food_list.append(food_item)
+                #     food_list.append(food_item)
 
                 print(food_list, "---------foodlist")
             print("------------------------")
