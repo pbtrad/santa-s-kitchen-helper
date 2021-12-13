@@ -109,48 +109,65 @@
 <!-- Previous Container -->
 <div class="row justify-content-between mt-5">
 
-    <div class="col-3">
+    <div class="col-5">
         <h3 class="x-mas-text">Previous Events</h3>
         <div class="row">
-            <div class="col-12 event-container">
+            <div class="col-12 event-container mb-5">
+
+                {% for name in event_name_list_previous %}
+
+                    {% if event == "" %}
+                        {% else %}
+                            <strong>{{ name[0] }}</strong>:
+                        {% endif %}
+
+                        {% if loop.first %}
+                            Bring These Dishes:
+                        {% endif %}
+
+                        {% for food in name[1] %}
+                            <strong>{{ food }}</strong>
+                            {% if not loop.last %}
+                                and
+                            {% endif %}
+                        {% endfor %}
+
+                        <br>
+                {% endfor %}
 
             </div>
         </div>
     </div>
 
     <!-- Upcoming Container -->
-    <div class="col-7">
+    <div class="col-6">
         <h3 class="x-mas-text">Upcoming Events</h3>
 
         <div class="row">
-            <div class="col-12 event-container" style="min-height: 15rem;">
+            <div class="col-12 event-container mb-5">
 
                 {% for name in event_name_list %}
 
-                <!-- {{event}} -->
-                {% if event == "" %}
-                    {% else %}
-                   <strong>{{ name[0] }}</strong>:
-
-                    {% endif %}
-                    
-                    
-
+                    {% if event == "" %}
+                        {% else %}
+                            <strong>{{ name[0] }}</strong>:
+                        {% endif %}
 
                         {% if loop.first %}
                             Bring These Dishes:
                         {% endif %}
-                    {% for food in name[1] %}
-                        <strong>{{ food }}</strong>
-                        {% if not loop.last %}
-                            and
-                        {% endif %}
-                    {% endfor %}
 
-                    <br>
+                        {% for food in name[1] %}
+                            <strong>{{ food }}</strong>
+                            {% if not loop.last %}
+                                and
+                            {% endif %}
+                        {% endfor %}
+
+                        <br>
                 {% endfor %}
             <div class="col-12">
-                
+
             </div>
         </div>
     </div>
@@ -186,17 +203,20 @@
                             <legend for="event_description" style="margin-bottom: 0;">Date</legend>
                             <select name="date_month" id="date_month">
                                 {% for month in date_list %}
-                                <option value="{{ loop.index0 }}">{{ month[0] }}</option>
+                                <option value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">{{ month[0] }}</option>
                                 {% endfor %}
+
+
+
                             </select>
                             <select name="date_day" id="date_day">
                                 {% for day in range(1, 32) %}
-                                <option value="{{ loop.index }}">{{ day }}</option>
+                                <option value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">{{ day }}</option>
                                 {% endfor %}
                             </select>
                             <select name="date_year" id="date_year">
                                 {% for year in range(year, year + 5) %}
-                                <option value="year">{{ year }}</option>
+                                <option value="{{ year }}">{{ year }}</option>
                                 {% endfor %}
                             </select>
                         </div>
