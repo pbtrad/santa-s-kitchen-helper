@@ -1,9 +1,10 @@
 # Santa's Kitchen Helper
+To view the live website, click [here](https://santas-kitchen-helper.herokuapp.com/).  \
+  \
+![Website responsive mockup](/assets/readme/amiresponsive.png)
 
-![Add Image Here]()
-
-Introduction/Overview
-
+Santa's Kitchen Helper is a tool that allows families to organise their events better. It is made mostly for Christmas, yet can be developed for all year round.  \
+The application has features that allow families to create their own group, add events and also add reminders of what dishes they will bring to said event.
 ## Contents
 
 - [UX](#ux)
@@ -32,6 +33,11 @@ Introduction/Overview
 ## UX
 
 ### User Stories
+
+#### As a first time visitor, I want to:
+1. Have a mission statement to know what the website is about.
+2. Have a way to easily navigate.
+3. 
 
 ### Design
 
