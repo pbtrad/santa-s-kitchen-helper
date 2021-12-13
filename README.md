@@ -35,6 +35,43 @@ Introduction/Overview
 
 ### Design
 
+### Database Design
+
+Using MongoDb NoSQL database the following collections were created.
+
+Users collection:
+
+| Title        | Data Type|
+| ------------- |:-------------:|
+| id:      | ObjectId |
+| name      | string      |
+| email | string      |
+| pass_ | binary_hashed_string |
+
+Event collection:
+
+| Title        | Data Type|
+| ------------- |:-------------:|
+| id:      | ObjectId |
+| name      | string      |
+| date | string      |
+| event | string |
+| email | string |
+| family | string |
+| description | string |
+| active | boolean |
+| food | array |
+                   
+Family collection:
+| Title        | Data Type|
+| ------------- |:-------------:|
+| id:      | ObjectId |
+| name      | string      |
+| date | string      |
+| events | array |
+| members | array |
+
+
 #### Typograhpy
 
 Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
