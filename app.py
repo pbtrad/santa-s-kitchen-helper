@@ -143,18 +143,6 @@ def logout():
         return render_template('register.html')
 
 
-
-    # working not and aggragators
-    # test = db.tset.find({"name":{"$ne": "1"}})
-    # test = db.tset.find(
-    #     {"$and": [
-    #         {"name": {"$ne": "1"}},
-    #         {"name": {"$ne": "2"}}
-    #     ]}
-    # )
-        # test = db.families.find({"members": {"$not": { user['_id']}}})
-
-
 # Provisional Profile
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -164,16 +152,7 @@ def profile():
         #userDoc = db.users.find_one({"email": session['email']})
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
-
-        # try:
-
-
-
         test = db.families.find({"members": {"$not": { user['_id']}}})
-        # print(test.countDocuments({"members": {"$not": { user['_id']}}}))
-        # print(db.families.count({"members": {"$not": { user['_id']}}}))
-
-        # print(all_familiess)
         #create eventlist
         eventIds = []
         for family in families:
@@ -182,19 +161,11 @@ def profile():
                 for event in event_array:
                     eventIds.append(event)
         events = []
-        # for id in eventIds:
-        #     events.append(db.families.find_one({"_id": ObjectId(id)}))
-        # create datelist
         date_list = []
         months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         year = datetime.date.today().year
         for month in range(1, 13):
             date_list.append([months[month - 1], monthrange(year,month)[1]])
-        # print(datetime.datetime.now())
-
-
-
-
 
         # join family list
         # returns all families the user is NOT a part of
@@ -203,12 +174,6 @@ def profile():
         # in family list
         # returns all families the user IS a part of
         in_family = db.families.find({"members": user["_id"]})
-
-        # # all user family events
-        # # returns all active events for user
-        # all_events_list = []
-        # for family in in_family:
-        #     all_events_list.append(family['events'])
 
         # All events from all familes user is a part of
         events_list = {}
@@ -219,14 +184,8 @@ def profile():
             for event in family["events"]:
                 events_list["$or"].append({"_id": ObjectId(event)})
 
-
-        # except:
-        #     pass
-        # searches events
-
         # Splits events into upcoming and previous
         events_list = db.events.find(events_list)
-        print(events_list)
         event_name_list = []
         upcoming_events = []
         previous_events = []
@@ -235,7 +194,6 @@ def profile():
             for time_check in events_list:
                 event_date = time_check['date']
                 day = event_date[0:2].replace("-","")
-                print(day, ">>>>>>>>>>>>>>>>>>>>")
 
                 if datetime.datetime(int(event_date[6:10]), int(event_date[3:5]), int(day) ) > datetime.datetime.now():
                     upcoming_events.append(time_check)
@@ -246,19 +204,6 @@ def profile():
         except Exception as e:
             print(e)
             print("I have lost events")
-
-
-
-
-        print("--------------------------------")
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
-        print (events_list)
-        for event in events_list:
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-            print(event)
-        print("---------------------------------")
-
 
         # Creates list with event, and food brought
         for event_name in upcoming_events:
@@ -274,44 +219,20 @@ def profile():
                 except TypeError:
                     print("---------Type error through upcomming events list--------")
 
-                print("-----------somelisteventlist-------------")
-                print(1)
                 for event in food:
-                    print(event)
                     somelist = []
                     somelist.append(event)
-                print("------------------------")
-
-
-                # if is_bringing:
 
                 for food_item in food[1]:
                     food_list += [food_item]
-
-                # food_list = []
-                # iteration = 0
-                # for food_item in food:
-
-                #     food_list.append(food_item)
-
-                print(food_list, "---------foodlist")
-            print("------------------------")
-            print(2)
-            # for event in food:
-            #     print(food_list)
-            print("------------------------")
-
 
             if food_list != []:
                 event_name_list += [[event_name['name'], food_list]]
             else:
                 event_name_list += [[event_name['name']]]
 
-        print("------------------------")
         for event in event_name_list:
             print(event)
-        print("------------------------")
-
 
         event_name_list_previous = []
         # Creates previous list with event, and food brought
@@ -342,10 +263,7 @@ def profile():
                 bring_dish_events_list += [[event["_id"], event["name"]]]
         except UnboundLocalError:
             pass
-        
 
-        # except:
-        #     pass
         return render_template(
             'profile.html',
             user=user,
@@ -358,7 +276,6 @@ def profile():
             event_name_list_previous=event_name_list_previous,
             bring_dish_events_list=bring_dish_events_list,
             test=test,
-           
         )
     else:
         return redirect(url_for("login"))
@@ -407,10 +324,8 @@ def event():
             print(family_name)
             event = {
                 "name": request.form.get("name"),
-                # "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
                 "date":  str(day) + "/" + str(month) + "/" + str(year),
                 "event": request.form.get("event_food"),
-                
                 "family": family_name,
                 "description": request.form.get("description"),
                 "active": request.form.get("active"),
@@ -478,14 +393,9 @@ def add_dish_event():
             dish.append(request.form.get("dish_4"))
 
         dishes.append(dish)
-        print(dishes)
-        print(event_found)
-        print(dishes, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        print()
 
         iteration = 0
         food_list = event_found["food"]
-        print((food_list), "<<<<<<<<<<<<<<<<<<<<<<")
         list_length = len(event_found["food"])
         if list_length == 0:
                 food_list.append(dishes)
@@ -494,32 +404,12 @@ def add_dish_event():
                 if user_id == find_dishes[0]:
             #         # print(find_dishes)
                     food_list[iteration] = dishes
-                    print("------------------EQUALS------------------")
                     break
                 if iteration >= list_length - 2:
-                    print("---------------------TRUTH-----------------")
                     food_list.append(dishes)
                     break
 
                 iteration += 1
-        print(iteration)
-        print(list_length)
-        # print(food_list, "Im food list<><><><>")
-        # event_found['food'] = food_list
-        # print("----------------")
-        # print(event_found)
-            # print(find_dishes[0])
-        # dishes = {
-        #     "_id": ObjectId(event_id),
-        #     "dish_1": request.form.get("dish_1"),
-        #     "dish_2": request.form.get("dish_2"),
-        #     "dish_3": request.form.get("dish_3"),
-        #     "dish_4": request.form.get("dish_4")
-        # }
-        # print(dishes)
-        # print()
-
-        print()
 
         db.events.update_one(
             {"_id": ObjectId(event_id)},
