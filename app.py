@@ -167,13 +167,6 @@ def profile():
 
         # try:
 
-        print("-------------------------------")
-
-
-
-
-        print("-------------------------------")
-
 
 
         test = db.families.find({"members": {"$not": { user['_id']}}})
@@ -231,6 +224,7 @@ def profile():
 
         # Splits events into upcoming and previous
         events_list = db.events.find(events_list)
+        print(events_list)
         event_name_list = []
         upcoming_events = []
         previous_events = []
@@ -271,8 +265,6 @@ def profile():
                 event_name_list += [[event_name['name']]]
 
 
-        print("-------------------------------------")
-
         event_name_list_previous = []
         # Creates previous list with event, and food brought
         for event_name in previous_events:
@@ -296,21 +288,13 @@ def profile():
             else:
                 event_name_list_previous += [[event_name['name']]]
 
-        print("-------------------------------------")
         try:
             bring_dish_events_list = []
-            print(bring_dish_events)
             for event in bring_dish_events:
-                print(event["_id"])
-                print(event["name"])
                 bring_dish_events_list += [[event["_id"], event["name"]]]
-            print(bring_dish_events_list)
         except UnboundLocalError:
             pass
-
-
-        print(datetime.datetime(2121, 1, 1))
-        print(year)
+        
         #61b49681ac8316b54be9b8ce patrik
 
         events = ["somthng"]
@@ -391,9 +375,10 @@ def event():
             #add event to families event list
             family = db.families.find_one({"name": family_name})
             print(family)
-            events = family["event"]
+            events = family["events"]
+            print(events)
             events.append(_id)
-            family["event"] = events
+            family["events"] = events
             db.families.update_one(
             {"_id": ObjectId(family["_id"])},
             {"$set": family}
