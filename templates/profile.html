@@ -1,189 +1,140 @@
 {% extends "base.html" %}
-{% set active_page = 'profile' %}
 {% block content %}
 {% if message  %}
-    <div class="alert alert-secondary w-50" role="alert">
-        <p>{{ message }}</p>
-    </div>
-{% endif %}
-<!-- Header -->
-<div class="row">
-    <h1 class="col text-center x-mas-text mt-5">{{ user.name|title }}'s Profile Page</h1>
+<div class="alert alert-secondary w-50" role="alert">
+    <p>{{ message }}</p>
 </div>
+{% endif %}
 
-<div class="row">
-    <!-- Avatar and edit profile -->
-    <div class="col-12 col-md-6 col-lg-3">
-        <div class="justify-content-center">
-            <!-- <h3 class="col-12 text-center x-mas-text">{{ user.name|title }}'s Profile</h3> -->
-            <img src="{{ url_for('static', filename='images/placeholder-user.jpg') }}" alt="User avatar" class="col-12 user-avatar mt-5 box-shadow">
-            <button class="custom-button blue-button col-6 mt-3" onclick="showEdit();">
-                Edit Profile
-                <i class="fas fa-cog"></i>
+<div class="row gx-5 p-3 mt-4">
+    <!-- Heading and Edit Button -->
+    <div class="col-sm-12 col-md-4">
+        <h1 class="col text-center xmas-text">{{ user.name|title }}'s Profile Page</h1>
+        <button class="btn blue-button mt-4 w-100" onclick="showEdit();">
+            Edit Profile
+            <i class="fas fa-cog"></i>
+        </button>
+        <!-- Edit Profile Form -->
+        <div class="hide mt-4" id="edit-profile-form">
+            <form method="POST" action="{{ url_for('edit_profile', user_id=user._id) }}">
+                <div class="input-group mb-3" id="user_username">
+                    <span class="input-group-text" id="username">Username</span>
+                    <input type="text" class="form-control" value="{{ user.name }}" aria-label="Username"
+                        aria-describedby="username" name="username" required>
+                </div>
+                <div class="input-group mb-3" id="user_email">
+                    <span class="input-group-text" id="email">Email</span>
+                    <input type="text" class="form-control" value="{{ user.email }}" aria-label="Email"
+                        aria-describedby="email" name="email">
+                </div>
+                <div class="input-group mb-3" id="user_password">
+                    <span class="input-group-text" id="password">New Password</span>
+                    <input type="text" class="form-control" placeholder="Enter new password" aria-label="New Password"
+                        aria-describedby="Change password" name="password">
+                </div>
+                <div class="input-group mb-3" id="user_old_password">
+                    <span class="input-group-text" id="old_password">Old Password</span>
+                    <input type="text" class="form-control" placeholder="Enter previous password"
+                        aria-label="Old Password" aria-describedby="previous password" name="old_password">
+                </div>
+                <button type="submit" class="btn btn-green float-end">Update</button>
+            </form>
+            <button class="btn btn-red" onclick="showEdit();">
+                Close
             </button>
         </div>
-        <div class="row justify-content-center">
 
+        <!-- Create new event button -->
+        <div class="mt-4">
+            <h3 class="xmas-text text-center">Create a New Event or Family</h3>
+            <button type="button" class="btn btn-green mt-3 w-100" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Create A New Event
+                <i class="fas fa-calendar-week"></i>
+            </button>
+            <button class="btn magenta-button mt-3 w-100" data-bs-toggle="modal" data-bs-target="#familyModal">
+                Create Family
+                <i class="fas fa-user-friends"></i>
+            </button>
+            <button class="btn magenta-button mt-3 w-100" data-bs-toggle="modal" data-bs-target="#bringDish">
+                Bring Dish
+                <i class="fas fa-utensils"></i>
+            </button>
         </div>
-        <!-- Edit profile form -->
-        <div class="row">
-            <div class="form-container-fluid col-12 mx-auto hide" id="edit-profile-form">
-                <form method="POST" action="{{ url_for('edit_profile', user_id=user._id) }}">
-                    <div class="input-group mb-3" id="user_username">
-                        <span class="input-group-text" id="username">Username</span>
-                        <input type="text" class="form-control" value="{{ user.name }}" aria-label="Username"
-                            aria-describedby="username" name="username" required>
-                    </div>
-
-                    <div class="input-group mb-3" id="user_email">
-                        <span class="input-group-text" id="email">Email</span>
-                        <input type="text" class="form-control" value="{{ user.email }}" aria-label="Email"
-                            aria-describedby="email" name="email">
-                    </div>
-                    <div class="input-group mb-3" id="user_password">
-                        <span class="input-group-text" id="password">New Password</span>
-                        <input type="text" class="form-control" placeholder="Enter new password" aria-label="New Password"
-                            aria-describedby="Change password" name="password">
-                    </div>
-                    <div class="input-group mb-3" id="user_old_password">
-                        <span class="input-group-text" id="old_password">Old Password</span>
-                        <input type="text" class="form-control" placeholder="Enter previous password" aria-label="Old Password"
-                            aria-describedby="previous password" name="old_password">
-                    </div>
-                    <button type="submit" class="btn btn-primary float-end">Update</button>
-                </form>
-                <button class="btn btn-secondary"
-                onclick="showEdit();">
-                Close
+        <!-- Join Family Selction -->
+        <div class="my-4">
+            <form method="POST" action="{{ url_for('add_to_family', user_id=user['_id'])}}">
+                <h3 class="xmas-text text-center">Join a new family</h3>
+                <select class="w-100" name="all_families_name" id="all_families_name">
+                    {% for family in join_family %}
+                    <option value="{{family.name}}">{{family.name}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn teal-button mt-3 w-100">Join Family <i
+                        class="fas fa-people-arrows"></i>
                 </button>
-            </div>
+            </form>
+        </div>
+    </div>
+    <!-- Previous and Upcoming Events Event-->
+    <div class="col-sm-12 col-md-8">
+        <!-- Upcoming Events -->
+        <h3 class="xmas-text">Upcoming Events</h3>
+        <div class="event-container">
+            {% for name in event_name_list %}
+
+            {% if event == "" %}
+            {% else %}
+            <strong>{{ name[0] }}</strong>:
+            {% endif %}
+
+            {% if loop.first %}
+            Bring These Dishes:
+            {% endif %}
+
+            {% for food in name[1] %}
+            <strong>{{ food }}</strong>
+            {% if not loop.last %}
+            and
+            {% endif %}
+            {% endfor %}
+
+            <br>
+            {% endfor %}
+        </div>
+
+        <!-- Previous Events -->
+        <h3 class="xmas-text mt-3">Previous Events</h3>
+        <div class="event-container">
+            {% for name in event_name_list_previous %}
+
+            {% if event == "" %}
+            {% else %}
+            <strong>{{ name[0] }}</strong>:
+            {% endif %}
+
+            {% if loop.first %}
+            Bring These Dishes:
+            {% endif %}
+
+            {% for food in name[1] %}
+            <strong>{{ food }}</strong>
+            {% if not loop.last %}
+            and
+            {% endif %}
+            {% endfor %}
+
+            <br>
+            {% endfor %}
         </div>
     </div>
 
-    <!-- event buttons  -->
-    <div class="col-12 col-md-6 col-lg-9 mt-5">
-        <div class="row justify-content-around">
 
-            <!-- Create new event button -->
-            <div class="col-12 col-md-2 col-lg-3" style="position: relative;">
-                <h3 class="x-mas-text text-center">Create a New Event or Family</h3>
-                    <div class="text-center">
-                        <button type="button" class="mt-3 green-button custom-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Create A New Event
-                            <i class="fas fa-calendar-week"></i>
-                        </button>
-                        <button class="custom-button magenta-button col-6" data-bs-toggle="modal" data-bs-target="#familyModal">
-                            Create Family
-                            <i class="fas fa-user-friends"></i>
-                        </button>
-                        <button class="custom-button magenta-button col-6" data-bs-toggle="modal" data-bs-target="#bringDish">
-                            Bring Dish
-                            <i class="fas fa-utensils"></i>
-                        </button>
-                    </div>
-            </div>
-
-            <div class="col-12 col-md-2 col-lg-3">
-                <form method="POST" action="{{ url_for('add_to_family', user_id=user['_id'])}}">
-                    <h3 class="x-mas-text text-center">Join a new family</h3>
-                    <div class="row justify-content-center">
-                        <select class="mx-auto" name="all_families_name" id="all_families_name">
-                            {% for family in join_family %}
-                                <option value="{{family.name}}">{{family.name}}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="submit" class="teal-button custom-button mt-3">Join Family<i class="fas fa-people-arrows"></i></button>
-                    </div>
-                </form>
-            </div>
-
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-</div>
-
-
-
-
-
-<!-- Previous Container -->
-<div class="row justify-content-between mt-5">
-
-    <div class="col-5">
-        <h3 class="x-mas-text">Previous Events</h3>
-        <div class="row">
-            <div class="col-12 event-container mb-5">
-
-                {% for name in event_name_list_previous %}
-
-                    {% if event == "" %}
-                        {% else %}
-                            <strong>{{ name[0] }}</strong>:
-                        {% endif %}
-
-                        {% if loop.first %}
-                            Bring These Dishes:
-                        {% endif %}
-
-                        {% for food in name[1] %}
-                            <strong>{{ food }}</strong>
-                            {% if not loop.last %}
-                                and
-                            {% endif %}
-                        {% endfor %}
-
-                        <br>
-                {% endfor %}
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Upcoming Container -->
-    <div class="col-6">
-        <h3 class="x-mas-text">Upcoming Events</h3>
-
-        <div class="row">
-            <div class="col-12 event-container mb-5">
-
-                {{ event_name_list }}
-                {% for name in event_name_list %}
-
-                    {% if event == "" %}
-                        {% else %}
-                            <strong>{{ name[0] }}</strong>:
-                        {% endif %}
-
-                        {% if loop.first %}
-                            Bring These Dishes:
-                        {% endif %}
-
-                        {% for food in name[1] %}
-                            <strong>{{ food }}</strong>
-                            {% if not loop.last %}
-                                and
-                            {% endif %}
-                        {% endfor %}
-
-                        <br>
-                {% endfor %}
-            <div class="col-12">
-
-            </div>
-        </div>
-    </div>
-
-</div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/editProfile.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/editProfile.js') }}"></script>
 
 <!-- Modal for creating event -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -201,18 +152,16 @@
                         <input type="text" class="form-control" id="name" name="name" minlength="5" maxlength="50"
                             required />
                     </div>
-
                     <!-- date -->
                     <div class="form-group">
                         <fieldset class="mt-1">
                             <legend for="event_description" style="margin-bottom: 0;">Date</legend>
                             <select name="date_month" id="date_month">
                                 {% for month in date_list %}
-                                <option value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">{{ month[0] }}</option>
+                                <option
+                                    value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">
+                                    {{ month[0] }}</option>
                                 {% endfor %}
-
-
-
                             </select>
                             <select name="date_day" id="date_day">
                                 {% for day in range(1, 32) %}
@@ -224,21 +173,19 @@
                                 <option value="{{ year }}">{{ year }}</option>
                                 {% endfor %}
                             </select>
-                        </div>
-                    </fieldset>
-
+                        </fieldset>
+                    </div>
                     <!-- Family -->
                     <div class="form-group">
                         <fieldset class="mt-1">
                             <legend for="event_description" style="margin-bottom: 0;">Family</legend>
                             <select name="family" id="family">
                                 {% for family in families %}
-                                    <option value="{{ family.name }}">{{ family.name }}</option>
+                                <option value="{{ family.name }}">{{ family.name }}</option>
                                 {% endfor %}
                             </select>
                         </fieldset>
                     </div>
-
                     <!-- Event Description -->
                     <div class="form-group mt-2">
                         <label for="event_description">Event Description</label>
@@ -249,27 +196,25 @@
                     <div class="form-group">
                         <p><span class="require">*</span> - required fields</p>
                     </div>
-
                     <!-- Submit Button -->
                     <div class="form-group">
-                        <button type="submit">
+                        <button type="submit" class="btn btn-green">
                             Create
                         </button>
-                        <button>
+                        <button class="btn btn-red">
                             Cancel
                         </button>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-red" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal for creating famnily -->
+<!-- Modal for creating family -->
 <div class="modal fade" id="familyModal" tabindex="-1" aria-labelledby="familyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -281,21 +226,21 @@
                 <form action="{{ url_for('family') }}" method="POST">
                     <div class="form-group">
                         <label for="name">Family Name<span class="require">*</span></label>
-                        <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                            required />
+                        <input type="text" class="form-control" id="family_name" name="family_name" minlength="5"
+                            maxlength="50" required />
                     </div>
                     <div class="form-group">
                         <p><span class="require">*</span> - required fields</p>
                     </div>
                     <div class="form-group">
-                        <button type="submit">
+                        <button type="submit" class="btn btn-green">
                             Create
                         </button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-red" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -312,52 +257,42 @@
             <div class="modal-body">
                 <form action="{{ url_for('add_dish_event') }}" method="POST">
                     <div class="form-group">
-
-
                         <div class="form-group">
                             <fieldset class="mt-1">
                                 <legend for="event_description" style="margin-bottom: 0;">Event</legend>
                                 <select name="event_id" id="event_id" class="px-5">
                                     {% for event in bring_dish_events_list %}
-                                        <option value="{{ event[0] }}">{{ event[1] }}</option>
+                                    <option value="{{ event[0] }}">{{ event[1] }}</option>
                                     {% endfor %}
                                 </select>
                             </fieldset>
                         </div>
-
-
                         <input type="hidden" name="dishTotal" id="dishTotal" value="1">
-
-                        
-                    <label for="name">Dish 1<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="dish_1" name="dish_1" minlength="3" maxlength="50"
-                    required />
-
-                    <label for="name">Dish 2<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="dish_2" name="dish_2" minlength="0" maxlength="50"
-                    />
-
-                    <label for="name">Dish 3<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="dish_3" name="dish_3" minlength="0" maxlength="50"
-                    />
-
-                    <label for="name">Dish 4<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="dish_4" name="dish_4" minlength="0" maxlength="50"
-                    />
-
+                        <label for="name">Dish 1<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="dish_1" name="dish_1" minlength="3" maxlength="50"
+                            required />
+                        <label for="name">Dish 2<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="dish_2" name="dish_2" minlength="0"
+                            maxlength="50" />
+                        <label for="name">Dish 3<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="dish_3" name="dish_3" minlength="0"
+                            maxlength="50" />
+                        <label for="name">Dish 4<span class="require">*</span></label>
+                        <input type="text" class="form-control" id="dish_4" name="dish_4" minlength="0"
+                            maxlength="50" />
                     </div>
                     <div class="form-group">
                         <p><span class="require">*</span> - required fields</p>
                     </div>
                     <div class="form-group">
-                        <button type="submit">
+                        <button type="submit" class="btn btn-green">
                             Create
                         </button>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-red" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -374,7 +309,4 @@
     {{ event.description }}
 </div>
 {% endfor %}
-
-
-<!-- <script src="{{ url_for('static', filename='js/profile.js') }}"></script> -->
 {% endblock %}

@@ -24,8 +24,8 @@ body {
 .xmas-text {
     color: var(--white);
     font-family: "Emilys Candy", sans-serif;
-    font-size: 2.5rem;
     filter: drop-shadow(1px 1px 2px var(--black));
+    letter-spacing: 3px;
     text-shadow: 2px 2px 4px var(--black),
                 -2px -2px 6px var(--black);
 }
@@ -74,23 +74,6 @@ body {
 .navbar-nav {
 	display: flex;
 	gap: 15px;
-}
-
-.navbar-nav li {
-    padding: 0;
-}
-
-.navbar-nav li a {
-    padding: .375rem .75rem;
-}
-
-.nav-link {
-    color: var(--white);
-    text-shadow: 1px 1px var(--grey);
-}
-
-.nav-link:hover {
-    color: var(--white);
 }
 
 .offcanvas-header h5 {
@@ -195,7 +178,13 @@ gap: 15px;
 
 /* --------------- Contact */
 .contact-container {
-    color: #fafafa;
+    color: #F9FCFB;
+}
+
+.team-name {
+    margin-top: 20px;
+    color: #F9FCFB;
+    text-shadow: 2px 2px #000;
 }
 
 .member-row {
@@ -203,7 +192,7 @@ gap: 15px;
     margin: 20px;
     padding: 15px;
     border-radius: 25px;
-    border: 2px solid #fafafa
+    border: 2px solid #F9FCFB;
 }
 
 .member-row .row {
@@ -211,7 +200,7 @@ gap: 15px;
 }
 
 .member-name hr {
-    border: 2px solid #fafafa;
+    border: 2px solid #F9FCFB;
     border-radius: 2px;
     opacity: 1;
 }
@@ -222,7 +211,7 @@ gap: 15px;
 
 .member-social a {
     text-decoration: none;
-    color: #fafafa;
+    color: #21BF73;
 }
 
 .member-social a i {
@@ -243,42 +232,3 @@ gap: 15px;
         padding: 7%;
     }
 }
-
-/* Event create/edit page */
-
-/* .event-container {
-    background-color: #F9FCFB;
-    color: #000;
-    border: 2px solid #000;
-}
-
-.event-form * {
-    margin: 0;
-    padding: 0;
-}
-
-.event-form p {
-    font-weight: 500;
-}
-
-.event-form input {
-    width: 100%;
-}
-
-.event-form .row {
-    margin: 10px 0 10px 0;
-}
-
-.add-button {
-    border: none;
-    background: none;
-    margin-left: 10px;
-}
-
-.form-bottom-button {
-    padding: 3px 7px;
-}
-
-.food-list-row {
-    height: 100px;
-} */
