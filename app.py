@@ -534,6 +534,9 @@ def add_to_family(user_id):
     if request.method == 'POST':
         family_name = request.form.get("all_families_name")
         print(family_name)
+        if db.families.count_documents({"name": family_name}) == 0:
+            return redirect(url_for("profile"))
+        print(family_name)
         family = db.families.find_one({"name": family_name})
         print(family)
         members = family["members"]
