@@ -228,102 +228,70 @@ def profile():
         # except:
         #     pass
         # searches events
+
+        # Splits events into upcoming and previous
         events_list = db.events.find(events_list)
-
-        # print(events_list)
-        # for te in events_list:
-        #     print(te)
-        #     print()
-
-        # build name list for front end
         event_name_list = []
-        
-        # try: #  Must have for new users
-        for event_name in events_list:
+        upcoming_events = []
+        previous_events = []
+        for time_check in events_list:
+            event_date = time_check['date']
+            if datetime.datetime(int(event_date[6:10]), int(event_date[0:2]), int(event_date[3:5])) > datetime.datetime.now():
+                upcoming_events.append(time_check)
+            else:
+                previous_events.append(time_check)
+
+        # Creates list with event, and food brought
+        for event_name in upcoming_events:
             food_list = []
             for food in event_name['food']:
-                print(len(food), "-----------------amfood start")
-                print(food, "-----------------amfood start")
+                try:
+                    is_bringing = True
+                    event_person_id = db.users.find_one({"_id": food[0]})['email']
+                    if event_person_id == userDoc["email"]:
+                        food_list += [db.users.find_one({"_id": food[0]})['name']] #name
+                    else:
+                        is_bringing = False
+                except TypeError:
+                    print("---------Type error through upcomming events list--------")
+                if is_bringing:
+                    for food_item in food[1]:
+                        food_list += [food_item]
 
-                print()
-                if food == "" or []:
-                    # food_list.append("False")
-                    print(food, "im food False")
-                else:
-                    try:
-                        is_bringing = True
-                        # print(db.users.find_one({"_id": food[0]})['email'], "-----------AM NAME")
-                        # print(userDoc['email'], "--------------am user-------------")
-                        event_person_id = db.users.find_one({"_id": food[0]})['email']
-                        if event_person_id == userDoc["email"]:
-                            food_list += [db.users.find_one({"_id": food[0]})['name']] #name
-                        else:
-                            is_bringing = False
-                    except TypeError:
-                        print("---------Type error through upcomming events list--------")
-                    if is_bringing:
-                        for food_item in food[1]:
-                            print(food[1], "IO am food") #food items
-                            food_list += [food_item]
-
-            print(food_list, "I am food list ----------MN")
-
-                    # for food_item in food:
-                    #     print(food_item, "I am food item")
-                    #     print(type(food_item))
-                        # print(db.users.find_one({"_id": food_item[0]}))
-                        # print(food_item[1])
-
-                    # food_list.append(food)
-                    # print(food_list.append(food), "i am error")
-                    # print(db.users.find_one({"_id": food}), "look at me")
-                    # print(food, "im food")
-
-            print(food_list, "---------------a am food list----------------")
             if food_list != []:
                 event_name_list += [[event_name['name'], food_list]]
             else:
                 event_name_list += [[event_name['name']]]
 
 
+        print("-------------------------------------")
 
+        event_name_list_previous = []
+        # Creates previous list with event, and food brought
+        for event_name in previous_events:
+            food_list = []
+            for food in event_name['food']:
+                try:
+                    is_bringing = True
+                    event_person_id = db.users.find_one({"_id": food[0]})['email']
+                    if event_person_id == userDoc["email"]:
+                        food_list += [db.users.find_one({"_id": food[0]})['name']] #name
+                    else:
+                        is_bringing = False
+                except TypeError:
+                    print("---------Type error through upcomming events list--------")
+                if is_bringing:
+                    for food_item in food[1]:
+                        food_list += [food_item]
 
-            print(food_list, "I am food list ----------------------")
-            print(event_name['name'], "I am event name----------------------")
-
-
-
-
-            # 61b49681ac8316b54be9b8ce
-
-            print(event_name["name"], "i am  name")
-
-
-            # print(event_name)
-            # print()
-            # print(event_name['name'])
-            print(event_name['food'])
-            # event_name_list.append(event_name['name'])  original
-        # except:
-        #     pass
+            if food_list != []:
+                event_name_list_previous += [[event_name['name'], food_list]]
+            else:
+                event_name_list_previous += [[event_name['name']]]
 
         print("-------------------------------------")
 
-        
-        print(event_name_list, "I am evetn name list finihs")
-        for te in event_name_list:
-            print(te)
-            # print()
-
-
-        # print(te)
-        # for t in te:
-        #     print(t["name"])
-        # print("I am time delta!!!!!!")
-        # print(datetime.dateime.now())
-
-
-        print("-------------------------------------")
+        print(datetime.datetime(2121, 1, 1))
         print(year)
         #61b49681ac8316b54be9b8ce patrik
 
@@ -339,6 +307,7 @@ def profile():
             date_list=date_list,
             year=year,
             event_name_list=event_name_list,
+            event_name_list_previous=event_name_list_previous,
             test=test
         )
     else:
@@ -381,10 +350,15 @@ def event():
             return redirect(url_for('profile'))
         else:
             family_name = request.form.get("family")
+            year = request.form.get("date_year")
+            day = request.form.get("date_day")
+            month = request.form.get("date_month")
+            print(year, )
             print(family_name)
             event = {
                 "name": request.form.get("name"),
-                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                # "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date":  day + "/" + month + "/" + year,
                 "event": request.form.get("event_food"),
                 "email": session["email"],
                 "family": family_name,
