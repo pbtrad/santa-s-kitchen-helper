@@ -37,7 +37,20 @@ The application has features that allow families to create their own group, add 
 #### As a first time visitor, I want to:
 1. Have a mission statement to know what the website is about.
 2. Have a way to easily navigate.
-3. 
+3. Be able to register for an account.
+4. Get feedback on the requirements of the registration process.
+5. Have the option to join a family group.
+6. Have the option of creating a family group.
+7. Be able to create events in the family group.
+8. Be able to see events from other members.
+
+#### As a recurring user, I want to: 
+9. Not have to sign in every time I visit the page.
+10. Have the option of editing my profile.
+11. Be able to add dishes that I will bring.
+12. See previous events.
+13. Have the option to edit my profile.
+14. See the contact details for the creators.
 
 ### Design
 
@@ -85,6 +98,7 @@ Family collection:
 #### Typograhpy
 
 Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
+Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?query=fuzzy)
 
 [Back to Contents](#contents)
 
