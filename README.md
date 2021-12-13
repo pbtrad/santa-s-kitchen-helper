@@ -124,6 +124,77 @@ Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?que
 
 #### User stories covered: 1
 
+### Register form:
+![Register form image](/assets/readme/user-stories/registration-form.png)
+* Gathers necessary information from user.
+* Provides visual cues if data type is correct or not.
+* Information asked is specific.
+
+#### User stories covered: 3, 4
+
+### Login form:
+![Login form image](/assets/readme/user-stories/login-form.png)
+* Gathers necessary information from user.
+* Provides visual cues if data type is correct or not.
+* Information asked is specific.
+
+#### User stories covered: 2, 3
+
+### Contact page:
+![Contact page image](/assets/readme/user-stories/contact-page.png)
+* Provides links to creators social pages.
+* Is appropriately themed with a made-up story about each creator.
+
+#### User stories covered: 13
+
+### Profile page:
+![Profile page image](/assets/readme/user-stories/profile-page.png)
+* Is the user's control center.
+* Provides buttons/choices for rest of features.
+* Displays user and events information.
+
+#### User stories covered: 8, 11
+
+### Profile edit page:
+![Profile edit page image](/assets/readme/user-stories/profile-edit-page.png)
+* Provides profile edit options, so user can change their information.
+* Is pre-populated with user's information.
+
+#### User stories covered: 12
+
+### Create event:
+![Create event button image](/assets/readme/user-stories/create-event-button.png)
+![Create event modal image](/assets/readme/user-stories/create-event.png)
+* Easy to find button.
+* Opens modal to create a new event.
+* Modal has clear requirements.
+
+#### User stories covered: 7
+
+### Join family:
+![Join family button image](/assets/readme/user-stories/join-family.png)
+* Easy to use list to join a family.
+* Button located on profile page, easy to find.
+
+#### User stories covered: 5
+
+### Create family:
+![Create family button image](/assets/readme/user-stories/create-family-button.png)
+![Create family modal image](/assets/readme/user-stories/create-family.png)
+* Provides option to create a new family. 
+* Opens modal with requested information.
+* Adds the user directly into family.
+
+#### User stories covered: 6
+
+### Session cookies:
+![Signed in image](/assets/readme/user-stories/signed-in.png)
+![Closed tab image](/assets/readme/user-stories/signed-in-closed.png)
+![Signed in image](/assets/readme/user-stories/signed-in-returned.png)
+* Keeps the user signed in when moving away from page. 
+
+#### User stories covered: 9
+
 ### Features Left to be Implemented
 
 [Back to Contents](#contents)
