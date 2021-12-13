@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-12 col-md-2 col-lg-3">
-                <form method="POST" action="#">
+                <form method="POST" action="{{ url_for('add_to_family', user_id=userDoc['_id'])}}">
                     <h3 class="x-mas-text text-center">Join a new family</h3>
                     <div class="row justify-content-center">
                         <select class="mx-auto" name="all_families_name" id="all_families_name">
@@ -305,16 +305,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ url_for('family') }}" method="POST">
+                <form action="{{ url_for('add_dish_event') }}" method="POST">
                     <div class="form-group">
 
 
                         <div class="form-group">
                             <fieldset class="mt-1">
                                 <legend for="event_description" style="margin-bottom: 0;">Family</legend>
-                                <select name="family" id="family">
-                                    {% for event_dish in add_event_dish %}
-                                        <option value="{{ event_dish.id}}">{{ event_dish.id }}</option>
+                                <select name="event_id" id="event_id" class="px-5">
+                                    {% for event in bring_dish_events_list %}
+                                        <option value="{{ event[0] }}">{{ event[1] }}</option>
                                     {% endfor %}
                                 </select>
                             </fieldset>
@@ -325,20 +325,20 @@
 
                         
                     <label for="name">Dish 1<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
+                    <input type="text" class="form-control" id="dish_1" name="dish_1" minlength="3" maxlength="50"
                     required />
 
                     <label for="name">Dish 2<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_2" name="dish_2" minlength="0" maxlength="50"
+                    />
 
                     <label for="name">Dish 3<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_3" name="dish_3" minlength="0" maxlength="50"
+                    />
 
                     <label for="name">Dish 4<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_4" name="dish_4" minlength="0" maxlength="50"
+                    />
 
                     </div>
                     <div class="form-group">
