@@ -11,21 +11,15 @@ The application has features that allow families to create their own group, add 
   - User Stories
   - Design
     - Wireframes
-    - Color Scheme
+    - Database Design
     - Typography
-    - Imagery
 - [Features](#features)
   - Exisiting Features
   - Features Left to be Implemented
 - [Technologies Used](#technologies-used)
-  - Languages
-  - Frameworks and Libraries
   - Tools
-  - Dependencies
 - [Testing](#testing)
 - [Deployment](#deployment)
-  - Github
-  - Heroku
 - [Credits and Acknowledgments](#credits-and-acknowledgments)
 
 ---
@@ -96,7 +90,7 @@ Family collection:
 
 #### Typograhpy
 
-Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)
+Heading font: [Emily's Candy](https://fonts.google.com/specimen/Emilys+Candy?subset=latin&query=candy)  \
 Letter font: [Fuzzy Bubbles](https://fonts.google.com/specimen/Fuzzy+Bubbles?query=fuzzy)
 
 [Back to Contents](#contents)
