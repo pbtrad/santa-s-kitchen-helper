@@ -161,7 +161,7 @@ def profile():
     # grab session users username from database
     if "email" in session:
         user = records.find_one({"email": session["email"]})
-        userDoc = db.users.find_one({"email": session['email']})
+        #userDoc = db.users.find_one({"email": session['email']})
         all_families = list(db.families.find())
         families = list(db.families.find({"members": user["_id"]}))
 
@@ -254,7 +254,7 @@ def profile():
                 try:
                     is_bringing = True
                     event_person_id = db.users.find_one({"_id": food[0]})['email']
-                    if event_person_id == userDoc["email"]:
+                    if event_person_id == user["email"]:
                         food_list += [db.users.find_one({"_id": food[0]})['name']] #name
                     else:
                         is_bringing = False
@@ -281,7 +281,7 @@ def profile():
                 try:
                     is_bringing = True
                     event_person_id = db.users.find_one({"_id": food[0]})['email']
-                    if event_person_id == userDoc["email"]:
+                    if event_person_id == user["email"]:
                         food_list += [db.users.find_one({"_id": food[0]})['name']] #name
                     else:
                         is_bringing = False
@@ -328,7 +328,7 @@ def profile():
             event_name_list_previous=event_name_list_previous,
             bring_dish_events_list=bring_dish_events_list,
             test=test,
-            userDoc=userDoc
+           
         )
     else:
         return redirect(url_for("login"))
@@ -378,9 +378,9 @@ def event():
             event = {
                 "name": request.form.get("name"),
                 # "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
-                "date":  day + "/" + month + "/" + year,
+                "date":  str(day) + "/" + str(month) + "/" + str(year),
                 "event": request.form.get("event_food"),
-                "email": session["email"],
+                
                 "family": family_name,
                 "description": request.form.get("description"),
                 "active": request.form.get("active"),
@@ -391,9 +391,9 @@ def event():
             #add event to families event list
             family = db.families.find_one({"name": family_name})
             print(family)
-            events = family["events"]
+            events = family["event"]
             events.append(_id)
-            family["events"] = events
+            family["event"] = events
             db.families.update_one(
             {"_id": ObjectId(family["_id"])},
             {"$set": family}
