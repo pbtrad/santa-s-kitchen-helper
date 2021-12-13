@@ -147,6 +147,8 @@ gap: 15px;
     color: #333;
     border: 2px solid #333;
     height: 5rem;
+    min-height: 15rem;
+    overflow: scroll;
 }
 
 .custom-button {
