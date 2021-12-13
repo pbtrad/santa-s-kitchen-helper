@@ -98,8 +98,8 @@ def register():
             new_email = user_data['email']
             #session['email'] = user_data
             #if registered redirect to logged in as the registered user
-            return render_template('profile.html', email=new_email, 
-                user=user_data, year=year)
+            return redirect(url_for('login', email=new_email, 
+                user=user_data, year=year))
     return render_template("register.html")
 
 
