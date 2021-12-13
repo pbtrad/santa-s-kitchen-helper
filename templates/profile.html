@@ -129,7 +129,6 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='js/editProfile.js') }}"></script>
 
 <!-- Modal for creating event -->
@@ -196,9 +195,6 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-green">
                             Create
-                        </button>
-                        <button class="btn btn-red">
-                            Cancel
                         </button>
                     </div>
                 </form>
