@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-12 col-md-2 col-lg-3">
-                <form method="POST" action="#">
+                <form method="POST" action="{{ url_for('add_to_family', user_id=userDoc['_id'])}}">
                     <h3 class="x-mas-text text-center">Join a new family</h3>
                     <div class="row justify-content-center">
                         <select class="mx-auto" name="all_families_name" id="all_families_name">
@@ -109,48 +109,65 @@
 <!-- Previous Container -->
 <div class="row justify-content-between mt-5">
 
-    <div class="col-3">
+    <div class="col-5">
         <h3 class="x-mas-text">Previous Events</h3>
         <div class="row">
-            <div class="col-12 event-container">
+            <div class="col-12 event-container mb-5">
+
+                {% for name in event_name_list_previous %}
+
+                    {% if event == "" %}
+                        {% else %}
+                            <strong>{{ name[0] }}</strong>:
+                        {% endif %}
+
+                        {% if loop.first %}
+                            Bring These Dishes:
+                        {% endif %}
+
+                        {% for food in name[1] %}
+                            <strong>{{ food }}</strong>
+                            {% if not loop.last %}
+                                and
+                            {% endif %}
+                        {% endfor %}
+
+                        <br>
+                {% endfor %}
 
             </div>
         </div>
     </div>
 
     <!-- Upcoming Container -->
-    <div class="col-7">
+    <div class="col-6">
         <h3 class="x-mas-text">Upcoming Events</h3>
 
         <div class="row">
-            <div class="col-12 event-container" style="min-height: 15rem;">
+            <div class="col-12 event-container mb-5">
 
                 {% for name in event_name_list %}
 
-                <!-- {{event}} -->
-                {% if event == "" %}
-                    {% else %}
-                   <strong>{{ name[0] }}</strong>:
-
-                    {% endif %}
-                    
-                    
-
+                    {% if event == "" %}
+                        {% else %}
+                            <strong>{{ name[0] }}</strong>:
+                        {% endif %}
 
                         {% if loop.first %}
                             Bring These Dishes:
                         {% endif %}
-                    {% for food in name[1] %}
-                        <strong>{{ food }}</strong>
-                        {% if not loop.last %}
-                            and
-                        {% endif %}
-                    {% endfor %}
 
-                    <br>
+                        {% for food in name[1] %}
+                            <strong>{{ food }}</strong>
+                            {% if not loop.last %}
+                                and
+                            {% endif %}
+                        {% endfor %}
+
+                        <br>
                 {% endfor %}
             <div class="col-12">
-                
+
             </div>
         </div>
     </div>
@@ -186,17 +203,20 @@
                             <legend for="event_description" style="margin-bottom: 0;">Date</legend>
                             <select name="date_month" id="date_month">
                                 {% for month in date_list %}
-                                <option value="{{ loop.index0 }}">{{ month[0] }}</option>
+                                <option value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">{{ month[0] }}</option>
                                 {% endfor %}
+
+
+
                             </select>
                             <select name="date_day" id="date_day">
                                 {% for day in range(1, 32) %}
-                                <option value="{{ loop.index }}">{{ day }}</option>
+                                <option value="{% if loop.index <= 9  %}0{{ loop.index }}{% else %}{{ loop.index }}{% endif %}">{{ day }}</option>
                                 {% endfor %}
                             </select>
                             <select name="date_year" id="date_year">
                                 {% for year in range(year, year + 5) %}
-                                <option value="year">{{ year }}</option>
+                                <option value="{{ year }}">{{ year }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -285,16 +305,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ url_for('family') }}" method="POST">
+                <form action="{{ url_for('add_dish_event') }}" method="POST">
                     <div class="form-group">
 
 
                         <div class="form-group">
                             <fieldset class="mt-1">
                                 <legend for="event_description" style="margin-bottom: 0;">Family</legend>
-                                <select name="family" id="family">
-                                    {% for event_dish in add_event_dish %}
-                                        <option value="{{ event_dish.id}}">{{ event_dish.id }}</option>
+                                <select name="event_id" id="event_id" class="px-5">
+                                    {% for event in bring_dish_events_list %}
+                                        <option value="{{ event[0] }}">{{ event[1] }}</option>
                                     {% endfor %}
                                 </select>
                             </fieldset>
@@ -305,20 +325,20 @@
 
                         
                     <label for="name">Dish 1<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
+                    <input type="text" class="form-control" id="dish_1" name="dish_1" minlength="3" maxlength="50"
                     required />
 
                     <label for="name">Dish 2<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_2" name="dish_2" minlength="0" maxlength="50"
+                    />
 
                     <label for="name">Dish 3<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_3" name="dish_3" minlength="0" maxlength="50"
+                    />
 
                     <label for="name">Dish 4<span class="require">*</span></label>
-                    <input type="text" class="form-control" id="family_name" name="family_name" minlength="5" maxlength="50"
-                    required />
+                    <input type="text" class="form-control" id="dish_4" name="dish_4" minlength="0" maxlength="50"
+                    />
 
                     </div>
                     <div class="form-group">

@@ -228,102 +228,88 @@ def profile():
         # except:
         #     pass
         # searches events
+
+        # Splits events into upcoming and previous
         events_list = db.events.find(events_list)
-
-        # print(events_list)
-        # for te in events_list:
-        #     print(te)
-        #     print()
-
-        # build name list for front end
         event_name_list = []
-        
-        # try: #  Must have for new users
-        for event_name in events_list:
+        upcoming_events = []
+        previous_events = []
+
+        try:
+            for time_check in events_list:
+                event_date = time_check['date']
+                if datetime.datetime(int(event_date[6:10]), int(event_date[0:2]), int(event_date[3:5])) > datetime.datetime.now():
+                    upcoming_events.append(time_check)
+                else:
+                    previous_events.append(time_check)
+
+            bring_dish_events = upcoming_events
+        except:
+            pass
+
+        # Creates list with event, and food brought
+        for event_name in upcoming_events:
             food_list = []
             for food in event_name['food']:
-                print(len(food), "-----------------amfood start")
-                print(food, "-----------------amfood start")
+                try:
+                    is_bringing = True
+                    event_person_id = db.users.find_one({"_id": food[0]})['email']
+                    if event_person_id == userDoc["email"]:
+                        food_list += [db.users.find_one({"_id": food[0]})['name']] #name
+                    else:
+                        is_bringing = False
+                except TypeError:
+                    print("---------Type error through upcomming events list--------")
+                if is_bringing:
+                    
+                    for food_item in food[1]:
+                        food_list += [food_item]
 
-                print()
-                if food == "" or []:
-                    # food_list.append("False")
-                    print(food, "im food False")
-                else:
-                    try:
-                        is_bringing = True
-                        # print(db.users.find_one({"_id": food[0]})['email'], "-----------AM NAME")
-                        # print(userDoc['email'], "--------------am user-------------")
-                        event_person_id = db.users.find_one({"_id": food[0]})['email']
-                        if event_person_id == userDoc["email"]:
-                            food_list += [db.users.find_one({"_id": food[0]})['name']] #name
-                        else:
-                            is_bringing = False
-                    except TypeError:
-                        print("---------Type error through upcomming events list--------")
-                    if is_bringing:
-                        for food_item in food[1]:
-                            print(food[1], "IO am food") #food items
-                            food_list += [food_item]
-
-            print(food_list, "I am food list ----------MN")
-
-                    # for food_item in food:
-                    #     print(food_item, "I am food item")
-                    #     print(type(food_item))
-                        # print(db.users.find_one({"_id": food_item[0]}))
-                        # print(food_item[1])
-
-                    # food_list.append(food)
-                    # print(food_list.append(food), "i am error")
-                    # print(db.users.find_one({"_id": food}), "look at me")
-                    # print(food, "im food")
-
-            print(food_list, "---------------a am food list----------------")
             if food_list != []:
                 event_name_list += [[event_name['name'], food_list]]
             else:
                 event_name_list += [[event_name['name']]]
 
 
-
-
-            print(food_list, "I am food list ----------------------")
-            print(event_name['name'], "I am event name----------------------")
-
-
-
-
-            # 61b49681ac8316b54be9b8ce
-
-            print(event_name["name"], "i am  name")
-
-
-            # print(event_name)
-            # print()
-            # print(event_name['name'])
-            print(event_name['food'])
-            # event_name_list.append(event_name['name'])  original
-        # except:
-        #     pass
-
         print("-------------------------------------")
 
-        
-        print(event_name_list, "I am evetn name list finihs")
-        for te in event_name_list:
-            print(te)
-            # print()
+        event_name_list_previous = []
+        # Creates previous list with event, and food brought
+        for event_name in previous_events:
+            food_list = []
+            for food in event_name['food']:
+                try:
+                    is_bringing = True
+                    event_person_id = db.users.find_one({"_id": food[0]})['email']
+                    if event_person_id == userDoc["email"]:
+                        food_list += [db.users.find_one({"_id": food[0]})['name']] #name
+                    else:
+                        is_bringing = False
+                except TypeError:
+                    print("---------Type error through upcomming events list--------")
+                if is_bringing:
+                    for food_item in food[1]:
+                        food_list += [food_item]
 
-
-        # print(te)
-        # for t in te:
-        #     print(t["name"])
-        # print("I am time delta!!!!!!")
-        # print(datetime.dateime.now())
-
+            if food_list != []:
+                event_name_list_previous += [[event_name['name'], food_list]]
+            else:
+                event_name_list_previous += [[event_name['name']]]
 
         print("-------------------------------------")
+        try:
+            bring_dish_events_list = []
+            print(bring_dish_events)
+            for event in bring_dish_events:
+                print(event["_id"])
+                print(event["name"])
+                bring_dish_events_list += [[event["_id"], event["name"]]]
+            print(bring_dish_events_list)
+        except UnboundLocalError:
+            pass
+
+
+        print(datetime.datetime(2121, 1, 1))
         print(year)
         #61b49681ac8316b54be9b8ce patrik
 
@@ -339,7 +325,10 @@ def profile():
             date_list=date_list,
             year=year,
             event_name_list=event_name_list,
-            test=test
+            event_name_list_previous=event_name_list_previous,
+            bring_dish_events_list=bring_dish_events_list,
+            test=test,
+            userDoc=userDoc
         )
     else:
         return redirect(url_for("login"))
@@ -381,10 +370,15 @@ def event():
             return redirect(url_for('profile'))
         else:
             family_name = request.form.get("family")
+            year = request.form.get("date_year")
+            day = request.form.get("date_day")
+            month = request.form.get("date_month")
+            print(year, )
             print(family_name)
             event = {
                 "name": request.form.get("name"),
-                "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                # "date": datetime.datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+                "date":  day + "/" + month + "/" + year,
                 "event": request.form.get("event_food"),
                 "email": session["email"],
                 "family": family_name,
@@ -430,6 +424,78 @@ def family():
             db.families.insert_one(family)
             flash("Family Successfully Added")
             return redirect(url_for("profile"))
+
+
+@app.route("/add_dish_event/", methods=["GET", "POST"])
+def add_dish_event():
+    if request.method == "POST":
+        event_id = request.form.get('event_id')
+        event_found = db.events.find_one({"_id": ObjectId(event_id)})
+        user_id = db.users.find_one({"email": session["email"]})["_id"]
+        dish_2 = request.form.get("dish_2").strip()
+        dish_3 = request.form.get("dish_3").strip()
+        dish_4 = request.form.get("dish_4").strip()
+        dishes = []
+        dish = []
+        dishes.append(user_id)
+        dish.append(request.form.get("dish_1"))
+        if dish_2:
+            dish.append(request.form.get("dish_2"))
+        if dish_3:
+            dish.append(request.form.get("dish_3"))
+        if dish_4:
+            dish.append(request.form.get("dish_4"))
+
+        dishes.append(dish)
+        print(dishes)
+        print(event_found)
+        print(dishes, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        print()
+
+        iteration = 0
+        food_list = event_found["food"]
+        print((food_list), "<<<<<<<<<<<<<<<<<<<<<<")
+        list_length = len(event_found["food"])
+        if list_length == 0:
+                food_list.append(dishes)
+        else:
+            for find_dishes in event_found["food"]:
+                if user_id == find_dishes[0]:
+            #         # print(find_dishes)
+                    food_list[iteration] = dishes
+                    print("------------------EQUALS------------------")
+                    break
+                if iteration >= list_length - 2:
+                    print("---------------------TRUTH-----------------")
+                    food_list.append(dishes)
+                    break
+
+                iteration += 1
+        print(iteration)
+        print(list_length)
+        # print(food_list, "Im food list<><><><>")
+        # event_found['food'] = food_list
+        # print("----------------")
+        # print(event_found)
+            # print(find_dishes[0])
+        # dishes = {
+        #     "_id": ObjectId(event_id),
+        #     "dish_1": request.form.get("dish_1"),
+        #     "dish_2": request.form.get("dish_2"),
+        #     "dish_3": request.form.get("dish_3"),
+        #     "dish_4": request.form.get("dish_4")
+        # }
+        # print(dishes)
+        # print()
+
+        print()
+
+        db.events.update_one(
+            {"_id": ObjectId(event_id)},
+            {"$set": event_found})
+        flash("Dish Successfully Added")
+        return redirect(url_for("profile"))
+
 
 
 @app.route("/add_to_family/<user_id>", methods=["GET", "POST"])
